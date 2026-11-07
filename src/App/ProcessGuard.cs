@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -197,6 +196,10 @@ internal static class ProcessGuard
         s_started = true;
 
         AttachJob();
+
+        // 软屏蔽只在进程启动时写一次：每次 Tick 都写注册表既浪费又会被杀软反复告警。
+        // 无管理员权限时 AttemptBlock 逐个返回 false，整条链路静默降级 —— 轮询杀进程仍然兜底。
+        ApplyBlocks();
 
         // 退出钩子：定时器回调打在已释放的对象上会抛 ObjectDisposedException，
         // 而 ProcessExit 期间没人接得住这个异常，必须在退出前主动停表。

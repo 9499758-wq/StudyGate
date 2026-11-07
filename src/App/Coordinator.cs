@@ -161,6 +161,11 @@ internal sealed class Coordinator
             app.MainWindow = window;
         }
 
+        // 历史在装卷时一次性注入：Ui 只读不写，重考时靠 OnRetakeRequested 里那次刷新。
+        // 直接传 _state.History 共享引用，不做 ToList/ToArray 拷贝 —— Ui 侧只在
+        // SetHistory 内部遍历一次构建视觉树，不做延迟读取，拷贝只会让条数对不上更难查。
+        window.SetHistory(_state.History);
+
         // 先填内容再显示：顺序反了会先闪一帧空白卡片。
         window.LoadPaper(_spec, _paper, GradeLabel(_state.Grade, _state.Term));
         window.ShowQuestion(_state.CurrentIndex, CountAnswered(), SelectedAt(_state.CurrentIndex));
@@ -311,6 +316,10 @@ internal sealed class Coordinator
     private void OnRetakeRequested()
     {
         StartNewPaper(NewSeed());
+
+        // 重考前必须刷新历史：Submit() 已经把这次作答写进 _state.History，
+        // 不刷新的话结果页显示的还是上一轮注入的旧快照，用户会看到「共 N 次」比实际少一次。
+        _window?.SetHistory(_state.History);
 
         _window?.LoadPaper(_spec, _paper, GradeLabel(_state.Grade, _state.Term));
         _window?.ShowQuestion(0, 0, -1);

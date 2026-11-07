@@ -86,6 +86,12 @@ public partial class GateWindow : Window, IGateViewHost
         Result.Show(result, OnPassedCountdownElapsed);
     }
 
+    public void SetHistory(IReadOnlyList<AttemptRecord> history)
+    {
+        // 纯转发：GateWindow 不持有历史，也不做任何裁剪/排序，历史逻辑全在 ResultView。
+        Result.SetHistory(history);
+    }
+
     public void ReleaseAndClose()
     {
         _released = true;

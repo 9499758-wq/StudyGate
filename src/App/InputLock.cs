@@ -165,7 +165,14 @@ internal sealed class InputLock : IDisposable
     private readonly HookProc _mouseProc;
 
     private readonly ManualResetEventSlim _ready = new ManualResetEventSlim(false);
+
+    /// <summary>
+    /// 句柄表。**必须加锁访问**：Stop() 在超时兜底路径上会从主线程直接 UnhookAll，
+    /// 而钩子线程退出消息循环后也会调一次 —— 两个线程同时 foreach/Clear 一个 List
+    /// 会抛 InvalidOperationException，且这发生在退出路径上，没人接得住。
+    /// </summary>
     private readonly List<IntPtr> _hooks = new List<IntPtr>();
+    private readonly object _hookLock = new object();
 
     private Thread? _thread;
     private uint _threadId;
@@ -247,12 +254,18 @@ internal sealed class InputLock : IDisposable
 
             if (kb != IntPtr.Zero)
             {
-                _hooks.Add(kb);
+                lock (_hookLock)
+                {
+                    _hooks.Add(kb);
+                }
             }
 
             if (ms != IntPtr.Zero)
             {
-                _hooks.Add(ms);
+                lock (_hookLock)
+                {
+                    _hooks.Add(ms);
+                }
             }
 
             // 键盘钩子是刚需；鼠标钩子失败可以降级（只锁键不锁鼠标）。
@@ -282,15 +295,18 @@ internal sealed class InputLock : IDisposable
 
     private void UnhookAll()
     {
-        foreach (IntPtr hook in _hooks)
+        lock (_hookLock)
         {
-            if (hook != IntPtr.Zero)
+            foreach (IntPtr hook in _hooks)
             {
-                UnhookWindowsHookEx(hook);
+                if (hook != IntPtr.Zero)
+                {
+                    UnhookWindowsHookEx(hook);
+                }
             }
-        }
 
-        _hooks.Clear();
+            _hooks.Clear();
+        }
     }
 
     // ── 回调 ──────────────────────────────────────────────────

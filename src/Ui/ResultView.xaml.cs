@@ -20,9 +20,20 @@ public partial class ResultView : UserControl
     /// <summary>达标后的静默等待时长。SPEC 第三节：3 秒。</summary>
     private static readonly TimeSpan PassDelay = TimeSpan.FromSeconds(3);
 
+    /// <summary>历史明细最多显示几行。再多就只给摘要，避免结果页被记录淹没。</summary>
+    private const int HistoryRowMax = 6;
+
+    /// <summary>
+    /// 每科题量，与 PaperSpec.PerSubject 的唯一取值一致（30 题 = 三科各 10）。
+    /// 不用 AttemptRecord.TotalCount / 3 求分母：那个字段语义是「整卷总数」，
+    /// 除不尽时会静默丢余数，卷面规格一变就跟着算错。
+    /// </summary>
+    private const int PerSubjectTotal = 10;
+
     private readonly DispatcherTimer _timer;
     private Action? _onPassed;
     private string _gradeLabel = string.Empty;
+    private IReadOnlyList<AttemptRecord> _history = Array.Empty<AttemptRecord>();
 
     public ResultView()
     {
@@ -43,6 +54,39 @@ public partial class ResultView : UserControl
     {
         _gradeLabel = gradeLabel ?? string.Empty;
         GradeLabel.Text = "StudyGate · " + _gradeLabel;
+    }
+
+    /// <summary>
+    /// 注入历史作答记录（最新在前，最多 30 条）。同步、无副作用、不触发任何事件，
+    /// 也不碰 3 秒倒计时。里面不排序、不重算，进来什么样就显示什么样。
+    /// </summary>
+    public void SetHistory(IReadOnlyList<AttemptRecord> history)
+    {
+        _history = history;
+
+        if (history is null || history.Count == 0)
+        {
+            HistorySummary.Text = "还没有记录";
+            HistoryList.Children.Clear();
+            return;
+        }
+
+        // 摘要：「共 N 次 · 上次 S 分 · 达标/未达标」。最新一条在索引 0（宿主已排好）。
+        AttemptRecord latest = history[0];
+        HistorySummary.Text = string.Format(
+            CultureInfo.InvariantCulture,
+            "共 {0} 次 · 上次 {1} 分 · {2}",
+            history.Count,
+            latest.Score,
+            latest.Passed ? "达标" : "未达标");
+
+        HistoryList.Children.Clear();
+
+        int shown = Math.Min(history.Count, HistoryRowMax);
+        for (int i = 0; i < shown; i++)
+        {
+            HistoryList.Children.Add(CreateHistoryRow(history[i]));
+        }
     }
 
     /// <summary>
@@ -152,6 +196,83 @@ public partial class ResultView : UserControl
         }
 
         return sb.ToString();
+    }
+
+    /// <summary>
+    /// 单条历史行的视觉。一行放完，空间不够就让等宽字体自动截断，
+    /// 不折行 —— 结果页已有错题区在抢高度，把一条记录拆成两行会把版面顶穿。
+    /// 达标条目比未达标亮一档，两档都不进主文色 #E8E6E1。
+    /// </summary>
+    private TextBlock CreateHistoryRow(AttemptRecord record)
+    {
+        return new TextBlock
+        {
+            Text = FormatHistoryLine(record),
+            FontFamily = new FontFamily("Consolas, Courier New, monospace"),
+            FontSize = 13,
+            Margin = new Thickness(0, 0, 0, 4),
+            TextTrimming = TextTrimming.CharacterEllipsis,
+            Foreground = new SolidColorBrush(
+                record.Passed ? Color.FromRgb(0x9B, 0xA0, 0xA8) : Color.FromRgb(0x5E, 0x63, 0x6B)),
+        };
+    }
+
+    /// <summary>「11/07 14:37　六年级下　90 分　10/10 8/10 9/10　00:33」。</summary>
+    private static string FormatHistoryLine(AttemptRecord record)
+    {
+        StringBuilder sb = new StringBuilder(96);
+
+        sb.Append(record.AtUtc.ToLocalTime().ToString("MM/dd HH:mm", CultureInfo.InvariantCulture))
+          .Append("  ")
+          .Append(GradeName(record.Grade))
+          .Append(record.Term)
+          .Append("  ")
+          .Append(record.Score.ToString(CultureInfo.InvariantCulture))
+          .Append(" 分  ");
+
+        if (record.SubjectCorrect is { Count: > 0 } perSubject)
+        {
+            for (int i = 0; i < perSubject.Count; i++)
+            {
+                if (i > 0)
+                {
+                    sb.Append(' ');
+                }
+
+                sb.Append(perSubject[i].ToString(CultureInfo.InvariantCulture))
+                  .Append('/')
+                  .Append(PerSubjectTotal.ToString(CultureInfo.InvariantCulture));
+            }
+
+            sb.Append("  ");
+        }
+
+        // 负数是历史脏数据（老存档或时钟回拨），显示成 00:00 而不是负号。
+        long ms = record.ElapsedMs < 0 ? 0 : record.ElapsedMs;
+        long totalSeconds = ms / 1000;
+
+        sb.Append(totalSeconds >= 3600
+            ? string.Format(
+                CultureInfo.InvariantCulture, "{0:00}:{1:00}:{2:00}",
+                totalSeconds / 3600, (totalSeconds / 60) % 60, totalSeconds % 60)
+            : string.Format(
+                CultureInfo.InvariantCulture, "{0:00}:{1:00}",
+                totalSeconds / 60, totalSeconds % 60));
+
+        return sb.ToString();
+    }
+
+    /// <summary>年级显示名。6 = 六年级（云南六三制），7/8/9 = 初一/初二/初三。</summary>
+    private static string GradeName(int grade)
+    {
+        return grade switch
+        {
+            6 => "六年级",
+            7 => "初一",
+            8 => "初二",
+            9 => "初三",
+            _ => grade.ToString(CultureInfo.InvariantCulture) + "年级",
+        };
     }
 
     // ─────────────────────────────────────────────────────────────
