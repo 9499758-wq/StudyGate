@@ -1,0 +1,487 @@
+{
+ "grade": 6,
+ "term": "上",
+ "subject": "english",
+ "items": [
+  {
+   "id": "g6s-en-001",
+   "stem": "—Excuse me, where is the museum? —It's ____ the post office.",
+   "options": [
+    "next to",
+    "next",
+    "in",
+    "on"
+   ],
+   "answer": 0,
+   "explanation": "next to 意为在……旁边，表示位置关系。next 单独使用不能接名词，in 与 on 都不能准确表示紧邻。"
+  },
+  {
+   "id": "g6s-en-002",
+   "stem": "Turn ____ at the crossing, and you'll see the hospital.",
+   "options": [
+    "leftly",
+    "left",
+    "the left",
+    "to left"
+   ],
+   "answer": 1,
+   "explanation": "祈使句用 turn left 表示向左转，left 是副词。leftly 不是词，加 the 或 to 都不合固定搭配。"
+  },
+  {
+   "id": "g6s-en-003",
+   "stem": "—How can I get to the library? —Go ____ this street.",
+   "options": [
+    "straightly",
+    "straights",
+    "straight",
+    "to straight"
+   ],
+   "answer": 2,
+   "explanation": "go straight 意为直走，straight 在此作副词。straights 是复数，straightly 与 to straight 都不存在。"
+  },
+  {
+   "id": "g6s-en-004",
+   "stem": "The cinema is ____ front of the school.",
+   "options": [
+    "to",
+    "on",
+    "at",
+    "in"
+   ],
+   "answer": 3,
+   "explanation": "in front of 意为在……前面。on front of 与 at front of 都不是固定搭配，to 也不能表示这一位置。"
+  },
+  {
+   "id": "g6s-en-005",
+   "stem": "—____ is the bookstore? —It's near the park.",
+   "options": [
+    "What",
+    "Where",
+    "How",
+    "Who"
+   ],
+   "answer": 1,
+   "explanation": "问地点用 Where。What 问事物，How 问方式或状况，Who 问人，都不能与「在公园附近」的答语相配。"
+  },
+  {
+   "id": "g6s-en-006",
+   "stem": "—Is there a hospital near here? —Yes, ____.",
+   "options": [
+    "there are",
+    "it is",
+    "there is",
+    "is there"
+   ],
+   "answer": 2,
+   "explanation": "There be 句型的肯定回答固定为 Yes, there is。it is 用于一般事物，there are 与单数主语不符。"
+  },
+  {
+   "id": "g6s-en-007",
+   "stem": "I usually go to school ____ foot.",
+   "options": [
+    "by",
+    "with",
+    "in",
+    "on"
+   ],
+   "answer": 3,
+   "explanation": "步行是固定搭配 on foot。by 用于交通工具，in 与 with 都不能与 foot 组成这一表达。"
+  },
+  {
+   "id": "g6s-en-008",
+   "stem": "My father goes to work ____ bus every day.",
+   "options": [
+    "by",
+    "on",
+    "in",
+    "at"
+   ],
+   "answer": 0,
+   "explanation": "by 加交通工具单数表示乘坐方式，by bus 即乘公交。on 用于 on foot 等，in 用于 car，at 不表交通。"
+  },
+  {
+   "id": "g6s-en-009",
+   "stem": "—How do you come to school? —I come ____ bike.",
+   "options": [
+    "in",
+    "on",
+    "by",
+    "with"
+   ],
+   "answer": 2,
+   "explanation": "by bike 意为骑自行车。on 后常接 foot，in 用于 car，with 表伴随，都不合交通方式表达。"
+  },
+  {
+   "id": "g6s-en-010",
+   "stem": "We must ____ at a yellow light.",
+   "options": [
+    "slowing",
+    "slow",
+    "down",
+    "slow down"
+   ],
+   "answer": 3,
+   "explanation": "must 后接动词原形，slow down 意为减速。slow 单独不表减速，down 是副词，slowing 不能跟在 must 后。"
+  },
+  {
+   "id": "g6s-en-011",
+   "stem": "You must ____ the traffic rules.",
+   "options": [
+    "obey",
+    "obeys",
+    "obeying",
+    "obeyed"
+   ],
+   "answer": 0,
+   "explanation": "must 后接动词原形 obey。obeys 是第三人称单数，obeying 与 obeyed 都不合情态动词的用法。"
+  },
+  {
+   "id": "g6s-en-012",
+   "stem": "—What are you going to do this weekend? —I ____ visit my grandparents.",
+   "options": [
+    "go to",
+    "am going to",
+    "going to",
+    "will going to"
+   ],
+   "answer": 1,
+   "explanation": "be going to 表示计划，主语 I 配 am。go to 表习惯，going to 缺系动词，will going to 混用两种结构。"
+  },
+  {
+   "id": "g6s-en-013",
+   "stem": "She ____ buy a new bike tomorrow.",
+   "options": [
+    "going to",
+    "are going to",
+    "am going to",
+    "is going to"
+   ],
+   "answer": 3,
+   "explanation": "主语 She 是第三人称单数，用 is going to。are 与 am 人称不符，只写 going to 缺系动词。"
+  },
+  {
+   "id": "g6s-en-014",
+   "stem": "—What are you going to be? —I'm going to be ____.",
+   "options": [
+    "a teacher",
+    "teacher",
+    "teachers",
+    "the teacher"
+   ],
+   "answer": 0,
+   "explanation": "表示职业的单数名词前须加不定冠词 a。去掉冠词、用复数或加定冠词都不合此处表达。"
+  },
+  {
+   "id": "g6s-en-015",
+   "stem": "Where ____ you going this afternoon?",
+   "options": [
+    "do",
+    "are",
+    "is",
+    "does"
+   ],
+   "answer": 1,
+   "explanation": "be going to 的疑问句把 are 提前，主语 you 配 are。do 与 does 属一般现在时，is 与 you 不搭配。"
+  },
+  {
+   "id": "g6s-en-016",
+   "stem": "I have a pen pal. He ____ in China.",
+   "options": [
+    "living",
+    "live",
+    "lives",
+    "lived"
+   ],
+   "answer": 2,
+   "explanation": "主语 He 是第三人称单数，一般现在时动词加 s，用 lives。live 用于复数或第一人称，living 与 lived 不合。"
+  },
+  {
+   "id": "g6s-en-017",
+   "stem": "My pen pal likes ____ pictures.",
+   "options": [
+    "drawing",
+    "draw",
+    "draws",
+    "drew"
+   ],
+   "answer": 0,
+   "explanation": "like 后接动名词表示爱好，用 drawing。draw、draws、drew 都不符合 like doing 这一结构。"
+  },
+  {
+   "id": "g6s-en-018",
+   "stem": "He ____ playing football and swimming.",
+   "options": [
+    "liking",
+    "like",
+    "likes",
+    "liked"
+   ],
+   "answer": 2,
+   "explanation": "主语 He 为第三人称单数，动词加 s 得 likes。like 用于非三单主语，liking 与 liked 在此不作谓语。"
+  },
+  {
+   "id": "g6s-en-019",
+   "stem": "—Does your pen pal live in Beijing? —No, he ____.",
+   "options": [
+    "don't",
+    "doesn't",
+    "isn't",
+    "not"
+   ],
+   "answer": 1,
+   "explanation": "以 Does 提问的否定回答用 doesn't。don't 用于非三单主语，isn't 属 be 动词回答，not 不能单独作回答。"
+  },
+  {
+   "id": "g6s-en-020",
+   "stem": "He ____ English every day.",
+   "options": [
+    "studied",
+    "study",
+    "studying",
+    "studies"
+   ],
+   "answer": 3,
+   "explanation": "以辅音字母加 y 结尾的动词，三单形式变 y 为 i 加 es，得 studies。study 用于非三单，另两项不合。"
+  },
+  {
+   "id": "g6s-en-021",
+   "stem": "—What does your mother do? —She ____ a nurse.",
+   "options": [
+    "does",
+    "is",
+    "do",
+    "are"
+   ],
+   "answer": 1,
+   "explanation": "回答职业用 She is a nurse。does 与 do 是助动词，are 与单数主语不符。"
+  },
+  {
+   "id": "g6s-en-022",
+   "stem": "My uncle works ____ a car factory.",
+   "options": [
+    "to",
+    "on",
+    "at",
+    "in"
+   ],
+   "answer": 3,
+   "explanation": "在某场所内工作用 in a factory。on 用于平面，at 多用于具体地点名，to 表方向。"
+  },
+  {
+   "id": "g6s-en-023",
+   "stem": "—What does he do? —He is a ____. He works in a hospital.",
+   "options": [
+    "doctor",
+    "teacher",
+    "driver",
+    "farmer"
+   ],
+   "answer": 0,
+   "explanation": "在医院工作的人最可能是医生 doctor。教师在学校，司机在车上，农民在田间，与医院这一线索不合。"
+  },
+  {
+   "id": "g6s-en-024",
+   "stem": "A ____ teaches students at school.",
+   "options": [
+    "policeman",
+    "doctor",
+    "teacher",
+    "writer"
+   ],
+   "answer": 2,
+   "explanation": "在学校教学生的是教师 teacher。医生治病，警察执勤，作家写作，都与「教学生」不符。"
+  },
+  {
+   "id": "g6s-en-025",
+   "stem": "He ____ in a police station. He is a policeman.",
+   "options": [
+    "working",
+    "work",
+    "works",
+    "worked"
+   ],
+   "answer": 2,
+   "explanation": "主语 He 为第三人称单数，一般现在时用 works。work 用于复数或第一人称，另两项不能作谓语。"
+  },
+  {
+   "id": "g6s-en-026",
+   "stem": "—How does he go to work? —He ____ by car.",
+   "options": [
+    "goes",
+    "go",
+    "going",
+    "went"
+   ],
+   "answer": 0,
+   "explanation": "主语 He 为三单，用 goes。go 与非三单主语搭配，going 与 went 都不合一般现在时的三单形式。"
+  },
+  {
+   "id": "g6s-en-027",
+   "stem": "I feel ____. I want to eat something.",
+   "options": [
+    "afraid",
+    "angry",
+    "tired",
+    "hungry"
+   ],
+   "answer": 3,
+   "explanation": "想吃东西说明饿了，用 hungry。angry 是生气，tired 是累，afraid 是害怕，都不合这一情境。"
+  },
+  {
+   "id": "g6s-en-028",
+   "stem": "The boy is ____ because he lost his toy.",
+   "options": [
+    "happy",
+    "sad",
+    "excited",
+    "hungry"
+   ],
+   "answer": 1,
+   "explanation": "丢了玩具自然难过，用 sad。happy 与 excited 表愉快兴奋，hungry 表饥饿，都与原因矛盾。"
+  },
+  {
+   "id": "g6s-en-029",
+   "stem": "—How do you feel? —I feel ____. I have a cold.",
+   "options": [
+    "excited",
+    "happy",
+    "strong",
+    "ill"
+   ],
+   "answer": 3,
+   "explanation": "感冒了身体不适，用 ill。happy 与 excited 表愉快，strong 表强壮，都与生病不符。"
+  },
+  {
+   "id": "g6s-en-030",
+   "stem": "You look tired. You ____ have a rest.",
+   "options": [
+    "should to",
+    "should",
+    "are should",
+    "shoulding"
+   ],
+   "answer": 1,
+   "explanation": "should 后直接接动词原形，表建议。加 to、混用系动词或加 ing 都不符合情态动词用法。"
+  },
+  {
+   "id": "g6s-en-031",
+   "stem": "Don't be ____. The dog is friendly.",
+   "options": [
+    "afraids",
+    "afraidly",
+    "afraid",
+    "in afraid"
+   ],
+   "answer": 2,
+   "explanation": "be 动词后接形容词作表语，用 afraid。afraidly 不是词，afraids 无此复数，in afraid 结构错。"
+  },
+  {
+   "id": "g6s-en-032",
+   "stem": "He is ____ because he got a new book.",
+   "options": [
+    "happy",
+    "sad",
+    "angry",
+    "ill"
+   ],
+   "answer": 0,
+   "explanation": "得到新书是好事，情绪愉快用 happy。sad、angry、ill 都与这一原因相反。"
+  },
+  {
+   "id": "g6s-en-033",
+   "stem": "—What's the matter? —____",
+   "options": [
+    "I feel sick.",
+    "I'm fine, thank you.",
+    "That's all right.",
+    "Never mind."
+   ],
+   "answer": 0,
+   "explanation": "What's the matter 问状况，答 I feel sick 说明不适。I'm fine 与问句矛盾，另两句回应道歉。"
+  },
+  {
+   "id": "g6s-en-034",
+   "stem": "下面哪一句表示「我打算明天去公园」（　）",
+   "options": [
+    "I'm going the park tomorrow.",
+    "I go to the park tomorrow.",
+    "I went to the park tomorrow.",
+    "I'm going to the park tomorrow."
+   ],
+   "answer": 3,
+   "explanation": "be going to 加地点表示打算前往，时间为 tomorrow。go 是一般现在时，went 与 tomorrow 矛盾，末句缺 to。"
+  },
+  {
+   "id": "g6s-en-035",
+   "stem": "____ there a cinema near your home?",
+   "options": [
+    "Do",
+    "Are",
+    "Is",
+    "Does"
+   ],
+   "answer": 2,
+   "explanation": "There be 句型单数主语用 Is。Cre 用于复数，Do 与 Does 不能构成 There be 的问句。"
+  },
+  {
+   "id": "g6s-en-036",
+   "stem": "There ____ two bookstores on this street.",
+   "options": [
+    "is",
+    "are",
+    "be",
+    "has"
+   ],
+   "answer": 1,
+   "explanation": "主语 two bookstores 为复数，用 are。is 用于单数，be 是原形，has 不能用于 There be 表示存在。"
+  },
+  {
+   "id": "g6s-en-037",
+   "stem": "—Thanks a lot. —____",
+   "options": [
+    "No thanks.",
+    "You're welcome.",
+    "That's right.",
+    "Fine, thanks."
+   ],
+   "answer": 1,
+   "explanation": "回应感谢用 You're welcome。No thanks 回应提议，That's right 表示判断正确，Fine thanks 回应问候。"
+  },
+  {
+   "id": "g6s-en-038",
+   "stem": "He often ____ TV in the evening.",
+   "options": [
+    "watches",
+    "watch",
+    "watching",
+    "watched"
+   ],
+   "answer": 0,
+   "explanation": "主语 He 为三单，以 ch 结尾的动词加 es，得 watches。watch 用于非三单主语，另两项不作谓语。"
+  },
+  {
+   "id": "g6s-en-039",
+   "stem": "下面哪个词与「想去某地」的表达搭配正确（　）",
+   "options": [
+    "want went",
+    "want go",
+    "want going",
+    "want to go"
+   ],
+   "answer": 3,
+   "explanation": "want 后接不定式 to do，故为 want to go。want go 缺 to，want going 与 want went 都不合这一搭配。"
+  },
+  {
+   "id": "g6s-en-040",
+   "stem": "My mother ____ me to school every morning.",
+   "options": [
+    "taking",
+    "take",
+    "takes",
+    "took"
+   ],
+   "answer": 2,
+   "explanation": "主语 My mother 为三单，用 takes。take 用于非三单主语，taking 与 took 在此不作一般现在时谓语。"
+  }
+ ]
+}

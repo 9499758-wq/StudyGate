@@ -1,0 +1,487 @@
+{
+ "grade": 7,
+ "term": "上",
+ "subject": "english",
+ "items": [
+  {
+   "id": "g7s-en-001",
+   "stem": "—____ your name? —My name is Li Hua.",
+   "options": [
+    "What's",
+    "What",
+    "What are",
+    "How is"
+   ],
+   "answer": 0,
+   "explanation": "问姓名用 What's your name，What's 即 What is。What 缺系动词，What are 与单数主语不符，How is 语义不对。"
+  },
+  {
+   "id": "g7s-en-002",
+   "stem": "—How old ____ you? —I ____ thirteen.",
+   "options": [
+    "is; am",
+    "are; am",
+    "are; is",
+    "am; are"
+   ],
+   "answer": 1,
+   "explanation": "主语 you 用 are，主语 I 用 am，故为 are; am。其余三项主谓搭配错，is 只用于第三人称单数。"
+  },
+  {
+   "id": "g7s-en-003",
+   "stem": "This is ____ English book.",
+   "options": [
+    "a",
+    "the",
+    "an",
+    "/"
+   ],
+   "answer": 2,
+   "explanation": "English 以元音音素开头，不定冠词用 an。a 用于辅音音素前，the 表特指但此处是泛指，零冠词不合。"
+  },
+  {
+   "id": "g7s-en-004",
+   "stem": "____ is my sister. ____ name is Lily.",
+   "options": [
+    "Her; Her",
+    "Her; She",
+    "She; She",
+    "She; Her"
+   ],
+   "answer": 3,
+   "explanation": "第一空作主语用主格 She，第二空修饰 name 用形容词性物主代词 Her。其余三项格的形式用错。"
+  },
+  {
+   "id": "g7s-en-005",
+   "stem": "These ____ my books. Those ____ his books.",
+   "options": [
+    "is; is",
+    "are; are",
+    "are; is",
+    "is; are"
+   ],
+   "answer": 1,
+   "explanation": "These 与 Those 都是复数指示代词，系动词都用 are。is 只配单数主语，故其余三项错。"
+  },
+  {
+   "id": "g7s-en-006",
+   "stem": "「这是我的父母」的英语是（　）",
+   "options": [
+    "This is my parent.",
+    "This are my parents.",
+    "These are my parents.",
+    "These is my parents."
+   ],
+   "answer": 2,
+   "explanation": "parents 是复数，指示代词用 These，系动词用 are。其余三项单复数或主谓搭配不一致。"
+  },
+  {
+   "id": "g7s-en-007",
+   "stem": "I have two ____.",
+   "options": [
+    "box",
+    "boxs",
+    "boxies",
+    "boxes"
+   ],
+   "answer": 3,
+   "explanation": "以 x 结尾的名词复数加 -es，box 变 boxes。box 是单数，boxs 拼写不合规则，boxies 错误地改 y。"
+  },
+  {
+   "id": "g7s-en-008",
+   "stem": "There are three ____ in the room.",
+   "options": [
+    "women",
+    "womans",
+    "woman",
+    "womens"
+   ],
+   "answer": 0,
+   "explanation": "woman 是不规则复数，复数为 women。womans 与 womens 都按规则变化，woman 是单数，都不符合。"
+  },
+  {
+   "id": "g7s-en-009",
+   "stem": "knife 的复数形式是（　）",
+   "options": [
+    "knifes",
+    "knife",
+    "knives",
+    "knif"
+   ],
+   "answer": 2,
+   "explanation": "以 fe 结尾的名词变 f 为 v 再加 -es，得 knives。knifes 未变 f，knife 是单数，均不合规则。"
+  },
+  {
+   "id": "g7s-en-010",
+   "stem": "child 的复数形式是（　）",
+   "options": [
+    "childs",
+    "child",
+    "childes",
+    "children"
+   ],
+   "answer": 3,
+   "explanation": "child 是不规则名词，复数为 children。childs 与 childes 是按规则误变，child 本身是单数。"
+  },
+  {
+   "id": "g7s-en-011",
+   "stem": "My father ____ TV every evening.",
+   "options": [
+    "watches",
+    "watchs",
+    "watch",
+    "watching"
+   ],
+   "answer": 0,
+   "explanation": "一般现在时第三人称单数，以 ch 结尾加 -es，得 watches。watch 用于复数主语，watchs 拼写错，watching 是分词。"
+  },
+  {
+   "id": "g7s-en-012",
+   "stem": "He ____ to school by bike every day.",
+   "options": [
+    "go",
+    "goes",
+    "going",
+    "went"
+   ],
+   "answer": 1,
+   "explanation": "主语 He 是第三人称单数，一般现在时用 goes。go 配复数主语，going 是分词，went 是过去式与 every day 冲突。"
+  },
+  {
+   "id": "g7s-en-013",
+   "stem": "I ____ like bananas.",
+   "options": [
+    "am not",
+    "isn't",
+    "doesn't",
+    "don't"
+   ],
+   "answer": 3,
+   "explanation": "实义动词 like 的否定用助动词 don't，主语是 I。am not 后接形容词或分词，doesn't 配第三人称单数，isn't 配 is。"
+  },
+  {
+   "id": "g7s-en-014",
+   "stem": "—____ she have a soccer ball? —Yes, she does.",
+   "options": [
+    "Does",
+    "Do",
+    "Is",
+    "Are"
+   ],
+   "answer": 0,
+   "explanation": "主语 she 是第三人称单数，实义动词 have 的一般疑问句用 Does。Do 配复数主语，Is 与 Bre 后不能接动词原形 have。"
+  },
+  {
+   "id": "g7s-en-015",
+   "stem": "They ____ have any brothers.",
+   "options": [
+    "doesn't",
+    "don't",
+    "aren't",
+    "isn't"
+   ],
+   "answer": 1,
+   "explanation": "主语 They 是复数，实义动词 have 的否定用 don't。doesn't 用于第三人称单数，isn't 与 aren't 后不能接原形 have。"
+  },
+  {
+   "id": "g7s-en-016",
+   "stem": "—Is this your pen? —No, it isn't. It's ____.",
+   "options": [
+    "her",
+    "she",
+    "hers",
+    "she's"
+   ],
+   "answer": 2,
+   "explanation": "此处需名词性物主代词作表语，hers 相当于 her pen。her 是形容词性须接名词，she 与 she's 不是物主代词。"
+  },
+  {
+   "id": "g7s-en-017",
+   "stem": "This is my book. That book is ____, too.",
+   "options": [
+    "mine",
+    "my",
+    "me",
+    "I"
+   ],
+   "answer": 0,
+   "explanation": "空格后无名词，要用名词性物主代词 mine。my 是形容词性须接名词，me 是宾格，I 是主格。"
+  },
+  {
+   "id": "g7s-en-018",
+   "stem": "「那些是我的钥匙」的英语是（　）",
+   "options": [
+    "That are my keys.",
+    "Those is my keys.",
+    "Those are my keys.",
+    "Those are my key."
+   ],
+   "answer": 2,
+   "explanation": "Those 复数配 are，keys 也要用复数。其余三项或主谓不一致，或指示代词单复数错，或名词漏复数。"
+  },
+  {
+   "id": "g7s-en-019",
+   "stem": "Let's ____ basketball.",
+   "options": [
+    "playing",
+    "play",
+    "to play",
+    "plays"
+   ],
+   "answer": 1,
+   "explanation": "Let's 后接动词原形，故用 play。playing 是分词，to play 是不定式，plays 是第三人称单数形式。"
+  },
+  {
+   "id": "g7s-en-020",
+   "stem": "I like ____ books after school.",
+   "options": [
+    "read",
+    "reads",
+    "to reading",
+    "reading"
+   ],
+   "answer": 3,
+   "explanation": "like 后可接动名词表示习惯性爱好，用 reading。read 与 reads 是谓语形式，to reading 搭配错误。"
+  },
+  {
+   "id": "g7s-en-021",
+   "stem": "—Where ____ your parents? —They are at home.",
+   "options": [
+    "is",
+    "are",
+    "am",
+    "be"
+   ],
+   "answer": 1,
+   "explanation": "主语 parents 是复数，系动词用 are。is 用于单数，am 配 I，be 是原形不能直接作谓语。"
+  },
+  {
+   "id": "g7s-en-022",
+   "stem": "It's time ____ class.",
+   "options": [
+    "at",
+    "to",
+    "of",
+    "for"
+   ],
+   "answer": 3,
+   "explanation": "It's time for + 名词，表示该做某事了。to 后需接动词原形，of 与 at 不能构成这一固定搭配。"
+  },
+  {
+   "id": "g7s-en-023",
+   "stem": "Please ____ the door.",
+   "options": [
+    "close",
+    "closing",
+    "to close",
+    "closes"
+   ],
+   "answer": 0,
+   "explanation": "祈使句以动词原形开头，故用 close。closes 是第三人称单数，closing 是分词，to close 用于不定式结构。"
+  },
+  {
+   "id": "g7s-en-024",
+   "stem": "My birthday is ____ May.",
+   "options": [
+    "on",
+    "at",
+    "in",
+    "for"
+   ],
+   "answer": 2,
+   "explanation": "月份前用介词 in。on 用于具体某天，at 用于钟点，for 表示持续时长，均不合。"
+  },
+  {
+   "id": "g7s-en-025",
+   "stem": "We have English ____ Monday morning.",
+   "options": [
+    "in",
+    "at",
+    "on",
+    "for"
+   ],
+   "answer": 2,
+   "explanation": "具体某一天的上午用 on。in 用于月份年份，at 用于钟点，for 表示时长。"
+  },
+  {
+   "id": "g7s-en-026",
+   "stem": "She ____ in Beijing now.",
+   "options": [
+    "lives",
+    "live",
+    "living",
+    "lived"
+   ],
+   "answer": 0,
+   "explanation": "主语 She 第三人称单数，一般现在时用 lives。live 配复数主语，living 是分词缺系动词，lived 是过去式。"
+  },
+  {
+   "id": "g7s-en-027",
+   "stem": "Do you have ____ ping-pong bat?",
+   "options": [
+    "/",
+    "an",
+    "the",
+    "a"
+   ],
+   "answer": 3,
+   "explanation": "ping-pong 以辅音音素开头，泛指一个用 a。an 用于元音音素前，the 表特指，零冠词不合。"
+  },
+  {
+   "id": "g7s-en-028",
+   "stem": "There ____ some milk in the glass.",
+   "options": [
+    "are",
+    "is",
+    "have",
+    "has"
+   ],
+   "answer": 1,
+   "explanation": "milk 是不可数名词，There be 句型用 is。are 配复数，have 与 has 不能用于 There be 句型表示存在。"
+  },
+  {
+   "id": "g7s-en-029",
+   "stem": "He can ____ English well.",
+   "options": [
+    "speaks",
+    "speaking",
+    "to speak",
+    "speak"
+   ],
+   "answer": 3,
+   "explanation": "情态动词 can 后接动词原形，用 speak。speaks 是第三人称单数，speaking 是分词，to speak 带 to 不合。"
+  },
+  {
+   "id": "g7s-en-030",
+   "stem": "「我的书包在哪里」的英语是（　）",
+   "options": [
+    "Where are my schoolbag?",
+    "Where is my schoolbag?",
+    "Where my schoolbag is?",
+    "Where do my schoolbag?"
+   ],
+   "answer": 1,
+   "explanation": "schoolbag 是单数，用 is 且疑问句需倒装。are 与单数主语不符，陈述语序不合，do 后不能直接接名词。"
+  },
+  {
+   "id": "g7s-en-031",
+   "stem": "—Thank you very much. —____",
+   "options": [
+    "I'm fine.",
+    "That's right.",
+    "You're welcome.",
+    "Never mind."
+   ],
+   "answer": 2,
+   "explanation": "回应感谢用 You're welcome。That's right 表示「说得对」，I'm fine 答身体状况，Never mind 用于回应道歉。"
+  },
+  {
+   "id": "g7s-en-032",
+   "stem": "「这个用英语怎么说」的英语是（　）",
+   "options": [
+    "What's this in English?",
+    "How do you spell it?",
+    "What's your name?",
+    "How are you?"
+   ],
+   "answer": 0,
+   "explanation": "询问某物的英语说法用 What's this in English。spell 问拼写，name 问姓名，How are you 问近况。"
+  },
+  {
+   "id": "g7s-en-033",
+   "stem": "I'm in Class One, ____ One.",
+   "options": [
+    "Grade",
+    "grade",
+    "grades",
+    "Grades"
+   ],
+   "answer": 0,
+   "explanation": "班级与年级名称作专有名词时首字母大写，故 Grade。grade 未大写，grades 与 Grades 复数都不合用法。"
+  },
+  {
+   "id": "g7s-en-034",
+   "stem": "Those are my ____.",
+   "options": [
+    "brother",
+    "brotheries",
+    "brother's",
+    "brothers"
+   ],
+   "answer": 3,
+   "explanation": "Those are 后接复数名词，用 brothers。brother 是单数，brother's 是所有格，brotheries 拼写错误。"
+  },
+  {
+   "id": "g7s-en-035",
+   "stem": "My sister ____ long hair.",
+   "options": [
+    "have",
+    "having",
+    "has",
+    "is"
+   ],
+   "answer": 2,
+   "explanation": "主语 My sister 是第三人称单数，一般现在时用 has。have 配复数主语，having 是分词，is 不能表示「拥有」。"
+  },
+  {
+   "id": "g7s-en-036",
+   "stem": "—What ____ does he like? —He likes blue.",
+   "options": [
+    "colours",
+    "colour",
+    "a colour",
+    "the colour"
+   ],
+   "answer": 1,
+   "explanation": "What colour 是固定搭配，问颜色。其余三项多加了复数、冠词或限定词，不符合这一固定问法。"
+  },
+  {
+   "id": "g7s-en-037",
+   "stem": "tomato 的复数形式是（　）",
+   "options": [
+    "tomatos",
+    "tomatoes",
+    "tomatoies",
+    "tomato"
+   ],
+   "answer": 1,
+   "explanation": "以 o 结尾的部分名词加 -es，tomato 变 tomatoes。tomatos 与 tomatoies 拼写不合规则，tomato 是单数。"
+  },
+  {
+   "id": "g7s-en-038",
+   "stem": "I don't have ____ eraser.",
+   "options": [
+    "an",
+    "a",
+    "the",
+    "any"
+   ],
+   "answer": 0,
+   "explanation": "eraser 以元音音素开头，单数泛指用 an。a 用于辅音音素前，the 表特指，any 后一般接复数或不可数名词。"
+  },
+  {
+   "id": "g7s-en-039",
+   "stem": "—____ is your English teacher? —She is very kind.",
+   "options": [
+    "What",
+    "Who",
+    "Where",
+    "How"
+   ],
+   "answer": 3,
+   "explanation": "答语 She is very kind 描述的是性格特质，问句用 How 询问「怎么样」。What 问事物，Who 问身份，Where 问地点。"
+  },
+  {
+   "id": "g7s-en-040",
+   "stem": "下面哪一句与「她每天坐公交车上学」意思一致（　）",
+   "options": [
+    "She take a bus to school every day.",
+    "She taking a bus to school every day.",
+    "She takes a bus to school every day.",
+    "She is take a bus to school every day."
+   ],
+   "answer": 2,
+   "explanation": "主语 She 第三人称单数，一般现在时动词用 takes。take 与单数主语不符，taking 缺助动词，is take 搭配错误。"
+  }
+ ]
+}

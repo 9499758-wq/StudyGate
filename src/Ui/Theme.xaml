@@ -1,0 +1,206 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+
+  <!--
+    StudyGate 锁屏主题：全项目唯一色板、字体与字号层级来源。
+
+    色板：近黑底 #101114 / 卡片 #191B1F / 主文 #E8E6E1 / 次文 #7C8088 / 沙金强调 #C8A24A。
+    强调色只允许三处出现：选项选中描边（1px）、达标状态文字、（预留）进度条填充。
+    禁止：渐变、发光、投影、玻璃拟态、渐变文字、emoji、胶囊按钮、圆角 > 8px、彩色阴影。
+
+    字号层级：64（结果主状态）/ 28（题干）/ 19（选项与三科分布）/ 15（数字与序号）/ 13（小签）。
+    字体：中文 Microsoft YaHei UI → 思源黑体 → SimHei；数字、序号、进度用 Consolas → Courier New 等宽。
+    （docs/SPEC.md 第三节要求「深灰近黑底 + 极窄字距中文字体 + 单色强调」，故中文不用宋体/衬线栈。）
+  -->
+
+  <!-- ───────────── 色板 ───────────── -->
+  <SolidColorBrush x:Key="Brush.Background" Color="#101114" po:Freeze="True"/>
+  <SolidColorBrush x:Key="Brush.Card" Color="#191B1F" po:Freeze="True"/>
+  <SolidColorBrush x:Key="Brush.CardHover" Color="#1C1E24" po:Freeze="True"/>
+  <SolidColorBrush x:Key="Brush.CardSelected" Color="#1D2026" po:Freeze="True"/>
+  <!-- 别名：跨层契约与评审用的命名，与上面两个同色 -->
+  <SolidColorBrush x:Key="Brush.CardOn" Color="#202329" po:Freeze="True"/>
+  <SolidColorBrush x:Key="Brush.Border" Color="#26282E" po:Freeze="True"/>
+  <SolidColorBrush x:Key="Brush.Line" Color="#26292F" po:Freeze="True"/>
+  <SolidColorBrush x:Key="Brush.BorderStrong" Color="#34373E" po:Freeze="True"/>
+  <SolidColorBrush x:Key="Brush.Text" Color="#E8E6E1" po:Freeze="True"/>
+  <SolidColorBrush x:Key="Brush.Muted" Color="#7C8088" po:Freeze="True"/>
+  <SolidColorBrush x:Key="Brush.Accent" Color="#C8A24A" po:Freeze="True"/>
+
+  <!-- 历史作答记录：达标条目比未达标亮一档，两档都不进主文色，避免抢题干视线 -->
+  <SolidColorBrush x:Key="Brush.HistoryPassed" Color="#9BA0A8" po:Freeze="True"/>
+  <SolidColorBrush x:Key="Brush.HistoryMiss" Color="#5E636B" po:Freeze="True"/>
+
+  <!-- ───────────── 字体 ───────────── -->
+  <FontFamily x:Key="Font.Text">Microsoft YaHei UI, 思源黑体, SimHei</FontFamily>
+  <FontFamily x:Key="Font.Mono">Consolas, Courier New</FontFamily>
+
+  <!-- ───────────── 文本样式 ───────────── -->
+
+  <!-- 13px 次文小签：顶部年级签、错题区标题、版本行 -->
+  <Style x:Key="Style.SmallLabel" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource Font.Text}"/>
+    <Setter Property="FontSize" Value="13"/>
+    <Setter Property="Foreground" Value="{StaticResource Brush.Muted}"/>
+  </Style>
+
+  <!-- 28px 题干：行高 1.6（28 × 1.6 = 44.8），左对齐，行长由外层 MaxWidth 限制 -->
+  <Style x:Key="Style.Stem" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource Font.Text}"/>
+    <Setter Property="FontSize" Value="28"/>
+    <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+    <Setter Property="TextWrapping" Value="Wrap"/>
+    <Setter Property="TextAlignment" Value="Left"/>
+    <Setter Property="LineHeight" Value="44.8"/>
+    <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+  </Style>
+
+  <!-- 15px 等宽数字：底部 07 / 30、已答 07 -->
+  <Style x:Key="Style.Mono" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource Font.Mono}"/>
+    <Setter Property="FontSize" Value="15"/>
+    <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+  </Style>
+
+  <!-- 19px 次级正文：结果页三科分布 -->
+  <Style x:Key="Style.Detail" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource Font.Text}"/>
+    <Setter Property="FontSize" Value="19"/>
+    <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+    <Setter Property="TextWrapping" Value="Wrap"/>
+    <Setter Property="LineHeight" Value="32"/>
+    <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+  </Style>
+
+  <!-- 15px 等宽错题号列表 -->
+  <Style x:Key="Style.WrongNumbers" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource Font.Mono}"/>
+    <Setter Property="FontSize" Value="15"/>
+    <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+    <Setter Property="TextWrapping" Value="Wrap"/>
+    <Setter Property="LineHeight" Value="26"/>
+    <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+  </Style>
+
+  <!-- 64px 结果主状态；颜色由 code-behind 按达标/未达标切换（达标沙金、未达标主文色） -->
+  <Style x:Key="Style.ResultStatus" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource Font.Text}"/>
+    <Setter Property="FontSize" Value="64"/>
+    <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+    <Setter Property="TextWrapping" Value="Wrap"/>
+    <Setter Property="TextAlignment" Value="Left"/>
+  </Style>
+
+  <!-- 选项序号 A/B/C/D：等宽 15px 次文色，不随选中态变色（选中只靠描边与底色） -->
+  <Style x:Key="Style.OptionLetter" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource Font.Mono}"/>
+    <Setter Property="FontSize" Value="15"/>
+    <Setter Property="Foreground" Value="{StaticResource Brush.Muted}"/>
+  </Style>
+
+  <!-- 选项正文：19px，行高 30 -->
+  <Style x:Key="Style.OptionText" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource Font.Text}"/>
+    <Setter Property="FontSize" Value="19"/>
+    <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+    <Setter Property="TextWrapping" Value="Wrap"/>
+    <Setter Property="LineHeight" Value="30"/>
+    <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+  </Style>
+
+  <!-- ───────────── 选项卡片 ───────────── -->
+  <!--
+    未选：1px 常规描边 + 卡片底。
+    悬停：底色微亮（不动描边）。
+    选中：1px 沙金描边 + 底色微亮；不做填充色块、不加对勾。
+    等高由外层 Grid 的 4 个 "*" 行保证（不在模板里写 Height）。
+  -->
+  <Style x:Key="Style.OptionCard" TargetType="RadioButton">
+    <Setter Property="FontFamily" Value="{StaticResource Font.Text}"/>
+    <Setter Property="FontSize" Value="19"/>
+    <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+    <Setter Property="MinHeight" Value="64"/>
+    <Setter Property="Padding" Value="20,14"/>
+    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="Cursor" Value="Hand"/>
+    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="RadioButton">
+          <Border x:Name="CardBorder"
+                  Background="{StaticResource Brush.Card}"
+                  BorderBrush="{StaticResource Brush.Border}"
+                  BorderThickness="1"
+                  CornerRadius="6"
+                  Padding="{TemplateBinding Padding}"
+                  SnapsToDevicePixels="True">
+            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="CardBorder" Property="Background" Value="{StaticResource Brush.CardHover}"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+              <Setter TargetName="CardBorder" Property="Background" Value="{StaticResource Brush.CardSelected}"/>
+              <Setter TargetName="CardBorder" Property="BorderBrush" Value="{StaticResource Brush.Accent}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="CardBorder" Property="Opacity" Value="0.55"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- 别名：评审约定的命名，与 Style.OptionCard 同一套视觉 -->
+  <Style x:Key="Style.OptionButton" TargetType="RadioButton" BasedOn="{StaticResource Style.OptionCard}"/>
+
+  <!-- ───────────── 唯一动作按钮（结果页「重考」） ───────────── -->
+  <!-- 方角小圆角、1px 中性描边，不占强调色；重考不是「通过」，不该染沙金 -->
+  <Style x:Key="Style.PrimaryButton" TargetType="Button">
+    <Setter Property="FontFamily" Value="{StaticResource Font.Text}"/>
+    <Setter Property="FontSize" Value="15"/>
+    <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+    <Setter Property="Background" Value="{StaticResource Brush.Card}"/>
+    <Setter Property="BorderBrush" Value="{StaticResource Brush.Border}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="Padding" Value="32,13"/>
+    <Setter Property="MinWidth" Value="132"/>
+    <Setter Property="MinHeight" Value="46"/>
+    <Setter Property="HorizontalAlignment" Value="Left"/>
+    <Setter Property="Cursor" Value="Hand"/>
+    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="ButtonBorder"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="6"
+                  Padding="{TemplateBinding Padding}"
+                  SnapsToDevicePixels="True">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource Brush.CardHover}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource Brush.CardSelected}"/>
+              <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{StaticResource Brush.BorderStrong}"/>
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+              <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{StaticResource Brush.BorderStrong}"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>StudyGate</title>
+<style>
+:root{
+  --bg:#101114;
+  --card:#191B1F;
+  --card-on:#202329;
+  --text:#E8E6E1;
+  --muted:#7C8088;
+  --accent:#C8A24A;
+  --line:#26292F;
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","STSong",serif;
+  --sans:"PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* ── 骨架 ───────────────────────────────────────── */
+.gate{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
+  padding:0 clamp(24px,5vw,88px);
+}
+
+/* 顶部：年级签 + 进度细线 */
+header{
+  flex:0 0 auto;
+  padding-top:clamp(22px,4vh,44px);
+  display:flex;align-items:baseline;gap:16px;
+}
+.grade{
+  font-family:var(--serif);
+  font-size:13px;
+  letter-spacing:.06em;
+  color:var(--muted);
+  white-space:nowrap;
+}
+.bar{
+  flex:1;height:1px;background:var(--line);
+  position:relative;top:-3px;
+}
+.bar i{
+  position:absolute;left:0;top:0;height:1px;width:0;
+  background:var(--accent);
+  transition:width .28s cubic-bezier(.4,0,.2,1);
+}
+.jump{
+  appearance:none;background:none;border:0;
+  font-family:var(--serif);font-size:12px;letter-spacing:.05em;
+  color:var(--muted);cursor:pointer;padding:4px 0;
+  transition:color .16s;
+}
+.jump:hover{color:var(--text)}
+
+/* 中部：题干 + 选项 */
+main{
+  flex:1 1 auto;
+  display:flex;flex-direction:column;justify-content:center;
+  max-width:720px;width:100%;margin:0 auto;
+  padding:clamp(24px,4vh,52px) 0;
+  min-height:0;
+}
+.stem{
+  font-family:var(--serif);
+  font-size:clamp(20px,2.4vw,27px);
+  line-height:1.72;
+  letter-spacing:.015em;
+  color:var(--text);
+  margin-bottom:clamp(26px,4.4vh,42px);
+  max-width:660px;
+}
+.stem em{
+  font-style:normal;
+  color:var(--text);
+  border-bottom:1px solid var(--line);
+  padding-bottom:1px;
+}
+
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{
+  display:flex;align-items:flex-start;gap:16px;
+  background:var(--card);
+  border:1px solid transparent;
+  border-radius:6px;
+  padding:15px 18px;
+  cursor:pointer;
+  transition:background .16s ease,border-color .16s ease;
+  text-align:left;
+  font:inherit;color:inherit;width:100%;
+}
+.opt:hover{background:var(--card-on)}
+.opt .k{
+  flex:0 0 auto;
+  font-family:var(--serif);
+  font-size:13px;line-height:1.9;
+  color:var(--muted);
+  width:14px;
+  transition:color .16s;
+}
+.opt .t{
+  font-size:15.5px;line-height:1.68;
+  letter-spacing:.01em;
+  color:var(--text);
+}
+.opt[aria-checked="true"]{
+  background:var(--card-on);
+  border-color:#34383F;
+}
+.opt[aria-checked="true"] .k{color:var(--text)}
+.opt[aria-checked="true"] .k::before{
+  content:"";position:absolute;
+}
+
+/* 缩小屏：1366×768 也不溢出 */
+@media (max-height:800px){
+  main{padding:14px 0}
+  .stem{font-size:clamp(18px,2.1vw,22px);margin-bottom:22px;line-height:1.62}
+  .opt{padding:11px 15px}
+  .opt .t{font-size:14.5px;line-height:1.6}
+  .options{gap:7px}
+}
+
+/* 底部：进度计数 */
+footer{
+  flex:0 0 auto;
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding-bottom:clamp(20px,3.4vh,38px);
+  font-family:var(--serif);
+  font-size:13px;letter-spacing:.1em;
+  color:var(--muted);
+}
+footer .dot{color:#3A3E45;margin:0 .7em}
+
+.version{
+  position:fixed;right:clamp(24px,5vw,88px);
+  bottom:clamp(20px,3.4vh,38px);
+  font-size:11px;letter-spacing:.04em;
+  color:#3A3E45;
+  font-family:var(--serif);
+  user-select:none;
+}
+
+/* ── 结果页 ─────────────────────────────────────── */
+.result{display:flex;flex-direction:column;justify-content:center}
+.verdict{
+  font-family:var(--serif);
+  font-size:clamp(30px,4.4vw,44px);
+  line-height:1.3;letter-spacing:.02em;
+  color:var(--text);
+  margin-bottom:clamp(20px,3.4vh,34px);
+}
+.verdict.pass{color:var(--accent)}
+.subjects{
+  font-size:14px;letter-spacing:.04em;color:var(--muted);
+  line-height:2;margin-bottom:clamp(18px,3vh,28px);
+}
+.subjects span{color:var(--text);font-variant-numeric:tabular-nums}
+.wrong{
+  font-size:12px;letter-spacing:.05em;color:var(--muted);
+  line-height:2.1;margin-bottom:clamp(24px,4vh,36px);
+  max-width:560px;
+}
+.wrong b{font-weight:400;color:#5E636B;font-family:var(--serif);letter-spacing:.08em}
+.wrong .ids{color:#9BA0A8;font-family:var(--serif);letter-spacing:.06em}
+
+.actions{display:flex;gap:12px;align-items:center}
+.btn{
+  appearance:none;border:1px solid #34383F;background:var(--card);
+  color:var(--text);font:inherit;font-size:14px;
+  padding:11px 30px;border-radius:6px;cursor:pointer;
+  letter-spacing:.08em;
+  transition:background .16s,border-color .16s;
+}
+.btn:hover{background:var(--card-on);border-color:#454A52}
+.countdown{
+  font-family:var(--serif);font-size:12px;letter-spacing:.08em;
+  color:var(--muted);font-variant-numeric:tabular-nums;
+}
+
+/* ── 计时 ─────────────────────────────────────────── */
+.clock{
+  font-family:var(--serif);font-size:12px;letter-spacing:.1em;
+  color:var(--muted);font-variant-numeric:tabular-nums;
+  white-space:nowrap;min-width:46px;text-align:right;
+}
+.clock.run{color:#9BA0A8}
+.clock.final{color:var(--text)}
+.clock.over{color:var(--text);letter-spacing:.14em}
+
+/* ── 做题记录 ─────────────────────────────────────── */
+.history{
+  margin-top:clamp(20px,3.4vh,34px);
+  font-size:11.5px;letter-spacing:.05em;color:#5E636B;
+  line-height:2.1;font-family:var(--serif);
+}
+.history b{font-weight:400;color:#7C8088;letter-spacing:.1em}
+.history .rec{cursor:default}
+.history.open .rec{cursor:pointer}
+.history.open .rec:hover{color:#9BA0A8}
+.history .rows{display:none;margin-top:10px}
+.history.open .rows{display:block}
+.history .rows i{
+  display:block;font-style:normal;
+  color:#6E737B;font-variant-numeric:tabular-nums;
+}
+.history .rows i span{color:#9BA0A8}
+
+/* ── 解锁遮罩 ───────────────────────────────────── */
+.reveal{
+  position:fixed;inset:0;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .32s ease;
+}
+.reveal.on{opacity:1;pointer-events:auto}
+.reveal p{
+  font-family:var(--serif);font-size:14px;letter-spacing:.14em;color:var(--muted);
+}
+
+/* 键盘提示条（演示用，真实软件里根本不存在） */
+.note{
+  position:fixed;left:clamp(24px,5vw,88px);bottom:clamp(20px,3.4vh,38px);
+  font-size:10.5px;letter-spacing:.05em;color:#2E3238;
+  font-family:var(--sans);line-height:1.7;
+  max-width:340px;
+}
+</style>
+</head>
+<body>
+
+<div class="gate">
+  <header>
+    <span class="grade" id="gradeLabel">StudyGate · 六年级下</span>
+    <div class="bar"><i id="progress"></i></div>
+    <span class="clock" id="clock">00:00</span>
+    <select class="jump" id="termPick" aria-label="切换学期"></select>
+  </header>
+
+  <main id="stage"></main>
+
+  <footer id="footer">
+    <span id="count">01 / 30</span>
+    <span>已答 <span id="done">00</span></span>
+  </footer>
+
+  <span class="version">v1.0.7</span>
+</div>
+
+<div class="reveal" id="reveal"><p>系统已放行</p></div>
+
+<div class="note" id="hint"></div>
+
+<script>
+const DATA = __BANK__;
+const PASS_SCORE = 90;
+const TOTAL = 30;          // 一张卷的量：三科各 10 题，约 15 分钟
+const PER_SUBJECT = 10;
+const RECENT_PAPERS = 2;   // 重考时避开最近 2 卷做过的题
+const SUBJ = ['语文', '数学', '英语'];
+
+/* ── 确定性抽题：与 tools/core-reference.mjs 同构 ───────────────── */
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a = (a + 0x6D2B79F5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function shuffle(list, seed) {
+  const out = list.slice();
+  const rnd = mulberry32(seed);
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+/**
+ * 抽一卷。四个随机维度都在这里：
+ *   1. 年级随机  —— keys 可能是单学期，也可能是六上+六下的混合池
+ *   2. 题目随机  —— 每科内部洗牌后取前 10 题（三科各 10，合计 30）
+ *   3. 选项随机  —— 每题四个选项重排，answer 索引同步改写（背「第 5 题选 B」没有用）
+ *   4. 避开旧卷  —— recentlyIds 是最近两卷做过的题，优先剔除，只有该科剩题不够才放回来
+ *
+ * recentlyIds 这一条保证连着重考三次不会碰到同一道题。
+ */
+function pick(keys, seed, recentlyIds) {
+  const kk = Array.isArray(keys) ? keys : [keys];
+  const pools = [0, 1, 2].map(s =>
+    shuffle(DATA.rows.filter(q => kk.includes(q.key) && q.s === s), seed + s * 7919)
+  );
+
+  // recentlyIds 是「最近 N 卷的 id 数组的数组」，这里展平一层丢进 Set。
+  const recent = new Set((recentlyIds ?? []).flat());
+  if (recent.size) {
+    for (let s = 0; s < 3; s++) {
+      const fresh = pools[s].filter(q => !recent.has(q.id));
+      if (fresh.length >= PER_SUBJECT) {
+        pools[s] = fresh.concat(pools[s].filter(q => recent.has(q.id)));
+      }
+    }
+  }
+
+  const chosen = [];
+  for (let s = 0; s < 3; s++) {
+    const take = Math.min(PER_SUBJECT, pools[s].length);
+    if (pools[s].length < PER_SUBJECT) {
+      throw new Error('题量不足：' + SUBJ[s] + ' 只有 ' + pools[s].length + ' 题，需要 ' + PER_SUBJECT + ' 题');
+    }
+    chosen.push(...pools[s].slice(0, take));
+  }
+
+  // 三科混排，不让同一科连着出
+  return shuffle(chosen, seed + 104729)
+    .slice(0, TOTAL)
+    .map((it, i) => scrambleOptions(it, seed + i * 31337 + 7));
+}
+
+/** 选项重排。DATA.rows 是全局共享的，绝不能原地改，必须返回浅拷贝。 */
+function scrambleOptions(it, seed) {
+  const perm = shuffle([0, 1, 2, 3], seed);
+  return {
+    id: it.id,
+    key: it.key,
+    s: it.s,
+    q: it.q,
+    o: perm.map(j => it.o[j]),
+    a: perm.indexOf(it.a),
+    e: it.e,
+  };
+}
+
+function grade(keys, excludeIds) {
+  const seed = Math.floor(Math.random() * 2147483647);
+  const paper = pick(keys, seed, excludeIds);
+  return paper.length >= TOTAL ? paper : pick(keys, 0x5EED, excludeIds);
+}
+
+/* ── 状态 ───────────────────────────────────────── */
+let key = [], poolLabel = '', paper = [], cursor = 0, answers = [];
+let recentIds = [];        // 最近两卷做过的题 id，重考时避开
+let startedAt = 0, ticker = 0, elapsed = 0;
+const stage = document.getElementById('stage');
+const footer = document.getElementById('footer');
+const progress = document.getElementById('progress');
+const countEl = document.getElementById('count');
+const doneEl = document.getElementById('done');
+const clockEl = document.getElementById('clock');
+const gradeLabel = document.getElementById('gradeLabel');
+const revealEl = document.getElementById('reveal');
+
+const LIMIT_SEC = 15 * 60;   // 15 分钟，到点自动交卷
+
+const TERMS = DATA.terms;
+const TERM_NAMES = DATA.labels;
+
+/* ── 做题记录（落 localStorage，真实软件落 state.json + 签名） ─── */
+const HISTORY_KEY = 'studygate.history.v1';
+const HISTORY_MAX = 30;
+
+function loadHistory() {
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY);
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveRecord(rec) {
+  const arr = loadHistory();
+  arr.unshift(rec);
+  while (arr.length > HISTORY_MAX) arr.pop();
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(arr));
+  } catch (e) { /* 配额满就丢掉，不影响答题 */ }
+}
+
+/* ── 分池：六上+六下混成一卷，其余按学期 ─────────── */
+const POOLS = [];
+if (DATA.mix6.length > 1) {
+  POOLS.push({ keys: DATA.mix6, label: TERM_NAMES[DATA.mix6[0]].replace('上', '') + '（上下册混合）' });
+} else if (DATA.mix6.length === 1) {
+  POOLS.push({ keys: DATA.mix6, label: TERM_NAMES[DATA.mix6[0]] });
+}
+for (const t of TERMS) {
+  if (DATA.mix6.includes(t)) continue;
+  POOLS.push({ keys: [t], label: TERM_NAMES[t] ?? t });
+}
+
+/* ── 渲染 ───────────────────────────────────────── */
+function start(pool) {
+  if (pool.label !== poolLabel) { recentIds = []; }
+  poolLabel = pool.label;
+  key = pool.keys;
+
+  paper = grade(pool.keys, recentIds);
+  // 只保留最近 RECENT_PAPERS 卷的 id，再久的不再回避（否则题池会被啃空）
+  recentIds.push(paper.map(q => q.id));
+  while (recentIds.length > RECENT_PAPERS) recentIds.shift();
+
+  cursor = 0;
+  answers = new Array(paper.length).fill(-1);
+  gradeLabel.textContent = 'StudyGate · ' + pool.label;
+  footer.style.visibility = 'visible';
+  clockEl.className = 'clock run';
+  startClock();
+  render();
+}
+
+/* ── 计时：15 分钟到点自动交卷 ──────────────────── */
+function startClock() {
+  stopClock();
+  startedAt = Date.now();
+  elapsed = 0;
+  paintClock();
+  ticker = setInterval(() => {
+    elapsed = Math.floor((Date.now() - startedAt) / 1000);
+    paintClock();
+    if (elapsed >= LIMIT_SEC) { stopClock(); finish(); }
+  }, 1000);
+}
+
+function stopClock() {
+  if (ticker) { clearInterval(ticker); ticker = 0; }
+}
+
+function paintClock() {
+  const left = Math.max(0, LIMIT_SEC - elapsed);
+  const m = Math.floor(left / 60), s = left % 60;
+  clockEl.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  if (left <= 60) clockEl.className = 'clock over';
+}
+
+function render() {
+  if (cursor >= paper.length) return finish();
+  const q = paper[cursor];
+  const sel = answers[cursor];
+
+  stage.className = '';
+  stage.innerHTML = '';
+
+  const stem = document.createElement('div');
+  stem.className = 'stem';
+  stem.textContent = q.q;
+  stage.appendChild(stem);
+
+  const list = document.createElement('div');
+  list.className = 'options';
+  q.o.forEach((text, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.setAttribute('aria-checked', sel === i ? 'true' : 'false');
+    b.innerHTML = '<span class="k">' + 'ABCD'[i] + '</span><span class="t"></span>';
+    b.querySelector('.t').textContent = text;
+    b.onclick = () => choose(i);
+    list.appendChild(b);
+  });
+  stage.appendChild(list);
+
+  const answered = answers.filter(x => x >= 0).length;
+  countEl.textContent = String(cursor + 1).padStart(2, '0') + ' / ' + String(paper.length).padStart(2, '0');
+  doneEl.textContent = String(answered).padStart(2, '0');
+  progress.style.width = ((cursor + (sel >= 0 ? 1 : 0)) / paper.length * 100) + '%';
+}
+
+function choose(i) {
+  answers[cursor] = i;
+  document.querySelectorAll('.opt').forEach((b, j) =>
+    b.setAttribute('aria-checked', j === i ? 'true' : 'false'));
+  progress.style.width = ((cursor + 1) / paper.length * 100) + '%';
+
+  setTimeout(() => {
+    cursor++;
+    if (cursor >= paper.length) finish();
+    else render();
+  }, 190);
+}
+
+function finish() {
+  stopClock();
+  let correct = 0;
+  const bySubject = [{ c: 0, t: 0 }, { c: 0, t: 0 }, { c: 0, t: 0 }];
+  const wrongIds = [];
+
+  paper.forEach((q, i) => {
+    const ok = answers[i] >= 0 && answers[i] === q.a;
+    bySubject[q.s].t++;
+    if (ok) { correct++; bySubject[q.s].c++; }
+    else wrongIds.push(q.id);
+  });
+
+  const score = paper.length === 0 ? 0 : Math.floor(correct * 100 / paper.length);
+  const passed = score >= PASS_SCORE;
+  const used = Math.min(LIMIT_SEC, elapsed);
+
+  // 落记录（真实软件写 state.json + HMAC，这里落 localStorage）
+  saveRecord({
+    at: new Date().toISOString(),
+    term: poolLabel,
+    score,
+    passed,
+    correct,
+    total: paper.length,
+    seconds: used,
+    subjects: bySubject.map(b => b.c + '/' + b.t),
+  });
+
+  stage.className = 'result';
+  stage.innerHTML = '';
+  footer.style.visibility = 'hidden';
+  progress.style.width = '100%';
+  clockEl.className = 'clock final';
+  clockEl.textContent = fmtSec(used);
+
+  const v = document.createElement('div');
+  v.className = 'verdict' + (passed ? ' pass' : '');
+  v.textContent = passed ? '已达标 · ' + score + ' 分' : '未达标 · 仍需 90 分';
+  stage.appendChild(v);
+
+  const sj = document.createElement('div');
+  sj.className = 'subjects';
+  sj.innerHTML = bySubject.map((b, i) =>
+    SUBJ[i] + ' <span>' + b.c + ' / ' + b.t + '</span>').join(' &nbsp;·&nbsp; ') +
+    ' &nbsp;&nbsp;<span>用时 ' + fmtSec(used) + '</span>';
+  stage.appendChild(sj);
+
+  const wr = document.createElement('div');
+  wr.className = 'wrong';
+  if (wrongIds.length) {
+    wr.innerHTML = '<b>错题</b><br><span class="ids">' +
+      wrongIds.map(x => x).join('&nbsp; ') + '</span>';
+    stage.appendChild(wr);
+  }
+
+  const act = document.createElement('div');
+  act.className = 'actions';
+  if (!passed) {
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.textContent = '重考';
+    btn.onclick = () => start(POOLS[POOLS.findIndex(p => p.label === poolLabel)] ?? POOLS[0]);
+    act.appendChild(btn);
+  } else {
+    const cd = document.createElement('div');
+    cd.className = 'countdown';
+    let n = 3;
+    cd.textContent = n + ' 秒后进入桌面';
+    act.appendChild(cd);
+    const t = setInterval(() => {
+      n--;
+      if (n <= 0) { clearInterval(t); reveal(); }
+      else cd.textContent = n + ' 秒后进入桌面';
+    }, 1000);
+  }
+  stage.appendChild(act);
+
+  stage.appendChild(buildHistory());
+}
+
+function fmtSec(n) {
+  const m = Math.floor(n / 60), s = n % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+/* ── 做题记录展示：最近 3 次折叠，点开看全部 ────── */
+function buildHistory() {
+  const box = document.createElement('div');
+  box.className = 'history';
+  const arr = loadHistory();
+  if (!arr.length) return box;
+
+  const head = document.createElement('div');
+  head.className = 'rec';
+  const last = arr[0];
+  head.innerHTML = '<b>记录</b> ' + arr.length + ' 次 · 上次 ' +
+    '<span>' + last.score + ' 分</span> · ' +
+    (last.passed ? '达标' : '未达标') + ' · ' + fmtSec(last.seconds);
+  box.appendChild(head);
+
+  const rows = document.createElement('div');
+  rows.className = 'rows';
+  arr.slice(0, 12).forEach(r => {
+    const d = new Date(r.at);
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mi = String(d.getMinutes()).padStart(2, '0');
+    const line = document.createElement('i');
+    line.innerHTML = mm + '/' + dd + ' ' + hh + ':' + mi + ' &nbsp;' +
+      r.term + ' &nbsp;<span>' + r.score + ' 分</span> &nbsp;' +
+      r.subjects.join(' ') + ' &nbsp;' + fmtSec(r.seconds);
+    rows.appendChild(line);
+  });
+  box.appendChild(rows);
+
+  if (arr.length > 3) {
+    box.classList.add('open');
+    head.onclick = () => box.classList.toggle('open');
+  }
+  return box;
+}
+
+function reveal() {
+  revealEl.classList.add('on');
+  setTimeout(() => {
+    revealEl.classList.remove('on');
+    footer.style.visibility = 'visible';
+    start(POOLS[POOLS.findIndex(p => p.label === poolLabel)] ?? POOLS[0]);
+  }, 1400);
+}
+
+/* ── 隐蔽口令：Ctrl+A = \x01，口令 + 回车 ───────── */
+const PASSWORD = 'demo-2024';
+let armed = false, buf = '';
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' || (e.ctrlKey && e.key === 'Tab')) {
+    e.preventDefault();
+    return;
+  }
+  if (e.ctrlKey && (e.key === 'a' || e.key === 'A')) {
+    e.preventDefault();
+    armed = true; buf = '';
+    return;
+  }
+  if (armed) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (buf === PASSWORD) { armed = false; buf = ''; reveal(); }
+      else { armed = false; buf = ''; }
+      return;
+    }
+    if (e.key.length === 1) {
+      e.preventDefault();
+      buf += e.key;
+    }
+  }
+});
+
+/* ── 学期切换（演示专用，真实软件锁死） ─────────── */
+const sel = document.getElementById('termPick');
+POOLS.forEach((p, i) => {
+  const o = document.createElement('option');
+  o.value = String(i);
+  o.textContent = p.label;
+  sel.appendChild(o);
+});
+sel.onchange = () => start(POOLS[Number(sel.value)]);
+
+/* ── 启动 ───────────────────────────────────────── */
+sel.value = '0';
+document.getElementById('hint').textContent =
+  '演示版 · 点选项即选中并自动进入下一题；Ctrl+A 后输入口令再回车可直接放行。';
+start(POOLS[0]);
+</script>
+</body>
+</html>

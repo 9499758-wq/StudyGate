@@ -1,0 +1,487 @@
+{
+ "grade": 8,
+ "term": "上",
+ "subject": "english",
+ "items": [
+  {
+   "id": "g8s-en-001",
+   "stem": "—What are you going to be when you grow up? —I ____ a doctor.",
+   "options": [
+    "am going to be",
+    "be",
+    "being",
+    "was"
+   ],
+   "answer": 0,
+   "explanation": "be going to 表示打算，后接动词原形 be，问句也用这一结构。只写 be 缺助动词，being 是分词，was 是过去式。"
+  },
+  {
+   "id": "g8s-en-002",
+   "stem": "Look at the dark clouds. It ____ rain.",
+   "options": [
+    "goes to",
+    "is going to",
+    "is going",
+    "going to"
+   ],
+   "answer": 1,
+   "explanation": "有明显迹象预示将要发生，用 be going to。goes to 表去处，is going 缺 to do，going to 缺系动词。"
+  },
+  {
+   "id": "g8s-en-003",
+   "stem": "—Will you go to the party tomorrow? —No, I ____.",
+   "options": [
+    "didn't",
+    "don't",
+    "won't",
+    "aren't"
+   ],
+   "answer": 2,
+   "explanation": "以 Will 开头的问句用 will 或 won't 作答。don't 配一般现在时，didn't 是过去，aren't 不能回应 will。"
+  },
+  {
+   "id": "g8s-en-004",
+   "stem": "I think there ____ more robots in the future.",
+   "options": [
+    "is",
+    "will have",
+    "are have",
+    "will be"
+   ],
+   "answer": 3,
+   "explanation": "There will be 表示将来存在，不能用 There will have。are have 混用两种结构，is 与复数 robots 不符。"
+  },
+  {
+   "id": "g8s-en-005",
+   "stem": "If it ____ tomorrow, we'll stay at home.",
+   "options": [
+    "will rain",
+    "rains",
+    "rained",
+    "raining"
+   ],
+   "answer": 1,
+   "explanation": "主句用将来时，if 从句用一般现在时表将来。will rain 是主句才用的形式，rained 与 raining 都不合时态搭配。"
+  },
+  {
+   "id": "g8s-en-006",
+   "stem": "She will call you as soon as she ____ home.",
+   "options": [
+    "got",
+    "will get",
+    "gets",
+    "getting"
+   ],
+   "answer": 2,
+   "explanation": "as soon as 引导的时间状语从句用一般现在时表将来。will get 是主句形式，got 与 getting 时态或形式不配套。"
+  },
+  {
+   "id": "g8s-en-007",
+   "stem": "下面哪个词是比较级形式（　）",
+   "options": [
+    "tall",
+    "taller",
+    "tallest",
+    "talls"
+   ],
+   "answer": 1,
+   "explanation": "单音节形容词加 -er 构成比较级，taller 符合要求。tall 是原级，tallest 是最高级，talls 形式不存在。"
+  },
+  {
+   "id": "g8s-en-008",
+   "stem": "This book is ____ than that one.",
+   "options": [
+    "more interesting",
+    "interesting",
+    "most interesting",
+    "interested"
+   ],
+   "answer": 0,
+   "explanation": "多音节形容词比较级用 more 加原级，且 than 要求比较级。interesting 是原级，most 是最高级，interested 形容人的感受。"
+  },
+  {
+   "id": "g8s-en-009",
+   "stem": "She is the ____ student in our class.",
+   "options": [
+    "tall",
+    "taller",
+    "tallest",
+    "more tall"
+   ],
+   "answer": 2,
+   "explanation": "三者以上比较用最高级，且前面有 the。tall 是原级，taller 是两者比较，more tall 用法错误。"
+  },
+  {
+   "id": "g8s-en-010",
+   "stem": "good 的比较级和最高级分别是（　）",
+   "options": [
+    "gooder; goodest",
+    "best; better",
+    "more good; most good",
+    "better; best"
+   ],
+   "answer": 3,
+   "explanation": "good 是不规则变化，比较级 better、最高级 best。加 -er 或加 more 的规则变化不适用于它，顺序也颠倒了。"
+  },
+  {
+   "id": "g8s-en-011",
+   "stem": "My bike is ____ than yours.",
+   "options": [
+    "newer",
+    "new",
+    "newest",
+    "more new"
+   ],
+   "answer": 0,
+   "explanation": "than 提示用比较级，单音节词 new 变 newer。new 是原级，newest 是最高级，more new 用法错误。"
+  },
+  {
+   "id": "g8s-en-012",
+   "stem": "bad 的比较级是（　）",
+   "options": [
+    "badder",
+    "worse",
+    "worst",
+    "more bad"
+   ],
+   "answer": 1,
+   "explanation": "bad 是不规则变化，比较级 worse、最高级 worst。加 -er 与加 more 都不适用，worst 是最高级。"
+  },
+  {
+   "id": "g8s-en-013",
+   "stem": "「你最好早点睡觉」的英语是（　）",
+   "options": [
+    "You should went to bed earlier.",
+    "You should to go to bed earlier.",
+    "You should going to bed earlier.",
+    "You should go to bed earlier."
+   ],
+   "answer": 3,
+   "explanation": "should 是情态动词，后接动词原形。带 to、用分词或过去式都与 should 的用法不符。"
+  },
+  {
+   "id": "g8s-en-014",
+   "stem": "—I have a bad cold. —You ____ see a doctor.",
+   "options": [
+    "should",
+    "should to",
+    "are should",
+    "shoulding"
+   ],
+   "answer": 0,
+   "explanation": "should 后接动词原形，此处表示提建议。should to 多了 to，are should 混用系动词，shoulding 形式不存在。"
+  },
+  {
+   "id": "g8s-en-015",
+   "stem": "—Must I finish it now? —No, you ____.",
+   "options": [
+    "mustn't",
+    "needn't",
+    "can't",
+    "shouldn't"
+   ],
+   "answer": 1,
+   "explanation": "以 Must 提问时否定回答用 needn't，表示不必。mustn't 意为禁止，can't 表不能，shouldn't 表不该。"
+  },
+  {
+   "id": "g8s-en-016",
+   "stem": "You ____ play football on the road. It's dangerous.",
+   "options": [
+    "may",
+    "needn't",
+    "mustn't",
+    "can"
+   ],
+   "answer": 2,
+   "explanation": "路上踢球危险，表示禁止用 mustn't。needn't 表不必，may 与 can 表许可，都与危险语境相反。"
+  },
+  {
+   "id": "g8s-en-017",
+   "stem": "「为什么不和我们一起去」的英语是（　）",
+   "options": [
+    "Why not come with us?",
+    "Why don't come with us?",
+    "Why not to come with us?",
+    "Why no come with us?"
+   ],
+   "answer": 0,
+   "explanation": "Why not 后接动词原形，是提建议的固定句式。don't 后缺主语，加 to 或用 no 都不合该结构。"
+  },
+  {
+   "id": "g8s-en-018",
+   "stem": "How about ____ a walk after dinner?",
+   "options": [
+    "take",
+    "to take",
+    "taking",
+    "took"
+   ],
+   "answer": 2,
+   "explanation": "How about 后接动名词，用 taking。take 是原形，to take 是不定式，took 是过去式，都不搭配。"
+  },
+  {
+   "id": "g8s-en-019",
+   "stem": "—How often do you exercise? —____",
+   "options": [
+    "Two weeks.",
+    "Twice a week.",
+    "For two weeks.",
+    "In two weeks."
+   ],
+   "answer": 1,
+   "explanation": "How often 问频次，答 Twice a week。Two weeks 与 For two weeks 答时长，In two weeks 答将来时段。"
+  },
+  {
+   "id": "g8s-en-020",
+   "stem": "cut 的过去式是（　）",
+   "options": [
+    "cutted",
+    "cuts",
+    "cutting",
+    "cut"
+   ],
+   "answer": 3,
+   "explanation": "cut 的三种形式都是 cut，属 AAA 型不规则动词。cutted 是按规则误变，cutting 是现在分词，cuts 是第三人称单数。"
+  },
+  {
+   "id": "g8s-en-021",
+   "stem": "He ____ in Shanghai for ten years.",
+   "options": [
+    "lives",
+    "lived",
+    "living",
+    "live"
+   ],
+   "answer": 1,
+   "explanation": "for ten years 指已持续的时间段并与过去相关，此处用过去式 lived。lives 与 live 是现在时，living 缺助动词。"
+  },
+  {
+   "id": "g8s-en-022",
+   "stem": "—Where did you go last Sunday? —I ____ to the park.",
+   "options": [
+    "go",
+    "going",
+    "gone",
+    "went"
+   ],
+   "answer": 3,
+   "explanation": "last Sunday 是过去时间，未指明具体时段用一般过去时，答语用 went。gone 是过去分词，go 与 going 时态或形式错。"
+  },
+  {
+   "id": "g8s-en-023",
+   "stem": "It's important ____ English well.",
+   "options": [
+    "to learn",
+    "learn",
+    "learning",
+    "learned"
+   ],
+   "answer": 0,
+   "explanation": "It's + 形容词 + to do 是固定句型，用不定式 to learn。learn 是原形，learning 不作此句真正主语，learned 是过去式。"
+  },
+  {
+   "id": "g8s-en-024",
+   "stem": "He decided ____ a new bike.",
+   "options": [
+    "buy",
+    "buying",
+    "to buy",
+    "bought"
+   ],
+   "answer": 2,
+   "explanation": "decide 后接不定式 to do，故用 to buy。buy 是原形，buying 不作 decide 的宾语，bought 是过去式。"
+  },
+  {
+   "id": "g8s-en-025",
+   "stem": "—Could you please ____ the window? —Sure.",
+   "options": [
+    "opening",
+    "to open",
+    "open",
+    "opened"
+   ],
+   "answer": 2,
+   "explanation": "Aould you please 后接动词原形，表示委婉请求。加 to、用分词或过去式都不符合这一句式。"
+  },
+  {
+   "id": "g8s-en-026",
+   "stem": "「请你不要在这里吸烟好吗」的英语是（　）",
+   "options": [
+    "Would you mind not smoking here?",
+    "Would you mind not to smoke here?",
+    "Would you mind don't smoke here?",
+    "Would you mind no smoking here?"
+   ],
+   "answer": 0,
+   "explanation": "mind 后接动名词，否定把 not 放前面，故为 not smoking。to smoke、don't smoke、no smoking 都不合。"
+  },
+  {
+   "id": "g8s-en-027",
+   "stem": "I'm sorry ____ you waiting so long.",
+   "options": [
+    "keep",
+    "kept",
+    "keeping",
+    "to keep"
+   ],
+   "answer": 3,
+   "explanation": "be sorry to do 表示因做某事而抱歉，用 to keep。keep 是原形，keeping 不作此结构，kept 是过去式。"
+  },
+  {
+   "id": "g8s-en-028",
+   "stem": "He is ____ young ____ go to school.",
+   "options": [
+    "so; that",
+    "too; to",
+    "enough; to",
+    "very; to"
+   ],
+   "answer": 1,
+   "explanation": "too…to 表示太……而不能，此处即年龄太小不能上学。so…that 后接从句，enough 语序相反，very…to 不合结构。"
+  },
+  {
+   "id": "g8s-en-029",
+   "stem": "The box is ____ heavy for me ____ carry.",
+   "options": [
+    "very; to",
+    "to; too",
+    "so; to",
+    "too; to"
+   ],
+   "answer": 3,
+   "explanation": "too 加形容词加 to do 表示太……以致不能。其余三项的搭配顺序或连词都不合这一固定结构。"
+  },
+  {
+   "id": "g8s-en-030",
+   "stem": "「他昨天花了两个小时做作业」的英语是（　）",
+   "options": [
+    "He took two hours do his homework yesterday.",
+    "It took him two hours to do his homework yesterday.",
+    "It spent him two hours doing his homework yesterday.",
+    "He cost two hours to do his homework yesterday."
+   ],
+   "answer": 1,
+   "explanation": "It takes sb. some time to do sth. 是固定句型，只有第一句结构完整。其余三句动词或宾语搭配都错。"
+  },
+  {
+   "id": "g8s-en-031",
+   "stem": "—What's the matter with you? —____",
+   "options": [
+    "That's all right.",
+    "I'm fine, thanks.",
+    "I have a cold.",
+    "Never mind."
+   ],
+   "answer": 2,
+   "explanation": "What's the matter 问身体不适，答 I have a cold 最贴合。另三句分别回应问候、歉意与道歉，都不对症。"
+  },
+  {
+   "id": "g8s-en-032",
+   "stem": "You should ____ some medicine and drink more water.",
+   "options": [
+    "take",
+    "takes",
+    "taking",
+    "took"
+   ],
+   "answer": 0,
+   "explanation": "should 后接动词原形 take。takes 是第三人称单数，taking 是分词，took 是过去式，都不合情态动词用法。"
+  },
+  {
+   "id": "g8s-en-033",
+   "stem": "We ____ go to the museum if it ____ fine tomorrow.",
+   "options": [
+    "will; is",
+    "will; will be",
+    "are; is",
+    "is; will be"
+   ],
+   "answer": 0,
+   "explanation": "主句用一般将来时 will go，if 从句用一般现在时 is。其余各项时态错配，主从句不能都用将来时。"
+  },
+  {
+   "id": "g8s-en-034",
+   "stem": "She ____ go to bed until her mother came back.",
+   "options": [
+    "isn't",
+    "doesn't",
+    "won't",
+    "didn't"
+   ],
+   "answer": 3,
+   "explanation": "not…until 表示直到……才，从句用过去式，主句也用过去时 didn't。现在时与将来时与 came 的时态不匹配。"
+  },
+  {
+   "id": "g8s-en-035",
+   "stem": "下面哪个词与 friendly 构成同义表达（　）",
+   "options": [
+    "lazy",
+    "angry",
+    "kind",
+    "strict"
+   ],
+   "answer": 2,
+   "explanation": "friendly 表友好，与 kind 意思相近。angry 是生气，lazy 是懒惰，strict 是严格，感情色彩都不对应。"
+  },
+  {
+   "id": "g8s-en-036",
+   "stem": "He is one of the ____ students in our school.",
+   "options": [
+    "better",
+    "best",
+    "good",
+    "well"
+   ],
+   "answer": 1,
+   "explanation": "one of the 加形容词最高级加复数名词，故用 best。better 用于两者比较，good 是原级，well 是副词。"
+  },
+  {
+   "id": "g8s-en-037",
+   "stem": "—Who is ____, Tom or Jack? —Tom is.",
+   "options": [
+    "tallest",
+    "taller",
+    "tall",
+    "the tallest"
+   ],
+   "answer": 1,
+   "explanation": "两者比较用比较级 taller，不加 the。tallest 与 the tallest 用于三者以上比较，tall 是原级。"
+  },
+  {
+   "id": "g8s-en-038",
+   "stem": "The more you read, ____ you will be.",
+   "options": [
+    "the cleverer",
+    "the clever",
+    "cleverer",
+    "more clever"
+   ],
+   "answer": 0,
+   "explanation": "the 加比较级、the 加比较级的对照结构，故为 the cleverer。缺 the 或误用原级都不合该句式。"
+  },
+  {
+   "id": "g8s-en-039",
+   "stem": "「我们应该学着照顾自己」的英语是（　）",
+   "options": [
+    "We should learning to look after ourselves.",
+    "We should learn to look after us.",
+    "We should to learn look after ourselves.",
+    "We should learn to look after ourselves."
+   ],
+   "answer": 3,
+   "explanation": "should 后接原形 learn，learn 后接不定式，反身代词用 ourselves。加 to、用分词或误用宾格 us 都不合。"
+  },
+  {
+   "id": "g8s-en-040",
+   "stem": "If you don't know the word, you can ____ in a dictionary.",
+   "options": [
+    "look it after",
+    "look up it",
+    "look it up",
+    "look after it"
+   ],
+   "answer": 2,
+   "explanation": "代词作宾语须放在 look 与 up 之间，故为 look it up。look up it 语序错，look after 意为照顾，语义不合。"
+  }
+ ]
+}

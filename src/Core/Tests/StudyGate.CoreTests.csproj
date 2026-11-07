@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyName>StudyGate.CoreTests</AssemblyName>
+    <RootNamespace>StudyGate.CoreTests</RootNamespace>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- 只编译本目录下的断言套件，显式封住上层 src/Core/*.cs 被隐式 glob 重复扫入。 -->
+  <ItemGroup>
+    <Compile Remove="../*.cs" />
+    <Compile Remove="../Tests/**/*.cs" />
+    <None Remove="../*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../StudyGate.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,172 @@
+<UserControl x:Class="StudyGate.Ui.QuizView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{DynamicResource Brush.Background}">
+
+  <!--
+    答题主体。自上而下：顶部小签 / 题干（可滚动兜底）/ 四个等高整宽选项卡片 / 底部进度。
+
+    尺寸策略（1280×720 / 1366×768 / 1920×1080 三档都不溢出）：
+    - 外层 Grid 撑满并留 64/36/64/24 边距，底部进度因此能贴住屏幕右侧。
+    - 内容（题干、选项）再用 Left + MaxWidth=980 限制行长：28px 中文约 30 字一行，再宽就成了横排小字。
+    - 选项区在 1.5* 行里用 4 个 "*" 行严格等高；卡片只设 MinHeight，不写死 Height。
+    - 选项 Grid 加 ClipToBounds，极端长文案也绝不溢出到进度行。
+
+    本控件自己合并 Theme.xaml：UserControl 是独立 BAML，加载时机不保证能沿父链找到
+    Window.Resources，StaticResource 会解析失败。本地合并一份最稳（字典无状态，重复无害）。
+  -->
+
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/StudyGate.Ui;component/Theme.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
+
+  <Grid Margin="64,36,64,24">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*" MinHeight="110"/>
+      <RowDefinition Height="1.5*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <!-- 13px 次文小签 -->
+    <TextBlock x:Name="GradeLabel"
+               Grid.Row="0"
+               Text="StudyGate · 六年级下"
+               Style="{StaticResource Style.SmallLabel}"/>
+
+    <!-- 题干：28px、行高 1.6、左对齐；过长时垂直滚动，绝不挤压选项区 -->
+    <ScrollViewer Grid.Row="1"
+                  Margin="0,24,0,16"
+                  HorizontalAlignment="Stretch"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
+                  Focusable="False">
+      <Border MaxWidth="980" HorizontalAlignment="Left">
+        <TextBlock x:Name="StemText" Style="{StaticResource Style.Stem}"/>
+      </Border>
+    </ScrollViewer>
+
+    <!-- 四个选项：等高（4 个 * 行）、整宽、靠左并限宽 -->
+    <Grid Grid.Row="2"
+          MaxWidth="980"
+          HorizontalAlignment="Left"
+          ClipToBounds="True">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <RadioButton x:Name="OptionA"
+                   Grid.Row="0"
+                   Style="{StaticResource Style.OptionCard}"
+                   GroupName="QuizOption"
+                   Tag="0"
+                   Margin="0,5"
+                   Click="OnOptionClick">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="34"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0"
+                     Text="A"
+                     Style="{StaticResource Style.OptionLetter}"
+                     VerticalAlignment="Center"/>
+          <TextBlock x:Name="OptionAText"
+                     Grid.Column="1"
+                     Style="{StaticResource Style.OptionText}"
+                     VerticalAlignment="Center"/>
+        </Grid>
+      </RadioButton>
+
+      <RadioButton x:Name="OptionB"
+                   Grid.Row="1"
+                   Style="{StaticResource Style.OptionCard}"
+                   GroupName="QuizOption"
+                   Tag="1"
+                   Margin="0,5"
+                   Click="OnOptionClick">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="34"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0"
+                     Text="B"
+                     Style="{StaticResource Style.OptionLetter}"
+                     VerticalAlignment="Center"/>
+          <TextBlock x:Name="OptionBText"
+                     Grid.Column="1"
+                     Style="{StaticResource Style.OptionText}"
+                     VerticalAlignment="Center"/>
+        </Grid>
+      </RadioButton>
+
+      <RadioButton x:Name="OptionC"
+                   Grid.Row="2"
+                   Style="{StaticResource Style.OptionCard}"
+                   GroupName="QuizOption"
+                   Tag="2"
+                   Margin="0,5"
+                   Click="OnOptionClick">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="34"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0"
+                     Text="C"
+                     Style="{StaticResource Style.OptionLetter}"
+                     VerticalAlignment="Center"/>
+          <TextBlock x:Name="OptionCText"
+                     Grid.Column="1"
+                     Style="{StaticResource Style.OptionText}"
+                     VerticalAlignment="Center"/>
+        </Grid>
+      </RadioButton>
+
+      <RadioButton x:Name="OptionD"
+                   Grid.Row="3"
+                   Style="{StaticResource Style.OptionCard}"
+                   GroupName="QuizOption"
+                   Tag="3"
+                   Margin="0,5"
+                   Click="OnOptionClick">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="34"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0"
+                     Text="D"
+                     Style="{StaticResource Style.OptionLetter}"
+                     VerticalAlignment="Center"/>
+          <TextBlock x:Name="OptionDText"
+                     Grid.Column="1"
+                     Style="{StaticResource Style.OptionText}"
+                     VerticalAlignment="Center"/>
+        </Grid>
+      </RadioButton>
+    </Grid>
+
+    <!-- 底部：只给题号进度与已答题数，永远不给分数、正确率、剩余时间 -->
+    <Grid Grid.Row="3" Margin="0,20,0,0">
+      <TextBlock x:Name="IndexLabel"
+                 Text="01 / 20"
+                 Style="{StaticResource Style.Mono}"
+                 Foreground="{StaticResource Brush.Muted}"
+                 HorizontalAlignment="Left"/>
+      <TextBlock x:Name="AnsweredLabel"
+                 Text="已答 01"
+                 Style="{StaticResource Style.Mono}"
+                 Foreground="{StaticResource Brush.Muted}"
+                 HorizontalAlignment="Right"/>
+    </Grid>
+  </Grid>
+</UserControl>

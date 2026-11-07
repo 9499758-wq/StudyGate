@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    StudyGate 接管层（Windows only）。
+
+    平台说明：
+    - 只设 PlatformTarget=x64，**不设 <Platforms>**。这样 solution 里现有的
+      "Debug|Any CPU" / "Release|Any CPU" 项目配置仍然有效（不会出现
+      "The project configuration is not valid"），而实际产出仍是 x64 可执行文件。
+    - 全局低级钩子读的 KBDLLHOOKSTRUCT / MSLLHOOKSTRUCT 与 ULONG_PTR 相关，
+      32 位进程布局会错位，因此 x64 是硬性要求，不能改成 AnyCPU 产物。
+  -->
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>12</LangVersion>
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyName>StudyGate</AssemblyName>
+    <RootNamespace>StudyGate.App</RootNamespace>
+    <StartupObject>StudyGate.App.Program</StartupObject>
+    <!-- 本工程没有 App.xaml；显式关闭 ApplicationDefinition 生成，避免未来误加时双 Main。 -->
+    <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\StudyGate.Core.csproj" />
+    <ProjectReference Include="..\Ui\StudyGate.Ui.csproj" />
+  </ItemGroup>
+
+</Project>

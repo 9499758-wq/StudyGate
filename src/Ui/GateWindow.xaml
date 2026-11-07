@@ -1,0 +1,60 @@
+<Window x:Class="StudyGate.Ui.GateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:StudyGate.Ui"
+        Title="StudyGate"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowState="Maximized"
+        WindowStartupLocation="Manual"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ShowActivated="True"
+        Background="{DynamicResource Brush.Background}"
+        FontFamily="{DynamicResource Font.Text}"
+        Foreground="{DynamicResource Brush.Text}"
+        TextOptions.TextFormattingMode="Display"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        PreviewKeyDown="OnPreviewKeyDown"
+        Closing="OnClosing">
+
+  <!--
+    根元素（Window 自身）的属性用 DynamicResource：根开始标签的属性在 Window.Resources 解析之前求值，
+    此处写 StaticResource 会去 Application.Resources 找并失败（本程序无 App.xaml）。
+    树内子元素一律用 StaticResource，解析时父级字典已就绪。
+  -->
+
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/StudyGate.Ui;component/Theme.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
+
+  <Grid Background="{StaticResource Brush.Background}">
+    <Grid.RowDefinitions>
+      <!-- 内容区：答题视图 / 结果视图 原位互换 -->
+      <RowDefinition Height="*"/>
+      <!-- 版本行：贴右下角，高度自适应 -->
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <local:QuizView x:Name="Quiz" Grid.Row="0"/>
+    <local:ResultView x:Name="Result" Grid.Row="0" Visibility="Collapsed"/>
+
+    <!--
+      隐蔽通道的视觉诱饵：仅一行版本号，无按钮、无提示、无 tooltip、无 hover 反应。
+      IsHitTestVisible=False 让点击穿透，UI 层完全不由此读口令（口令在 App 层 InputLock）。
+    -->
+    <TextBlock x:Name="VersionText"
+               Grid.Row="1"
+               Text="v1.0.7"
+               Style="{StaticResource Style.SmallLabel}"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom"
+               Margin="0,0,24,12"
+               IsHitTestVisible="False"/>
+  </Grid>
+</Window>

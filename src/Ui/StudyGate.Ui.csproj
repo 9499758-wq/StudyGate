@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <OutputType>Library</OutputType>
+    <AssemblyName>StudyGate.Ui</AssemblyName>
+    <RootNamespace>StudyGate.Ui</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!--
+      关闭默认项 glob，显式列出 XAML 项：本层 XAML 数量固定，显式声明避免多 XAML 项目的重复项歧义。
+      注意 Theme.xaml 必须作为 Page 项（BAML 编译），不能当 Resource 松散嵌入，
+      否则 ResourceDictionary 的 Source 加载路径会退化到 XamlReader 解析。
+    -->
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
+
+    <!--
+      CS8618：WPF 为 x:Name 生成的 *.g.i.cs 字段无初始化，与手写构造函数不在同一文件，
+      可空分析必然报警；该告警只来自生成代码，手写代码仍完整启用可空分析。
+      CS8622：XAML 事件绑定由生成的代码做方法组转换，WPF 自身委托标注可空性不稳定。
+      仅抑制这两条，其余告警一律按错误处理。
+    -->
+    <NoWarn>$(NoWarn);CS8618;CS8622</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="IGateViewHost.cs" />
+    <Compile Include="GateWindow.xaml.cs" />
+    <Compile Include="QuizView.xaml.cs" />
+    <Compile Include="ResultView.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="GateWindow.xaml" />
+    <Page Include="QuizView.xaml" />
+    <Page Include="ResultView.xaml" />
+    <Page Include="Theme.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\StudyGate.Core.csproj" />
+  </ItemGroup>
+
+  <!-- 零第三方 UI 包：不引用 MaterialDesign / MahApps / HandyControl / 任何 NuGet UI 框架 -->
+
+</Project>

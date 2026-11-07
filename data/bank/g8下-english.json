@@ -1,0 +1,487 @@
+{
+ "grade": 8,
+ "term": "下",
+ "subject": "english",
+ "items": [
+  {
+   "id": "g8x-en-001",
+   "stem": "—Have you ever ____ to Beijing? —Yes, twice.",
+   "options": [
+    "been",
+    "be",
+    "being",
+    "was"
+   ],
+   "answer": 0,
+   "explanation": "现在完成时 have 后接过去分词，have been to 表示去过某地。be 是原形，being 是现在分词，was 不能与 have 连用。"
+  },
+  {
+   "id": "g8x-en-002",
+   "stem": "I ____ this book for two weeks.",
+   "options": [
+    "have borrowed",
+    "have kept",
+    "keep",
+    "kept"
+   ],
+   "answer": 1,
+   "explanation": "for 加时间段要求延续性动词，keep 才能表示持续借阅。borrow 是短暂动词，keep 与 kept 时态不对。"
+  },
+  {
+   "id": "g8x-en-003",
+   "stem": "He ____ here since 2019.",
+   "options": [
+    "lives",
+    "lived",
+    "has lived",
+    "is living"
+   ],
+   "answer": 2,
+   "explanation": "since 加过去时间点用现在完成时 has lived。lives 是一般现在时，lived 是过去时，is living 是现在进行时。"
+  },
+  {
+   "id": "g8x-en-004",
+   "stem": "—How long have you studied English? —____ three years.",
+   "options": [
+    "Since",
+    "From",
+    "In",
+    "For"
+   ],
+   "answer": 3,
+   "explanation": "答语为时间段，用 For 加时长。Since 后接时间点，In 与 From 不表示持续时间。"
+  },
+  {
+   "id": "g8x-en-005",
+   "stem": "She hasn't finished her homework ____.",
+   "options": [
+    "already",
+    "yet",
+    "ever",
+    "just"
+   ],
+   "answer": 1,
+   "explanation": "否定句句末用 yet，意为还没有。already 用于肯定句，ever 用于疑问，just 表示刚刚。"
+  },
+  {
+   "id": "g8x-en-006",
+   "stem": "They ____ already ____ the film.",
+   "options": [
+    "have; saw",
+    "has; seen",
+    "have; seen",
+    "did; see"
+   ],
+   "answer": 2,
+   "explanation": "主语 They 用 have，already 提示现在完成时，动词用过去分词 seen。has 配单数，saw 与 did 都不是完成时形式。"
+  },
+  {
+   "id": "g8x-en-007",
+   "stem": "I have ____ finished my work, so I can help you.",
+   "options": [
+    "yet",
+    "never",
+    "ever",
+    "already"
+   ],
+   "answer": 3,
+   "explanation": "肯定句表示已经完成，用 already。yet 用于否定或疑问，ever 与 never 表示曾经或从不。"
+  },
+  {
+   "id": "g8x-en-008",
+   "stem": "—Where is Tom? —He ____ to the library.",
+   "options": [
+    "has gone",
+    "has been",
+    "went",
+    "goes"
+   ],
+   "answer": 0,
+   "explanation": "人不在现场，说明去了某地未回，用 has gone to。has been to 表示去过已回，另两项时态不符。"
+  },
+  {
+   "id": "g8x-en-009",
+   "stem": "—Have you finished reading the book? —Yes, I ____ it last night.",
+   "options": [
+    "have finished",
+    "finish",
+    "finished",
+    "will finish"
+   ],
+   "answer": 2,
+   "explanation": "last night 是明确的过去时间，须用一般过去时 finished，不能用现在完成时。其余三项时态与时间状语冲突。"
+  },
+  {
+   "id": "g8x-en-010",
+   "stem": "She ____ in this school since she came here.",
+   "options": [
+    "teaches",
+    "taught",
+    "is teaching",
+    "has taught"
+   ],
+   "answer": 3,
+   "explanation": "since 引导的从句用过去时，主句用现在完成时 has taught。另三项时态与 since 结构不配套。"
+  },
+  {
+   "id": "g8x-en-011",
+   "stem": "Over the past ten years, our city ____ a lot.",
+   "options": [
+    "has changed",
+    "changed",
+    "changes",
+    "is changing"
+   ],
+   "answer": 0,
+   "explanation": "over the past ten years 表示从过去到现在的持续时段，用现在完成时。其余时态都不能涵盖这一跨度。"
+  },
+  {
+   "id": "g8x-en-012",
+   "stem": "—How many times ____ you been to Kunming? —Three times.",
+   "options": [
+    "do",
+    "have",
+    "did",
+    "are"
+   ],
+   "answer": 1,
+   "explanation": "现在完成时的疑问句由 have 提前构成，been 已是过去分词。do、did、are 都不能与 been 搭配。"
+  },
+  {
+   "id": "g8x-en-013",
+   "stem": "The film ____ for ten minutes.",
+   "options": [
+    "has begun",
+    "is beginning",
+    "began",
+    "has been on"
+   ],
+   "answer": 3,
+   "explanation": "for 加时间段要与延续性状态搭配，be on 表示上映持续。begun 与 began 是短暂动词，不能接时间段。"
+  },
+  {
+   "id": "g8x-en-014",
+   "stem": "It is three years ____ we last met.",
+   "options": [
+    "since",
+    "for",
+    "after",
+    "when"
+   ],
+   "answer": 0,
+   "explanation": "It is 加时间段加 since 加过去时从句，是固定句型。for、after、when 都不构成这一结构。"
+  },
+  {
+   "id": "g8x-en-015",
+   "stem": "「这本书我已经买了两周了」的英语是（　）",
+   "options": [
+    "I have bought the book for two weeks.",
+    "I have had the book for two weeks.",
+    "I bought the book for two weeks.",
+    "I have buy the book two weeks."
+   ],
+   "answer": 1,
+   "explanation": "buy 是短暂动词，不能接时间段，须用状态动词 have 的完成式 had。其余三句动词或时态都不合要求。"
+  },
+  {
+   "id": "g8x-en-016",
+   "stem": "He's never been to Shanghai, ____ he?",
+   "options": [
+    "is",
+    "isn't",
+    "has",
+    "hasn't"
+   ],
+   "answer": 2,
+   "explanation": "反义疑问句的助动词与前面保持一致，He's 在此为 He has，故用 has。陈述部分含 never 已是否定，后面用肯定形式。"
+  },
+  {
+   "id": "g8x-en-017",
+   "stem": "She likes music, ____ she?",
+   "options": [
+    "doesn't",
+    "does",
+    "isn't",
+    "is"
+   ],
+   "answer": 0,
+   "explanation": "陈述部分用实义动词 likes，反义部分用 doesn't。陈述为肯定则附加部分用否定，is 与 is n't 与实义动词不配。"
+  },
+  {
+   "id": "g8x-en-018",
+   "stem": "They went to the park yesterday, ____ they?",
+   "options": [
+    "weren't",
+    "don't",
+    "didn't",
+    "aren't"
+   ],
+   "answer": 2,
+   "explanation": "陈述部分为过去时的实义动词 went，反义部分用 didn't。其余三项时态或助动词都不对应。"
+  },
+  {
+   "id": "g8x-en-019",
+   "stem": "Let's go out for a walk, ____ we?",
+   "options": [
+    "will",
+    "shall",
+    "do",
+    "don't"
+   ],
+   "answer": 1,
+   "explanation": "Let's 开头的祈使句反义部分固定用 shall we。will、do、don't 都不符合这一固定搭配。"
+  },
+  {
+   "id": "g8x-en-020",
+   "stem": "Open the window, ____ you?",
+   "options": [
+    "are",
+    "shall",
+    "do",
+    "will"
+   ],
+   "answer": 3,
+   "explanation": "以动词原形开头的祈使句反义部分用 will you。shall 用于 Let's 结构，do 与 are 不合该句式。"
+  },
+  {
+   "id": "g8x-en-021",
+   "stem": "There is little water in the bottle, ____ there?",
+   "options": [
+    "isn't",
+    "is",
+    "does",
+    "doesn't"
+   ],
+   "answer": 1,
+   "explanation": "little 含否定意义，陈述部分视为否定，反义部分用肯定 is。反之用 isn't 会造成双重否定。"
+  },
+  {
+   "id": "g8x-en-022",
+   "stem": "He hardly speaks English, ____ he?",
+   "options": [
+    "isn't",
+    "doesn't",
+    "is",
+    "does"
+   ],
+   "answer": 3,
+   "explanation": "hardly 表否定，反义部分用肯定形式 does。用 doesn't 会与 hardly 的否定含义重复。"
+  },
+  {
+   "id": "g8x-en-023",
+   "stem": "I don't think he is right, ____?",
+   "options": [
+    "is he",
+    "isn't he",
+    "do I",
+    "don't I"
+   ],
+   "answer": 0,
+   "explanation": "I don't think 句式中，反义部分与从句主语和动词保持一致并取肯定，即 is he。"
+  },
+  {
+   "id": "g8x-en-024",
+   "stem": "—You didn't come to school yesterday, did you? —____, I was ill.",
+   "options": [
+    "Yes, I did",
+    "Yes, I didn't",
+    "No, I didn't",
+    "No, I did"
+   ],
+   "answer": 2,
+   "explanation": "实际没来，答 No, I didn't，与事实一致。用 Yes 会表示来了，混搭肯定与否定词也不成立。"
+  },
+  {
+   "id": "g8x-en-025",
+   "stem": "She said that she ____ busy then.",
+   "options": [
+    "is",
+    "will be",
+    "was",
+    "has been"
+   ],
+   "answer": 2,
+   "explanation": "主句用过去时 said，宾语从句须相应用过去时 was，即向过去时态呼应。其余时态与 said 不呼应。"
+  },
+  {
+   "id": "g8x-en-026",
+   "stem": "He asked me ____ I had finished the work.",
+   "options": [
+    "if",
+    "that",
+    "what",
+    "which"
+   ],
+   "answer": 0,
+   "explanation": "一般疑问句转成宾语从句用 if 或 whether 引导，意为是否。that 引导陈述句，what 与 which 需有具体所指。"
+  },
+  {
+   "id": "g8x-en-027",
+   "stem": "Could you tell me ____?",
+   "options": [
+    "where is the bank",
+    "where does the bank",
+    "the bank where is",
+    "where the bank is"
+   ],
+   "answer": 3,
+   "explanation": "宾语从句须用陈述语序，即 where 加主语加谓语，不用倒装。其余三项都是疑问语序或结构混乱。"
+  },
+  {
+   "id": "g8x-en-028",
+   "stem": "I don't know ____ he will come or not.",
+   "options": [
+    "if",
+    "whether",
+    "that",
+    "what"
+   ],
+   "answer": 1,
+   "explanation": "与 or not 搭配只能用 whether，不能用 if。that 引导陈述句，what 需作成分且语义不合。"
+  },
+  {
+   "id": "g8x-en-029",
+   "stem": "Do you know ____?",
+   "options": [
+    "what is his name",
+    "what does his name",
+    "his name what is",
+    "what his name is"
+   ],
+   "answer": 3,
+   "explanation": "从句用陈述语序 what his name is。其余三项或倒装或语序混乱，都不符合宾语从句规则。"
+  },
+  {
+   "id": "g8x-en-030",
+   "stem": "She wants to know ____ you like the film.",
+   "options": [
+    "that",
+    "if",
+    "what",
+    "which"
+   ],
+   "answer": 1,
+   "explanation": "原句为一般疑问句 Do you like the film，转从句用 if 表是否。that 用于陈述句，what 与 which 需要指代对象。"
+  },
+  {
+   "id": "g8x-en-031",
+   "stem": "He told me that the earth ____ around the sun.",
+   "options": [
+    "went",
+    "will go",
+    "goes",
+    "has gone"
+   ],
+   "answer": 2,
+   "explanation": "宾语从句表示客观真理时仍用一般现在时 goes，不受主句过去时影响。其余时态与这一规则不符。"
+  },
+  {
+   "id": "g8x-en-032",
+   "stem": "At eight last night, I ____ my homework.",
+   "options": [
+    "was doing",
+    "did",
+    "do",
+    "have done"
+   ],
+   "answer": 0,
+   "explanation": "at eight last night 指过去某一时刻，用过去进行时 was doing。do 与 did 不表示进行，have done 是完成时。"
+  },
+  {
+   "id": "g8x-en-033",
+   "stem": "While she ____ dinner, the phone rang.",
+   "options": [
+    "was cooking",
+    "cooked",
+    "cooks",
+    "has cooked"
+   ],
+   "answer": 0,
+   "explanation": "while 引导的持续背景动作常用过去进行时 was cooking。其余时态与 rang 的突发动作不协调。"
+  },
+  {
+   "id": "g8x-en-034",
+   "stem": "They ____ football when it began to rain.",
+   "options": [
+    "played",
+    "have played",
+    "play",
+    "were playing"
+   ],
+   "answer": 3,
+   "explanation": "when 引导的短暂动作发生在持续动作之中，主句用过去进行时 were playing。其余时态没有体现这一关系。"
+  },
+  {
+   "id": "g8x-en-035",
+   "stem": "—What ____ you doing at nine yesterday? —I was reading.",
+   "options": [
+    "are",
+    "did",
+    "were",
+    "do"
+   ],
+   "answer": 2,
+   "explanation": "过去某一时刻的进行动作用 were 加 doing，主语 you 配 were。are 是现在时，did 与 do 后不能接 doing。"
+  },
+  {
+   "id": "g8x-en-036",
+   "stem": "He ____ TV while his mother was cleaning the room.",
+   "options": [
+    "watched",
+    "was watching",
+    "watches",
+    "has watched"
+   ],
+   "answer": 1,
+   "explanation": "两个动作同时持续，都用过去进行时，故为 was watching。其余时态与 was cleaning 不对应。"
+  },
+  {
+   "id": "g8x-en-037",
+   "stem": "「当我到家时，他正在做饭」的英语是（　）",
+   "options": [
+    "When I got home, he cooked.",
+    "When I got home, he was cooking.",
+    "When I was getting home, he cooked.",
+    "When I get home, he was cooking."
+   ],
+   "answer": 1,
+   "explanation": "到家是短暂动作用过去时 got，做饭是持续背景用过去进行时 was cooking。其余三句时态搭配都不对。"
+  },
+  {
+   "id": "g8x-en-038",
+   "stem": "She ____ to music at this time yesterday.",
+   "options": [
+    "was listening",
+    "listened",
+    "listens",
+    "has listened"
+   ],
+   "answer": 0,
+   "explanation": "at this time yesterday 指过去某一时刻，用过去进行时 was listening。其余三项都不能表示进行中的动作。"
+  },
+  {
+   "id": "g8x-en-039",
+   "stem": "下面哪一句表示「他昨天一整天都在看书」（　）",
+   "options": [
+    "He reads all day yesterday.",
+    "He read all day tomorrow.",
+    "He has read all day yesterday.",
+    "He was reading all day yesterday."
+   ],
+   "answer": 3,
+   "explanation": "过去整天持续的动作可用过去进行时 was reading。reads 是现在时，has read 与 yesterday 冲突，末句时间矛盾。"
+  },
+  {
+   "id": "g8x-en-040",
+   "stem": "We ____ when the teacher came in.",
+   "options": [
+    "talk",
+    "talked",
+    "were talking",
+    "have talked"
+   ],
+   "answer": 2,
+   "explanation": "老师进来的瞬间我们正在说话，主句用过去进行时 were talking。其余时态都没有突出「正在进行时被打断」。"
+  }
+ ]
+}

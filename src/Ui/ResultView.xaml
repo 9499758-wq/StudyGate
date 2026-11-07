@@ -1,0 +1,100 @@
+<UserControl x:Class="StudyGate.Ui.ResultView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{DynamicResource Brush.Background}">
+
+  <!--
+    交卷结果页，原位替换答题页。
+    达标：64px 主状态（沙金）+ 三科分布 + 历史记录，静默 3 秒（不显示任何倒计时数字、无按钮）。
+    未达标：64px 主状态（主文色）+ 三科分布 + 错题号列表 + 历史记录 + 唯一按钮「重考」。
+    历史区两种状态都显示，位置在错题区下方、按钮上方；空历史时摘要行照常占位，布局不塌。
+    没有「退出」「跳过」「稍后」；不写"全对"、不显示正确率。
+
+    本控件自己合并 Theme.xaml，理由同 QuizView（独立 BAML，不保证能沿父链取到 Window.Resources）。
+  -->
+
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/StudyGate.Ui;component/Theme.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
+
+  <Grid Margin="64,36,64,36">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <!-- 历史记录：Auto 高度，不参与 * 分配，避免把错题区压扁 -->
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <!-- 13px 次文小签，与答题页同一条基线 -->
+    <TextBlock x:Name="GradeLabel"
+               Grid.Row="0"
+               Text="StudyGate · 六年级下"
+               Style="{StaticResource Style.SmallLabel}"/>
+
+    <!-- 64px 主状态：未达标「未达标 · 仍需 90 分」/ 达标「已达标 · 90 分」 -->
+    <Border Grid.Row="1"
+            MaxWidth="980"
+            HorizontalAlignment="Left"
+            Margin="0,40,0,0">
+      <TextBlock x:Name="StatusText" Style="{StaticResource Style.ResultStatus}"/>
+    </Border>
+
+    <!-- 19px 三科分布：语文 6/6 · 数学 5/6 · 英语 5/8 -->
+    <Border Grid.Row="2"
+            MaxWidth="980"
+            HorizontalAlignment="Left"
+            Margin="0,28,0,0">
+      <TextBlock x:Name="SubjectLine" Style="{StaticResource Style.Detail}"/>
+    </Border>
+
+    <!-- 错题区：标题「错题」+ 15px 等宽题号列表；无错题时整块留空（不写"全对"） -->
+    <ScrollViewer x:Name="WrongBlock"
+                  Grid.Row="3"
+                  Margin="0,30,0,12"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
+                  Focusable="False"
+                  Visibility="Collapsed">
+      <StackPanel MaxWidth="980" HorizontalAlignment="Left">
+        <TextBlock Text="错题"
+                   Style="{StaticResource Style.SmallLabel}"
+                   Margin="0,0,0,12"/>
+        <TextBlock x:Name="WrongList" Style="{StaticResource Style.WrongNumbers}"/>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!--
+      历史记录区：标题「记录」+ 摘要行 + 明细列表（最多 6 条，最新在前）。
+      明细 13px 等宽 + tabular 数字；达标条目比未达标亮一档，两档都不进主文色、不做进度条/徽章。
+    -->
+    <StackPanel Grid.Row="4"
+                MaxWidth="980"
+                HorizontalAlignment="Left"
+                Margin="0,10,0,0">
+      <TextBlock Text="记录"
+                 Style="{StaticResource Style.SmallLabel}"
+                 Margin="0,0,0,10"/>
+      <TextBlock x:Name="HistorySummary"
+                 Text="还没有记录"
+                 Style="{StaticResource Style.SmallLabel}"
+                 Margin="0,0,0,8"/>
+      <!-- 明细行由 code-behind 生成（13px 等宽 + tabular 数字，达标亮一档），最多 6 行 -->
+      <StackPanel x:Name="HistoryList" Focusable="False"/>
+    </StackPanel>
+
+    <!-- 唯一按钮：重考。达标态隐藏 -->
+    <Button x:Name="RetakeButton"
+            Grid.Row="5"
+            Content="重考"
+            Style="{StaticResource Style.PrimaryButton}"
+            Margin="0,14,0,0"
+            Click="OnRetakeClick"/>
+  </Grid>
+</UserControl>

@@ -1,0 +1,487 @@
+{
+ "grade": 7,
+ "term": "下",
+ "subject": "english",
+ "items": [
+  {
+   "id": "g7x-en-001",
+   "stem": "Unit 1 的核心句型「Can you play the guitar?」用于（　）",
+   "options": [
+    "询问能力",
+    "询问时间",
+    "询问地点",
+    "询问天气"
+   ],
+   "answer": 0,
+   "explanation": "can 表能力，问会不会弹吉他。问时间用 what time，问地点用 where，问天气用 what's the weather like。"
+  },
+  {
+   "id": "g7x-en-002",
+   "stem": "—Can he swim? —No, he ____.",
+   "options": [
+    "can",
+    "can't",
+    "doesn't",
+    "isn't"
+   ],
+   "answer": 1,
+   "explanation": "以 Can 开头的问句用 can 或 can't 作答，否定为 can't。doesn't 与 isn't 不能回应情态动词提问。"
+  },
+  {
+   "id": "g7x-en-003",
+   "stem": "I can ____ the piano, but I can't ____ it well.",
+   "options": [
+    "play; playing",
+    "playing; play",
+    "play; play",
+    "to play; play"
+   ],
+   "answer": 2,
+   "explanation": "情态动词 can 后一律接动词原形，两空都填 play。加 -ing 或加 to 都不符合 can 的用法。"
+  },
+  {
+   "id": "g7x-en-004",
+   "stem": "—What club do you want to join? —I want to join the ____ club.",
+   "options": [
+    "swim",
+    "swims",
+    "swam",
+    "swimming"
+   ],
+   "answer": 3,
+   "explanation": "表示「游泳俱乐部」用动名词 swimming 修饰 club。swim、swims、swam 都不作名词修饰成分。"
+  },
+  {
+   "id": "g7x-en-005",
+   "stem": "be good at 的意思是（　）",
+   "options": [
+    "对……有好处",
+    "擅长于",
+    "善于与人相处",
+    "忙于"
+   ],
+   "answer": 1,
+   "explanation": "be good at 后接名词或动名词，表示擅长某事。be good for 是对……有益，be good with 是善于应付。"
+  },
+  {
+   "id": "g7x-en-006",
+   "stem": "She is good ____ telling stories.",
+   "options": [
+    "for",
+    "with",
+    "at",
+    "to"
+   ],
+   "answer": 2,
+   "explanation": "擅长做某事用 be good at，后接动名词 telling。be good for 表益处，with 表善于相处，to 不构成该搭配。"
+  },
+  {
+   "id": "g7x-en-007",
+   "stem": "—What time do you usually get up? —____ six o'clock.",
+   "options": [
+    "In",
+    "On",
+    "For",
+    "At"
+   ],
+   "answer": 3,
+   "explanation": "具体钟点前用介词 at。in 用于月份、年份、上午等，on 用于具体某天，for 表持续时长。"
+  },
+  {
+   "id": "g7x-en-008",
+   "stem": "He usually ____ his homework at eight in the evening.",
+   "options": [
+    "does",
+    "do",
+    "doing",
+    "did"
+   ],
+   "answer": 0,
+   "explanation": "主语 He 第三人称单数，一般现在时用 does。do 配复数主语，doing 是分词缺助动词，did 是过去式与 usually 不符。"
+  },
+  {
+   "id": "g7x-en-009",
+   "stem": "—How do you get to school? —I ____ to school by bike.",
+   "options": [
+    "going",
+    "goes",
+    "go",
+    "went"
+   ],
+   "answer": 2,
+   "explanation": "主语 I 用动词原形 go。goes 配第三人称单数，going 缺助动词，went 是过去式与一般现在时语境不合。"
+  },
+  {
+   "id": "g7x-en-010",
+   "stem": "It takes me ten minutes ____ to school.",
+   "options": [
+    "get",
+    "gets",
+    "getting",
+    "to get"
+   ],
+   "answer": 3,
+   "explanation": "It takes sb. some time to do sth. 是固定句型，用不定式 to get。其余三项都缺 to 或形式不对。"
+  },
+  {
+   "id": "g7x-en-011",
+   "stem": "祈使句「不要在教室里吃东西」的英语是（　）",
+   "options": [
+    "Don't eat in the classroom.",
+    "Not eat in the classroom.",
+    "Doesn't eat in the classroom.",
+    "No eat in the classroom."
+   ],
+   "answer": 0,
+   "explanation": "否定祈使句用 Don't 加动词原形。Not 不能直接开头，Doesn't 用于第三人称单数陈述，No 后不接动词原形。"
+  },
+  {
+   "id": "g7x-en-012",
+   "stem": "—____ run in the hallways. —Sorry, Ms. Clark.",
+   "options": [
+    "Not",
+    "Don't",
+    "Doesn't",
+    "Isn't"
+   ],
+   "answer": 1,
+   "explanation": "否定祈使句以 Don't 加动词原形开头。Not 不能单独置于句首，Doesn't 与 Isn't 都不是祈使句的否定形式。"
+  },
+  {
+   "id": "g7x-en-013",
+   "stem": "We must ____ the rules at school.",
+   "options": [
+    "follows",
+    "following",
+    "followed",
+    "follow"
+   ],
+   "answer": 3,
+   "explanation": "情态动词 must 后接动词原形 follow。follows 是第三人称单数，following 是分词，followed 是过去式。"
+  },
+  {
+   "id": "g7x-en-014",
+   "stem": "「你为什么喜欢熊猫」的英语是（　）",
+   "options": [
+    "Why do you like pandas?",
+    "Why are you like pandas?",
+    "Why you like pandas?",
+    "Why does you like pandas?"
+   ],
+   "answer": 0,
+   "explanation": "实义动词 like 的疑问句用助动词 do，主语 you 配 do 且需倒装。are 不能与 like 连用，does 配第三人称单数。"
+  },
+  {
+   "id": "g7x-en-015",
+   "stem": "Pandas are ____, so many people like them.",
+   "options": [
+    "scary",
+    "cute",
+    "dangerous",
+    "dirty"
+   ],
+   "answer": 1,
+   "explanation": "「所以很多人喜欢」说明原因是可爱，用 cute。scary、dangerous、dirty 都是负面评价，与后半句因果不符。"
+  },
+  {
+   "id": "g7x-en-016",
+   "stem": "—What is he doing? —He ____ TV.",
+   "options": [
+    "watch",
+    "watches",
+    "is watching",
+    "watched"
+   ],
+   "answer": 2,
+   "explanation": "现在进行时由 be 加现在分词构成，主语 He 用 is watching。watch 是原形，watches 是一般现在时，watched 是过去式。"
+  },
+  {
+   "id": "g7x-en-017",
+   "stem": "Look! The children ____ in the river.",
+   "options": [
+    "are swimming",
+    "swims",
+    "swim",
+    "swam"
+   ],
+   "answer": 0,
+   "explanation": "Look 提示动作正在进行，用现在进行时 are swimming。swim 与 swims 是一般现在时，swam 是过去式。"
+  },
+  {
+   "id": "g7x-en-018",
+   "stem": "run 的现在分词是（　）",
+   "options": [
+    "runing",
+    "runned",
+    "running",
+    "runs"
+   ],
+   "answer": 2,
+   "explanation": "重读闭音节且末尾只有一个辅音字母，要双写再加 -ing，得 running。runing 少写 n，runned 与 runs 形式不对。"
+  },
+  {
+   "id": "g7x-en-019",
+   "stem": "—How's the weather in Kunming? —It's ____.",
+   "options": [
+    "sun",
+    "sunny",
+    "suny",
+    "sunny day"
+   ],
+   "answer": 1,
+   "explanation": "回答天气要用形容词 sunny。sun 是名词，suny 拼写少一个 n，sunny day 是名词短语不作表语。"
+  },
+  {
+   "id": "g7x-en-020",
+   "stem": "It's raining now. You'd better take an ____.",
+   "options": [
+    "map",
+    "sunglasses",
+    "T-shirt",
+    "umbrella"
+   ],
+   "answer": 3,
+   "explanation": "下雨天要带伞，umbrella 以元音音素开头配 an。sunglasses 用于晴天，T-shirt 与 map 都与下雨无关。"
+  },
+  {
+   "id": "g7x-en-021",
+   "stem": "—Is there a post office near here? —Yes, ____.",
+   "options": [
+    "there are",
+    "there is",
+    "it is",
+    "there be"
+   ],
+   "answer": 1,
+   "explanation": "There be 句型的肯定回答用 Yes, there is。there are 与单数主语不符，it is 答非所问，there be 不是完整答语。"
+  },
+  {
+   "id": "g7x-en-022",
+   "stem": "There ____ some books and a pen on the desk.",
+   "options": [
+    "is",
+    "has",
+    "have",
+    "are"
+   ],
+   "answer": 3,
+   "explanation": "There be 句型遵循就近原则，靠近的是复数 books，用 are。is 与复数不符，have 与 has 不能表示存在。"
+  },
+  {
+   "id": "g7x-en-023",
+   "stem": "The pay phone is ____ the post office and the library.",
+   "options": [
+    "between",
+    "among",
+    "in",
+    "through"
+   ],
+   "answer": 0,
+   "explanation": "两者之间用 between…and…。among 用于三者以上，in 与 through 不构成这一搭配。"
+  },
+  {
+   "id": "g7x-en-024",
+   "stem": "—What does he look like? —He ____ of medium height.",
+   "options": [
+    "have",
+    "has",
+    "is",
+    "are"
+   ],
+   "answer": 2,
+   "explanation": "身高用 be 动词加 of medium height。has 用于描述头发等身体部位，have 与单数主语不符，are 数不对。"
+  },
+  {
+   "id": "g7x-en-025",
+   "stem": "She has long ____ hair.",
+   "options": [
+    "curling",
+    "curls",
+    "curly",
+    "curled"
+   ],
+   "answer": 2,
+   "explanation": "形容词 curly 直接修饰 hair。curls 是名词复数，curling 是分词，curled 是过去式，都不作前置定语。"
+  },
+  {
+   "id": "g7x-en-026",
+   "stem": "—What would you like? —I'd like some ____.",
+   "options": [
+    "noodles",
+    "noodle",
+    "noodle's",
+    "noodles's"
+   ],
+   "answer": 0,
+   "explanation": "noodle 常用复数 noodles，some 后接复数可数名词。其余三项的单数或所有格形式都不合用法。"
+  },
+  {
+   "id": "g7x-en-027",
+   "stem": "「你想要多大碗的面条」的英语是（　）",
+   "options": [
+    "How many bowl noodles would you like?",
+    "What size noodles would you like?",
+    "How much noodles would you like?",
+    "What size bowl of noodles would you like?"
+   ],
+   "answer": 3,
+   "explanation": "问尺寸用 What size bowl of noodles。省掉 bowl 结构不完整，how much 问价格或数量，how many 搭配错误。"
+  },
+  {
+   "id": "g7x-en-028",
+   "stem": "—How was your school trip? —It ____ great.",
+   "options": [
+    "is",
+    "was",
+    "are",
+    "were"
+   ],
+   "answer": 1,
+   "explanation": "问句用 was 问过去，答语也用 was。is 是现在时，are 与 were 用于复数，与主语 It 不搭配。"
+  },
+  {
+   "id": "g7x-en-029",
+   "stem": "We ____ a lot of photos on the school trip last week.",
+   "options": [
+    "take",
+    "takes",
+    "taking",
+    "took"
+   ],
+   "answer": 3,
+   "explanation": "last week 是过去时间，用过去式 took。take 与 takes 是一般现在时，taking 是分词缺助动词。"
+  },
+  {
+   "id": "g7x-en-030",
+   "stem": "—Did you see any cows? —Yes, I ____.",
+   "options": [
+    "do",
+    "did",
+    "was",
+    "were"
+   ],
+   "answer": 1,
+   "explanation": "以 Did 开头的问句用 did 作答。do 配一般现在时，was 与 were 是 be 动词的过去式，不能回应行为动词提问。"
+  },
+  {
+   "id": "g7x-en-031",
+   "stem": "—What did you do last weekend? —I ____ my grandparents.",
+   "options": [
+    "visit",
+    "visits",
+    "visited",
+    "visiting"
+   ],
+   "answer": 2,
+   "explanation": "last weekend 要求过去式 visited。visit 与 visits 是现在时，visiting 是分词缺助动词。"
+  },
+  {
+   "id": "g7x-en-032",
+   "stem": "下面哪个动词的过去式是 stayed（　）",
+   "options": [
+    "stays",
+    "staying",
+    "stay",
+    "stayed"
+   ],
+   "answer": 2,
+   "explanation": "元音字母加 y 结尾的动词直接加 -ed，stay 变 stayed。stays 是第三人称单数，staying 是现在分词，均非过去式。"
+  },
+  {
+   "id": "g7x-en-033",
+   "stem": "I ____ my homework last night.",
+   "options": [
+    "did",
+    "does",
+    "do",
+    "doing"
+   ],
+   "answer": 0,
+   "explanation": "last night 是过去时间，用过去式 did。do 与 does 是现在时，doing 是分词不能单独作谓语。"
+  },
+  {
+   "id": "g7x-en-034",
+   "stem": "There ____ a lot of rain last summer.",
+   "options": [
+    "is",
+    "were",
+    "are",
+    "was"
+   ],
+   "answer": 3,
+   "explanation": "last summer 是过去，rain 不可数，用 was。is 是现在时，are 与 were 需要复数主语。"
+  },
+  {
+   "id": "g7x-en-035",
+   "stem": "—Where did you go on vacation? —I ____ to the mountains.",
+   "options": [
+    "go",
+    "goes",
+    "went",
+    "going"
+   ],
+   "answer": 2,
+   "explanation": "问句用 did 表过去，答语用过去式 went。go 与 goes 是现在时，going 是分词缺助动词。"
+  },
+  {
+   "id": "g7x-en-036",
+   "stem": "「请安静」的英语表达最恰当的是（　）",
+   "options": [
+    "Are quiet, please.",
+    "Be quiet, please.",
+    "Do quiet, please.",
+    "You quiet, please."
+   ],
+   "answer": 1,
+   "explanation": "祈使句用 be 动词原形开头，Ae quiet。are 是陈述形式，do 后不能直接接形容词，缺谓语动词则不成立。"
+  },
+  {
+   "id": "g7x-en-037",
+   "stem": "—What did you ____ for lunch yesterday? —I ate some noodles.",
+   "options": [
+    "eat",
+    "ate",
+    "eaten",
+    "eating"
+   ],
+   "answer": 0,
+   "explanation": "did 后须接动词原形 eat，过去时已由 did 承担。ate 是过去式不能与 did 连用，eaten 是过去分词，eating 是分词。"
+  },
+  {
+   "id": "g7x-en-038",
+   "stem": "—Excuse me, is there a bank near here? —____, I don't know.",
+   "options": [
+    "Sorry",
+    "Yes",
+    "Thanks",
+    "OK"
+   ],
+   "answer": 0,
+   "explanation": "不知道时应先致歉，用 Sorry。Yes 表示肯定有，Thanks 用于致谢，OK 表示同意，都与后句矛盾。"
+  },
+  {
+   "id": "g7x-en-039",
+   "stem": "My father usually ____ up at six.",
+   "options": [
+    "get",
+    "got",
+    "getting",
+    "gets"
+   ],
+   "answer": 3,
+   "explanation": "主语 My father 第三人称单数，一般现在时用 gets。get 配复数主语，getting 缺助动词，got 是过去式。"
+  },
+  {
+   "id": "g7x-en-040",
+   "stem": "—What are you doing now? —下列答句中正确的是（　）",
+   "options": [
+    "I am watch TV now.",
+    "I watching TV now.",
+    "I am watching TV now.",
+    "I watches TV now."
+   ],
+   "answer": 2,
+   "explanation": "now 提示现在进行时，须由 be 加现在分词构成。am watch 混用形式，缺 be 或误用第三人称单数都不成立。"
+  }
+ ]
+}

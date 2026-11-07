@@ -1,0 +1,487 @@
+{
+ "grade": 9,
+ "term": "下",
+ "subject": "english",
+ "items": [
+  {
+   "id": "g9x-en-001",
+   "stem": "By the time he arrived, the film ____ for ten minutes.",
+   "options": [
+    "had been on",
+    "had begun",
+    "began",
+    "has been on"
+   ],
+   "answer": 0,
+   "explanation": "by the time 加过去时要求过去完成，for 加时间段须用延续状态 be on。begun 是短暂动词，has been on 时态不对。"
+  },
+  {
+   "id": "g9x-en-002",
+   "stem": "She said she ____ the book twice.",
+   "options": [
+    "reads",
+    "had read",
+    "has read",
+    "will read"
+   ],
+   "answer": 1,
+   "explanation": "主句 said 是过去时，转述更早的完成动作用过去完成时 had read。其余时态与 said 不呼应。"
+  },
+  {
+   "id": "g9x-en-003",
+   "stem": "I ____ my homework when he called me.",
+   "options": [
+    "finish",
+    "finished",
+    "had finished",
+    "will finish"
+   ],
+   "answer": 2,
+   "explanation": "电话来时作业已完成，先发生的动作用过去完成时 had finished。其余时态没有体现先后顺序。"
+  },
+  {
+   "id": "g9x-en-004",
+   "stem": "The train ____ before we got to the station.",
+   "options": [
+    "left",
+    "has left",
+    "leaves",
+    "had left"
+   ],
+   "answer": 3,
+   "explanation": "到站前火车已开走，过去的过去用过去完成时 had left。has left 与现在相关，left 与 leaves 不表先后。"
+  },
+  {
+   "id": "g9x-en-005",
+   "stem": "—Why didn't you answer the phone? —I ____ a shower.",
+   "options": [
+    "take",
+    "was taking",
+    "took",
+    "have taken"
+   ],
+   "answer": 1,
+   "explanation": "未接电话时正在洗澡，用过去进行时 was taking。其余时态都不能表示当时正在进行。"
+  },
+  {
+   "id": "g9x-en-006",
+   "stem": "He ____ in this factory since he left school.",
+   "options": [
+    "works",
+    "worked",
+    "has worked",
+    "is working"
+   ],
+   "answer": 2,
+   "explanation": "since 加过去时从句，主句用现在完成时 has worked。其余时态与 since 结构不配套。"
+  },
+  {
+   "id": "g9x-en-007",
+   "stem": "The bridge ____ by the end of last year.",
+   "options": [
+    "completed",
+    "was completing",
+    "has been completed",
+    "had been completed"
+   ],
+   "answer": 3,
+   "explanation": "by the end of last year 加被动语态，须用过去完成时被动 had been completed。其余时态与被动都不符。"
+  },
+  {
+   "id": "g9x-en-008",
+   "stem": "—How long ____ you ____ in Kunming? —Since 2010.",
+   "options": [
+    "have; lived",
+    "did; live",
+    "do; live",
+    "are; living"
+   ],
+   "answer": 0,
+   "explanation": "How long 加 since 用现在完成时 have lived。did 与 do 配一般时，are living 是进行时形式。"
+  },
+  {
+   "id": "g9x-en-009",
+   "stem": "I don't know if he ____ tomorrow. If he ____, I'll call you.",
+   "options": [
+    "comes; comes",
+    "comes; will come",
+    "will come; comes",
+    "will come; will come"
+   ],
+   "answer": 2,
+   "explanation": "第一处 if 引导宾语从句表是否，用将来时；第二处 if 引导条件从句用一般现在时。其余组合都把两处混为一类。"
+  },
+  {
+   "id": "g9x-en-010",
+   "stem": "If I ____ you, I would accept the offer.",
+   "options": [
+    "am",
+    "was",
+    "will be",
+    "were"
+   ],
+   "answer": 3,
+   "explanation": "与现在事实相反的虚拟条件句，be 动词统一用 were。am 与 was 不表虚拟，will be 属真实条件句。"
+  },
+  {
+   "id": "g9x-en-011",
+   "stem": "If he ____ harder, he would have passed the exam.",
+   "options": [
+    "had studied",
+    "studied",
+    "studies",
+    "would study"
+   ],
+   "answer": 0,
+   "explanation": "与过去事实相反，从句用 had 加过去分词，主句用 would have done。其余形式不构成过去虚拟。"
+  },
+  {
+   "id": "g9x-en-012",
+   "stem": "I wish I ____ as tall as my brother.",
+   "options": [
+    "am",
+    "were",
+    "will be",
+    "be"
+   ],
+   "answer": 1,
+   "explanation": "wish 后从句表与现在事实相反，be 动词用 were。am 表真实，will be 与 be 都不合虚拟要求。"
+  },
+  {
+   "id": "g9x-en-013",
+   "stem": "He suggested that we ____ the meeting until next week.",
+   "options": [
+    "putting off",
+    "putted off",
+    "puts off",
+    "put off"
+   ],
+   "answer": 3,
+   "explanation": "suggest 后的从句用虚拟语气，动词取原形 put off。putted 是错误变形，puts 与 putting 不合该结构。"
+  },
+  {
+   "id": "g9x-en-014",
+   "stem": "It is important that every student ____ the rule.",
+   "options": [
+    "follow",
+    "follows",
+    "following",
+    "followed"
+   ],
+   "answer": 0,
+   "explanation": "It is important that 从句用虚拟语气，动词取原形 follow。第三人称单数、分词、过去式都不符合。"
+  },
+  {
+   "id": "g9x-en-015",
+   "stem": "The reason why he was late is ____ he got up late.",
+   "options": [
+    "because",
+    "that",
+    "why",
+    "for"
+   ],
+   "answer": 1,
+   "explanation": "The reason is that 是固定搭配，表语从句用 that 引导。because 会造成因果重复，why 与 for 结构不合。"
+  },
+  {
+   "id": "g9x-en-016",
+   "stem": "It was in the park ____ I met my old friend.",
+   "options": [
+    "where",
+    "which",
+    "that",
+    "when"
+   ],
+   "answer": 2,
+   "explanation": "强调句型 It was 加被强调的地点状语加 that，不用 where。which 指物，where 与 when 在此结构不合。"
+  },
+  {
+   "id": "g9x-en-017",
+   "stem": "Not until he came back ____ the truth.",
+   "options": [
+    "did he know",
+    "he knew",
+    "he did know",
+    "knew he"
+   ],
+   "answer": 0,
+   "explanation": "Not until 置于句首时主句部分倒装，用 did he know。其余三项都是陈述语序，不合倒装规则。"
+  },
+  {
+   "id": "g9x-en-018",
+   "stem": "Only in this way ____ improve your English.",
+   "options": [
+    "you can",
+    "you could",
+    "can you",
+    "could you"
+   ],
+   "answer": 2,
+   "explanation": "Only 加状语置于句首时主句倒装，情态动词提前为 can you。其余各项或未倒装或时态与语境不合。"
+  },
+  {
+   "id": "g9x-en-019",
+   "stem": "So tired ____ that he fell asleep at once.",
+   "options": [
+    "he was",
+    "was he",
+    "he is",
+    "is he"
+   ],
+   "answer": 1,
+   "explanation": "so 加形容词置于句首时主句倒装，was 提前。其余形式未倒装或时态与 fell 不搭。"
+  },
+  {
+   "id": "g9x-en-020",
+   "stem": "Neither he nor I ____ interested in the film.",
+   "options": [
+    "is",
+    "be",
+    "are",
+    "am"
+   ],
+   "answer": 3,
+   "explanation": "neither…nor 连接主语时按就近原则，靠近的 I 决定用 am。is 与 are 都不符合就近一致。"
+  },
+  {
+   "id": "g9x-en-021",
+   "stem": "Either you or he ____ to go there.",
+   "options": [
+    "have",
+    "has",
+    "are",
+    "were"
+   ],
+   "answer": 1,
+   "explanation": "either…or 连接主语时按就近原则，靠近的 he 用 has。have、are、were 都与 he 不一致。"
+  },
+  {
+   "id": "g9x-en-022",
+   "stem": "The number of students in our school ____ about 1200.",
+   "options": [
+    "are",
+    "be",
+    "were",
+    "is"
+   ],
+   "answer": 3,
+   "explanation": "the number of 意为数量，作主语时谓语用单数 is。a number of 才接复数谓语，其余形式时态也错。"
+  },
+  {
+   "id": "g9x-en-023",
+   "stem": "Neither of the two answers ____ correct.",
+   "options": [
+    "is",
+    "are",
+    "were",
+    "be"
+   ],
+   "answer": 0,
+   "explanation": "neither of 作主语时谓语用单数 is。are 与 were 是复数形式，be 是原形不作谓语。"
+  },
+  {
+   "id": "g9x-en-024",
+   "stem": "The police ____ looking for the missing child.",
+   "options": [
+    "is",
+    "was",
+    "are",
+    "has"
+   ],
+   "answer": 2,
+   "explanation": "police 作主语表示警察全体，谓语用复数 are。is 与 was 是单数，has 是单数完成形式。"
+  },
+  {
+   "id": "g9x-en-025",
+   "stem": "下面哪个词与 finally 意思最接近（　）",
+   "options": [
+    "at once",
+    "at first",
+    "at last",
+    "at times"
+   ],
+   "answer": 2,
+   "explanation": "finally 意为最终，对应 at last。at first 表起初，at once 表立刻，at times 表有时。"
+  },
+  {
+   "id": "g9x-en-026",
+   "stem": "He ____ the truth at last.",
+   "options": [
+    "found out",
+    "found",
+    "looked for",
+    "looked"
+   ],
+   "answer": 0,
+   "explanation": "find out 表示查明真相。find 意为找到实体，look for 意为寻找过程，look 是不及物看。"
+  },
+  {
+   "id": "g9x-en-027",
+   "stem": "The meeting was ____ because of the heavy rain.",
+   "options": [
+    "put away",
+    "put on",
+    "put up",
+    "put off"
+   ],
+   "answer": 3,
+   "explanation": "put off 表示推迟，与原因状语搭配合理。put on 意为穿上，put up 意为搭建，put away 意为收起来。"
+  },
+  {
+   "id": "g9x-en-028",
+   "stem": "I can't ____ the noise outside.",
+   "options": [
+    "stayed",
+    "stand",
+    "standing",
+    "stands"
+   ],
+   "answer": 1,
+   "explanation": "can't 后接动词原形 stand，意为忍受。其余形式含过去式、分词或第三人称单数，都不合情态动词用法。"
+  },
+  {
+   "id": "g9x-en-029",
+   "stem": "She ____ up smoking two years ago.",
+   "options": [
+    "giving",
+    "given",
+    "gives",
+    "gave"
+   ],
+   "answer": 3,
+   "explanation": "two years ago 用一般过去时 gave up，意为戒掉。given 是过去分词，gives 与 giving 时态或形式不合。"
+  },
+  {
+   "id": "g9x-en-030",
+   "stem": "Please ____ the light before you leave.",
+   "options": [
+    "turn on",
+    "turn off",
+    "turn up",
+    "turn down"
+   ],
+   "answer": 1,
+   "explanation": "离开前应关灯，用 turn off。turn on 是打开，turn up 调大音量，turn down 调小音量。"
+  },
+  {
+   "id": "g9x-en-031",
+   "stem": "We should ____ the environment by not littering.",
+   "options": [
+    "protecting",
+    "protects",
+    "protect",
+    "protected"
+   ],
+   "answer": 2,
+   "explanation": "should 后接动词原形 protect。protects、protecting、protected 都不合情态动词后面的形式要求。"
+  },
+  {
+   "id": "g9x-en-032",
+   "stem": "—Would you like some tea? —____",
+   "options": [
+    "Yes, please.",
+    "Yes, I would like.",
+    "No, I wouldn't like.",
+    "Yes, I do."
+   ],
+   "answer": 0,
+   "explanation": "接受 Would you like 的邀请用 Yes, please。其余答语或语法不完整，或用 I do 回应与 would 无关的助动词。"
+  },
+  {
+   "id": "g9x-en-033",
+   "stem": "—Thank you for your help. —____",
+   "options": [
+    "You're welcome.",
+    "No, thanks.",
+    "That's right.",
+    "Never mind."
+   ],
+   "answer": 0,
+   "explanation": "回应感谢用 You're welcome。No, thanks 回应提议，That's right 表示判断正确，Never mind 回应道歉。"
+  },
+  {
+   "id": "g9x-en-034",
+   "stem": "—Sorry, I'm late. —____",
+   "options": [
+    "Of course.",
+    "You're welcome.",
+    "That's right.",
+    "Never mind."
+   ],
+   "answer": 3,
+   "explanation": "回应道歉用 Never mind，意为没关系。另三句分别回应感谢、确认判断、回应请求。"
+  },
+  {
+   "id": "g9x-en-035",
+   "stem": "—Could you help me carry the box? —____",
+   "options": [
+    "That's all right.",
+    "You're welcome.",
+    "Sure, I can.",
+    "Thank you."
+   ],
+   "answer": 2,
+   "explanation": "答应请求用 Sure, I can。另三句回应感谢或道歉，不能用来应允帮助。"
+  },
+  {
+   "id": "g9x-en-036",
+   "stem": "Which of the following is the right passive form of「他们昨天修好了这台机器」（　）",
+   "options": [
+    "The machine repaired by them yesterday.",
+    "The machine was repaired by them yesterday.",
+    "The machine is repaired by them yesterday.",
+    "The machine has repaired by them yesterday."
+   ],
+   "answer": 1,
+   "explanation": "过去时间加被动语态为 was repaired 加 by 加施动者。其余各项缺助动词、时态不符或语态错误。"
+  },
+  {
+   "id": "g9x-en-037",
+   "stem": "He is the man ____ helped me yesterday.",
+   "options": [
+    "which",
+    "who",
+    "whose",
+    "what"
+   ],
+   "answer": 1,
+   "explanation": "先行词 the man 指人且在从句作主语，用 who。which 指物，whose 作定语，what 不能引导定语从句。"
+  },
+  {
+   "id": "g9x-en-038",
+   "stem": "This is the factory ____ my father works.",
+   "options": [
+    "where",
+    "that",
+    "which",
+    "who"
+   ],
+   "answer": 0,
+   "explanation": "先行词 factory 表地点且从句完整，用关系副词 where。which 与 that 需在从句中作成分。"
+  },
+  {
+   "id": "g9x-en-039",
+   "stem": "The more careful you are, ____ mistakes you will make.",
+   "options": [
+    "the more",
+    "fewer",
+    "more",
+    "the fewer"
+   ],
+   "answer": 3,
+   "explanation": "the 加比较级对照结构表示越……越……，此句应填 the fewer。缺 the 或用 more 都会改变语义。"
+  },
+  {
+   "id": "g9x-en-040",
+   "stem": "下面哪一句是宾语从句的正确语序（　）",
+   "options": [
+    "I don't know when will he come.",
+    "I don't know when does he come.",
+    "I don't know when he will come.",
+    "I don't know when he does come."
+   ],
+   "answer": 2,
+   "explanation": "宾语从句用陈述语序 when he will come。倒装形式与 does come 强调结构都不符合从句要求。"
+  }
+ ]
+}

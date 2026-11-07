@@ -1,0 +1,487 @@
+{
+ "grade": 9,
+ "term": "上",
+ "subject": "english",
+ "items": [
+  {
+   "id": "g9s-en-001",
+   "stem": "This bridge ____ in 1998.",
+   "options": [
+    "was built",
+    "built",
+    "is built",
+    "has built"
+   ],
+   "answer": 0,
+   "explanation": "桥是被建造的，1998 是过去时间，用一般过去时的被动语态 was built。built 是主动，is built 时态不符，has built 不能表被动。"
+  },
+  {
+   "id": "g9s-en-002",
+   "stem": "English ____ in more than fifty countries.",
+   "options": [
+    "speaks",
+    "is spoken",
+    "spoke",
+    "has spoken"
+   ],
+   "answer": 1,
+   "explanation": "英语是被使用的对象，用一般现在时被动语态 is spoken。speaks 是主动，spoke 与 has spoken 都不表被动。"
+  },
+  {
+   "id": "g9s-en-003",
+   "stem": "The homework ____ tomorrow.",
+   "options": [
+    "will finish",
+    "is finishing",
+    "will be finished",
+    "finishes"
+   ],
+   "answer": 2,
+   "explanation": "作业将被完成，用一般将来时被动 will be finished。其余三项都是主动形式，与作业的受动关系不符。"
+  },
+  {
+   "id": "g9s-en-004",
+   "stem": "A new hospital ____ in our town next year.",
+   "options": [
+    "is built",
+    "was built",
+    "builds",
+    "will be built"
+   ],
+   "answer": 3,
+   "explanation": "next year 提示将来时，医院是被修建的，用 will be built。is built 与 was built 时态不符，builds 是主动。"
+  },
+  {
+   "id": "g9s-en-005",
+   "stem": "The room ____ by us every day.",
+   "options": [
+    "cleans",
+    "is cleaned",
+    "cleaned",
+    "is cleaning"
+   ],
+   "answer": 1,
+   "explanation": "房间被人打扫，every day 用一般现在时被动 is cleaned。cleans 与 cleaned 是主动，is cleaning 是进行时主动。"
+  },
+  {
+   "id": "g9s-en-006",
+   "stem": "These trees ____ last spring.",
+   "options": [
+    "plant",
+    "planted",
+    "were planted",
+    "are planted"
+   ],
+   "answer": 2,
+   "explanation": "树是被栽种的，last spring 是过去时间，用 were planted。are planted 时态不符，另两项是主动形式。"
+  },
+  {
+   "id": "g9s-en-007",
+   "stem": "—When ____ the school ____? —In 1950.",
+   "options": [
+    "has; built",
+    "did; build",
+    "is; built",
+    "was; built"
+   ],
+   "answer": 3,
+   "explanation": "学校被建成，被动语态疑问句用 was 提前加过去分词 built。did 后须接原形，is 与 has 时态或形式不符。"
+  },
+  {
+   "id": "g9s-en-008",
+   "stem": "The letter ____ to him yesterday.",
+   "options": [
+    "was sent",
+    "sent",
+    "is sent",
+    "sends"
+   ],
+   "answer": 0,
+   "explanation": "信是被寄出的，yesterday 用过去时被动 was sent。sent 是主动过去式，is sent 时态不符，sends 是第三人称单数。"
+  },
+  {
+   "id": "g9s-en-009",
+   "stem": "The boy ____ to look after his sister.",
+   "options": [
+    "asks",
+    "asked",
+    "is asked",
+    "is asking"
+   ],
+   "answer": 2,
+   "explanation": "男孩是被要求照顾妹妹的，用一般现在时被动 is asked。其余三项都是主动，与男孩的受动关系不符。"
+  },
+  {
+   "id": "g9s-en-010",
+   "stem": "The windows ____ already ____ by the students.",
+   "options": [
+    "have; cleaned",
+    "has; cleaned",
+    "are; cleaned",
+    "have; been cleaned"
+   ],
+   "answer": 3,
+   "explanation": "完成时被动为 have been 加过去分词，主语复数用 have。has 配单数，缺 been 或改用 are 都不成立。"
+  },
+  {
+   "id": "g9s-en-011",
+   "stem": "The book ____ by many students now.",
+   "options": [
+    "is being read",
+    "is reading",
+    "reads",
+    "has read"
+   ],
+   "answer": 0,
+   "explanation": "书正被学生阅读，现在进行时被动为 is being read。is reading 是主动进行，reads 与 has read 都不表被动。"
+  },
+  {
+   "id": "g9s-en-012",
+   "stem": "The story ____ by children all over the world.",
+   "options": [
+    "loves",
+    "is loved",
+    "loved",
+    "loving"
+   ],
+   "answer": 1,
+   "explanation": "故事是被喜爱的，用一般现在时被动 is loved。loved 是过去式主动，loves 与 loving 形式或语态不对。"
+  },
+  {
+   "id": "g9s-en-013",
+   "stem": "The man ____ is talking with our teacher is my father.",
+   "options": [
+    "which",
+    "where",
+    "whose",
+    "who"
+   ],
+   "answer": 3,
+   "explanation": "先行词 the man 指人，从句缺主语，用关系代词 who。which 指物，whose 作定语，where 指地点。"
+  },
+  {
+   "id": "g9s-en-014",
+   "stem": "This is the book ____ I bought yesterday.",
+   "options": [
+    "which",
+    "whose",
+    "who",
+    "where"
+   ],
+   "answer": 0,
+   "explanation": "先行词 book 指物，从句缺宾语，用 which。who 指人，whose 作定语，where 作状语。"
+  },
+  {
+   "id": "g9s-en-015",
+   "stem": "I like the girl ____ hair is long and black.",
+   "options": [
+    "who",
+    "whose",
+    "which",
+    "that"
+   ],
+   "answer": 1,
+   "explanation": "hair 与 girl 是所属关系，须用 whose 作定语。who、which、that 都不能表示所属。"
+  },
+  {
+   "id": "g9s-en-016",
+   "stem": "The house ____ we lived in ten years ago has been pulled down.",
+   "options": [
+    "who",
+    "whose",
+    "which",
+    "what"
+   ],
+   "answer": 2,
+   "explanation": "先行词 house 指物，介词 in 后缺宾语，用 which。who 指人，whose 与 what 都不合此处。"
+  },
+  {
+   "id": "g9s-en-017",
+   "stem": "This is the best film ____ I have ever seen.",
+   "options": [
+    "that",
+    "who",
+    "which",
+    "what"
+   ],
+   "answer": 0,
+   "explanation": "先行词被最高级 the best 修饰时，关系代词只能用 that。which 与 who 在此结构中不适用。"
+  },
+  {
+   "id": "g9s-en-018",
+   "stem": "Do you know the man ____ is standing at the gate?",
+   "options": [
+    "which",
+    "whose",
+    "who",
+    "when"
+   ],
+   "answer": 2,
+   "explanation": "先行词 the man 指人且在从句中作主语，用 who。which 指物，whose 作定语，when 指时间。"
+  },
+  {
+   "id": "g9s-en-019",
+   "stem": "I still remember the day ____ we first met.",
+   "options": [
+    "which",
+    "when",
+    "that",
+    "where"
+   ],
+   "answer": 1,
+   "explanation": "先行词 the day 表时间且从句不缺主宾，用关系副词 when。which 与 that 需在从句中作成分。"
+  },
+  {
+   "id": "g9s-en-020",
+   "stem": "This is the school ____ my mother works.",
+   "options": [
+    "which",
+    "that",
+    "who",
+    "where"
+   ],
+   "answer": 3,
+   "explanation": "先行词 school 表地点，从句成分完整，用关系副词 where。which 与 that 缺可替代的成分。"
+  },
+  {
+   "id": "g9s-en-021",
+   "stem": "The book ____ cover is red belongs to Mary.",
+   "options": [
+    "who",
+    "whose",
+    "which",
+    "that"
+   ],
+   "answer": 1,
+   "explanation": "cover 与 book 是所属关系，须用 whose。which、that 不能作定语表所属，who 只指人。"
+  },
+  {
+   "id": "g9s-en-022",
+   "stem": "He is the only person ____ can help you.",
+   "options": [
+    "which",
+    "what",
+    "whose",
+    "who"
+   ],
+   "answer": 3,
+   "explanation": "先行词被 only 修饰且指人，关系代词用 who，也可用 that。which 指物，whose 与 what 不合。"
+  },
+  {
+   "id": "g9s-en-023",
+   "stem": "—Whose bag is this? —It ____ be Lily's. Hers is blue.",
+   "options": [
+    "can't",
+    "must",
+    "may",
+    "should"
+   ],
+   "answer": 0,
+   "explanation": "包不是 Lily 的，因为她的包是蓝色，表示否定推测用 can't。must 表肯定推测，may 表可能，should 表应该。"
+  },
+  {
+   "id": "g9s-en-024",
+   "stem": "The light is on, so he ____ be at home.",
+   "options": [
+    "can't",
+    "mustn't",
+    "must",
+    "needn't"
+   ],
+   "answer": 2,
+   "explanation": "灯亮着是有力证据，表示肯定推测用 must。can't 表否定推测，mustn't 表禁止，needn't 表不必。"
+  },
+  {
+   "id": "g9s-en-025",
+   "stem": "She ____ be in the library. I saw her there just now.",
+   "options": [
+    "might",
+    "can't",
+    "must",
+    "would"
+   ],
+   "answer": 2,
+   "explanation": "刚亲眼见到她在图书馆，是有把握的肯定推测，用 must。can't 与 might 都不是肯定判断。"
+  },
+  {
+   "id": "g9s-en-026",
+   "stem": "It ____ rain this afternoon. Take an umbrella with you.",
+   "options": [
+    "may",
+    "can't",
+    "must",
+    "shouldn't"
+   ],
+   "answer": 0,
+   "explanation": "下午有可能下雨，表示不确定的可能性用 may。must 太肯定，can't 表否定，shouldn't 表不该。"
+  },
+  {
+   "id": "g9s-en-027",
+   "stem": "He ____ be a student. He looks too old.",
+   "options": [
+    "must",
+    "should",
+    "may",
+    "can't"
+   ],
+   "answer": 3,
+   "explanation": "看起来太老，作否定推测用 can't。must 表肯定推测，may 表可能，should 表应当。"
+  },
+  {
+   "id": "g9s-en-028",
+   "stem": "—Where is Tom? —He ____ be in the playground. I'm not sure.",
+   "options": [
+    "must",
+    "might",
+    "can't",
+    "should"
+   ],
+   "answer": 1,
+   "explanation": "说话人不确定，用 might 表较低可能性。must 与 should 语气过强，can't 是否定推测。"
+  },
+  {
+   "id": "g9s-en-029",
+   "stem": "The dictionary ____ be mine. My name is on it.",
+   "options": [
+    "can't",
+    "needn't",
+    "might",
+    "must"
+   ],
+   "answer": 3,
+   "explanation": "名字写在上面是确凿证据，用 must 表肯定推测。can't 是否定推测，might 不肯定，needn't 表不必。"
+  },
+  {
+   "id": "g9s-en-030",
+   "stem": "You ____ be tired after the long walk.",
+   "options": [
+    "can't",
+    "must",
+    "might not",
+    "needn't"
+   ],
+   "answer": 1,
+   "explanation": "长途步行后疲惫是合理推断，用 must 表肯定。can't 与 might not 表否定，needn't 表不必。"
+  },
+  {
+   "id": "g9s-en-031",
+   "stem": "I don't know ____ he will come to the party.",
+   "options": [
+    "that",
+    "what",
+    "whether",
+    "which"
+   ],
+   "answer": 2,
+   "explanation": "表示是否用 whether 引导宾语从句。that 用于陈述句，what 与 which 需在从句中作成分。"
+  },
+  {
+   "id": "g9s-en-032",
+   "stem": "Can you tell me ____ yesterday?",
+   "options": [
+    "what he did",
+    "what did he do",
+    "what does he do",
+    "what he does"
+   ],
+   "answer": 0,
+   "explanation": "宾语从句须用陈述语序，且 yesterday 用过去时，故为 what he did。其余三项倒装或时态错。"
+  },
+  {
+   "id": "g9s-en-033",
+   "stem": "I wonder ____ the meeting will begin.",
+   "options": [
+    "when",
+    "that",
+    "what",
+    "which"
+   ],
+   "answer": 0,
+   "explanation": "从句需要时间状语，用 when 引导。that 引导陈述句，what 与 which 需在从句中作主语或宾语。"
+  },
+  {
+   "id": "g9s-en-034",
+   "stem": "She asked me ____ I could help her.",
+   "options": [
+    "that",
+    "which",
+    "what",
+    "if"
+   ],
+   "answer": 3,
+   "explanation": "原句是 Can you help me，转从句用 if 表示是否。that 用于陈述句，另两项需有指代对象。"
+  },
+  {
+   "id": "g9s-en-035",
+   "stem": "Excuse me, could you tell me how old ____ ?",
+   "options": [
+    "how old is he",
+    "how old does he",
+    "how old he is",
+    "how he old is"
+   ],
+   "answer": 2,
+   "explanation": "宾语从句用陈述语序 how old he is。其余三项语序倒装或词序混乱。"
+  },
+  {
+   "id": "g9s-en-036",
+   "stem": "He told me that he ____ to Beijing twice.",
+   "options": [
+    "has been",
+    "had been",
+    "is",
+    "will be"
+   ],
+   "answer": 1,
+   "explanation": "主句 told 是过去时，从句表示更早的经历用过去完成时 had been。has been 与 told 不呼应。"
+  },
+  {
+   "id": "g9s-en-037",
+   "stem": "I really don't know ____ to do next.",
+   "options": [
+    "how",
+    "what",
+    "which",
+    "that"
+   ],
+   "answer": 1,
+   "explanation": "疑问词加不定式作宾语，do 缺宾语，用 what。how 表方式，which 需选择范围，that 不合。"
+  },
+  {
+   "id": "g9s-en-038",
+   "stem": "Please tell me ____ you like the film or not.",
+   "options": [
+    "whether",
+    "if",
+    "that",
+    "what"
+   ],
+   "answer": 0,
+   "explanation": "与 or not 搭配只能用 whether。if 不能与 or not 直接连用，that 与 what 都不表选择。"
+  },
+  {
+   "id": "g9s-en-039",
+   "stem": "「他昨天告诉我的事很重要」的英语是（　）",
+   "options": [
+    "Which he told me yesterday is important.",
+    "What did he tell me yesterday is very important.",
+    "That he told me yesterday are important.",
+    "What he told me yesterday is very important."
+   ],
+   "answer": 3,
+   "explanation": "主语从句用陈述语序 what he told me yesterday，谓语用单数 is。倒装、are 与 which 都不合。"
+  },
+  {
+   "id": "g9s-en-040",
+   "stem": "The reason ____ he was late is that he missed the bus.",
+   "options": [
+    "which",
+    "what",
+    "why",
+    "when"
+   ],
+   "answer": 2,
+   "explanation": "先行词 the reason 表原因，从句成分完整，用关系副词 why。which 与 what 需在从句中作成分。"
+  }
+ ]
+}

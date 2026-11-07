@@ -1,0 +1,967 @@
+{
+ "grade": 6,
+ "term": "下",
+ "subject": "english",
+ "items": [
+  {
+   "id": "g6x-en-001",
+   "stem": "「How tall are you?」的正确回答是（　）",
+   "options": [
+    "I'm 1.62 metres.",
+    "I'm 48 kilograms.",
+    "I'm twelve years old.",
+    "I'm fine, thank you."
+   ],
+   "answer": 0,
+   "explanation": "问句问身高，答语要用身高单位 metre；B答的是体重，C答的是年龄，D答的是状态，都与 how tall 不对应。"
+  },
+  {
+   "id": "g6x-en-002",
+   "stem": "「How heavy are you?」——I'm 45 ____.",
+   "options": [
+    "metres",
+    "kilograms",
+    "years",
+    "centimetres"
+   ],
+   "answer": 1,
+   "explanation": "问体重用 kilogram，45 kilograms 表示45公斤；metre是长度单位，year是年龄单位，centimetre是厘米，均不合问句。"
+  },
+  {
+   "id": "g6x-en-003",
+   "stem": "tall 的比较级是（　）",
+   "options": [
+    "tallest",
+    "more tall",
+    "taller",
+    "talls"
+   ],
+   "answer": 2,
+   "explanation": "单音节形容词加-er构成比较级，tall变taller；more tall不符合规则，tallest是最高级，talls不是形容词形式。"
+  },
+  {
+   "id": "g6x-en-004",
+   "stem": "heavy 的比较级是（　）",
+   "options": [
+    "heavyer",
+    "heaviest",
+    "more heavy",
+    "heavier"
+   ],
+   "answer": 3,
+   "explanation": "以辅音字母加y结尾的双音节词，变y为i再加-er，得heavier；heavyer拼写错误，heaviest是最高级，more heavy不合规则。"
+  },
+  {
+   "id": "g6x-en-005",
+   "stem": "big 的比较级是（　）",
+   "options": [
+    "biger",
+    "bigger",
+    "bigest",
+    "more big"
+   ],
+   "answer": 1,
+   "explanation": "重读闭音节且末尾只有一个辅音字母，要双写该字母再加-er，得bigger；biger少写一个g，bigest是最高级且拼错。"
+  },
+  {
+   "id": "g6x-en-006",
+   "stem": "My brother is ____ than me.",
+   "options": [
+    "tall",
+    "tallest",
+    "taller",
+    "the tallest"
+   ],
+   "answer": 2,
+   "explanation": "句中有than表比较，前面要用比较级taller；tall是原级，tallest前需the且不与than连用，the tallest同样不合。"
+  },
+  {
+   "id": "g6x-en-007",
+   "stem": "「你比你的弟弟高吗？」的英语是（　）",
+   "options": [
+    "You are taller than your brother?",
+    "Are you tall than your brother?",
+    "Do you taller than your brother?",
+    "Are you taller than your brother?"
+   ],
+   "answer": 3,
+   "explanation": "一般疑问句需把be动词are提到句首，比较级用taller；其余三项或漏比较级，或误用do，或没有倒装。"
+  },
+  {
+   "id": "g6x-en-008",
+   "stem": "Which is ____, an elephant or a horse?",
+   "options": [
+    "heavier",
+    "heaviest",
+    "heavy",
+    "the heaviest"
+   ],
+   "answer": 0,
+   "explanation": "两者比较用比较级heavier；heavy是原级，heaviest与the heaviest都是三者以上比较用的最高级，故不合适。"
+  },
+  {
+   "id": "g6x-en-009",
+   "stem": "「我的头发比你的长」的英语是（　）",
+   "options": [
+    "My hair is long than yours.",
+    "My hair is the longest than yours.",
+    "My hair is longer than yours.",
+    "My hair longer is than yours."
+   ],
+   "answer": 2,
+   "explanation": "long的比较级是longer，比较对象用yours替代your hair；A漏比较级，B把最高级与than混用，D语序颠倒。"
+  },
+  {
+   "id": "g6x-en-010",
+   "stem": "You're 1.55 metres. I'm 1.60 metres. So I'm ____ than you.",
+   "options": [
+    "shorter",
+    "thinner",
+    "heavier",
+    "taller"
+   ],
+   "answer": 3,
+   "explanation": "1.60米高于1.55米，身高更高用taller；shorter表更矮，thinner表更瘦，heavier表更重，都与身高比较不符。"
+  },
+  {
+   "id": "g6x-en-011",
+   "stem": "「Last weekend」的意思是（　）",
+   "options": [
+    "上个周末",
+    "下周末",
+    "这个周末",
+    "每个周末"
+   ],
+   "answer": 0,
+   "explanation": "last表示上一个的，weekend是周末，合起来是上个周末；next是下一个，this是这个，every是每个，故其余三项错。"
+  },
+  {
+   "id": "g6x-en-012",
+   "stem": "clean 的过去式是（　）",
+   "options": [
+    "cleanned",
+    "cleaned",
+    "cleaning",
+    "cleans"
+   ],
+   "answer": 1,
+   "explanation": "规则动词直接加-ed，clean变cleaned；cleanned多写一个n，cleaning是现在分词，cleans是第三人称单数。"
+  },
+  {
+   "id": "g6x-en-013",
+   "stem": "「What did you do last weekend?」的正确回答是（　）",
+   "options": [
+    "I clean my room.",
+    "I am cleaning my room.",
+    "I will clean my room.",
+    "I cleaned my room."
+   ],
+   "answer": 3,
+   "explanation": "问句用did提问，答语要用过去式cleaned；A是一般现在时，B是现在进行时，C是将来时，时态都不对应。"
+  },
+  {
+   "id": "g6x-en-014",
+   "stem": "「Did you go to the park?」的否定回答是（　）",
+   "options": [
+    "No, I didn't.",
+    "No, I don't.",
+    "No, I wasn't.",
+    "No, I haven't."
+   ],
+   "answer": 0,
+   "explanation": "以Did开头的问句要用didn't作否定回答；don't对应一般现在时，wasn't对应be动词，haven't对应完成时，均不匹配。"
+  },
+  {
+   "id": "g6x-en-015",
+   "stem": "stay 的过去式是（　）",
+   "options": [
+    "staied",
+    "stayed",
+    "staying",
+    "stays"
+   ],
+   "answer": 1,
+   "explanation": "以元音字母加y结尾的动词直接加-ed，stay变stayed；staied是错误改y，staying是现在分词，stays是第三人称单数。"
+  },
+  {
+   "id": "g6x-en-016",
+   "stem": "watch 的过去式是（　）",
+   "options": [
+    "watchs",
+    "watching",
+    "watched",
+    "watchied"
+   ],
+   "answer": 2,
+   "explanation": "以ch结尾的规则动词加-ed，得watched；watchs拼写不合，watching是现在分词，watchied错误地改y加ed。"
+  },
+  {
+   "id": "g6x-en-017",
+   "stem": "I ____ my clothes last Sunday.",
+   "options": [
+    "washed",
+    "washing",
+    "washes",
+    "wash"
+   ],
+   "answer": 0,
+   "explanation": "last Sunday是过去时间，动词要用过去式washed；wash是原形，washing是现在分词，washes是第三人称单数。"
+  },
+  {
+   "id": "g6x-en-018",
+   "stem": "have 的过去式是（　）",
+   "options": [
+    "haved",
+    "has",
+    "had",
+    "having"
+   ],
+   "answer": 2,
+   "explanation": "have是不规则动词，过去式是had；haved是错误地按规则变化，has是第三人称单数，having是现在分词。"
+  },
+  {
+   "id": "g6x-en-019",
+   "stem": "「上个周末你做了什么？」的英语是（　）",
+   "options": [
+    "What do you do last weekend?",
+    "What did you do last weekend?",
+    "What are you doing last weekend?",
+    "What will you do last weekend?"
+   ],
+   "answer": 1,
+   "explanation": "last weekend是过去时间，要用助动词did构成疑问；do用于现在时，are doing是进行时，will do是将来时。"
+  },
+  {
+   "id": "g6x-en-020",
+   "stem": "sleep 的过去式是（　）",
+   "options": [
+    "sleeped",
+    "sleeps",
+    "sleeping",
+    "slept"
+   ],
+   "answer": 3,
+   "explanation": "sleep是不规则动词，过去式slept；sleeped是错误按规则变化，sleeping是现在分词，sleeps是第三人称单数。"
+  },
+  {
+   "id": "g6x-en-021",
+   "stem": "「Where did you go?」——I ____ to the zoo.",
+   "options": [
+    "go",
+    "went",
+    "goes",
+    "going"
+   ],
+   "answer": 1,
+   "explanation": "问句用did，答语用过去式went；go是原形，goes是第三人称单数，going是现在分词，都不能对应过去时。"
+  },
+  {
+   "id": "g6x-en-022",
+   "stem": "go 的过去式是（　）",
+   "options": [
+    "goed",
+    "gone",
+    "going",
+    "went"
+   ],
+   "answer": 3,
+   "explanation": "go是不规则动词，过去式went；goed是错误按规则变化，gone是过去分词，going是现在分词，都不能单独作过去式。"
+  },
+  {
+   "id": "g6x-en-023",
+   "stem": "ride 的过去式是（　）",
+   "options": [
+    "rode",
+    "rided",
+    "ridden",
+    "riding"
+   ],
+   "answer": 0,
+   "explanation": "ride的过去式是rode；rided是错误按规则变化，ridden是过去分词，riding是现在分词，均不作过去式用。"
+  },
+  {
+   "id": "g6x-en-024",
+   "stem": "eat 的过去式是（　）",
+   "options": [
+    "eated",
+    "eaten",
+    "ate",
+    "eating"
+   ],
+   "answer": 2,
+   "explanation": "eat的过去式是ate；eated是错误按规则变化，eaten是过去分词，eating是现在分词，都不符合过去式要求。"
+  },
+  {
+   "id": "g6x-en-025",
+   "stem": "take 的过去式是（　）",
+   "options": [
+    "taked",
+    "taken",
+    "took",
+    "taking"
+   ],
+   "answer": 2,
+   "explanation": "take的过去式是took；taked是错误变化，taken是过去分词，taking是现在分词，都不能作过去式。"
+  },
+  {
+   "id": "g6x-en-026",
+   "stem": "buy 的过去式是（　）",
+   "options": [
+    "bought",
+    "buyed",
+    "buied",
+    "buying"
+   ],
+   "answer": 0,
+   "explanation": "buy是不规则动词，过去式bought；buyed与buied都是错误按规则变化，buying是现在分词。"
+  },
+  {
+   "id": "g6x-en-027",
+   "stem": "「How did you go there?」——We ____ there by bus.",
+   "options": [
+    "go",
+    "going",
+    "goes",
+    "went"
+   ],
+   "answer": 3,
+   "explanation": "问句用did问过去，答语要用过去式went；go是原形，goes是单数形式，going是分词，都不能与did呼应。"
+  },
+  {
+   "id": "g6x-en-028",
+   "stem": "camp 的过去式是（　）",
+   "options": [
+    "camps",
+    "camped",
+    "camping",
+    "campied"
+   ],
+   "answer": 1,
+   "explanation": "camp 是规则动词，加 -ed 得 camped；camps 是单数形式，camping 是现在分词，campied 错改 y 加 ed，三项均错。"
+  },
+  {
+   "id": "g6x-en-029",
+   "stem": "I ____ a cold last weekend and stayed in bed.",
+   "options": [
+    "have",
+    "having",
+    "has",
+    "had"
+   ],
+   "answer": 3,
+   "explanation": "last weekend表过去，要用had；have是原形，having是现在分词，has是第三人称单数，都不能表示过去的生病。"
+  },
+  {
+   "id": "g6x-en-030",
+   "stem": "「上周末我们去了公园」的英语是（　）",
+   "options": [
+    "We go to the park last weekend.",
+    "We went to the park last weekend.",
+    "We are going to the park last weekend.",
+    "We will go to the park last weekend."
+   ],
+   "answer": 1,
+   "explanation": "过去时间里动词用went；go是现在时，are going是进行时，will go是将来时，都与last weekend相冲突。"
+  },
+  {
+   "id": "g6x-en-031",
+   "stem": "「Then and now」这个单元主要讨论（　）",
+   "options": [
+    "将来的学校",
+    "怎样做实验",
+    "过去与现在的变化",
+    "如何种花"
+   ],
+   "answer": 2,
+   "explanation": "then指那时、now指现在，本单元比较过去与现在的不同；其余三项都跑出单元主题，与变化对比无关。"
+  },
+  {
+   "id": "g6x-en-032",
+   "stem": "There ____ no gym in my school ten years ago.",
+   "options": [
+    "was",
+    "are",
+    "is",
+    "were"
+   ],
+   "answer": 0,
+   "explanation": "ten years ago是过去时间，gym是单数，用was；is和are是现在时，were用于复数主语，故不合。"
+  },
+  {
+   "id": "g6x-en-033",
+   "stem": "There ____ many trees in our school now.",
+   "options": [
+    "are",
+    "was",
+    "is",
+    "were"
+   ],
+   "answer": 0,
+   "explanation": "now表现在，trees是复数，用are；is用于单数现在，was与were是过去时，都不符合现在的复数主语。"
+  },
+  {
+   "id": "g6x-en-034",
+   "stem": "Before, I ____ ride a bike. Now I can.",
+   "options": [
+    "can",
+    "can't",
+    "could",
+    "couldn't"
+   ],
+   "answer": 3,
+   "explanation": "before与now对比，前面说过去不会骑，用couldn't；can与can't是现在时，could表示过去能，与后文矛盾。"
+  },
+  {
+   "id": "g6x-en-035",
+   "stem": "「十年前我不会游泳」的英语是（　）",
+   "options": [
+    "Ten years ago I can't swim.",
+    "Ten years ago I don't swim.",
+    "Ten years ago I couldn't swim.",
+    "Ten years ago I can swim."
+   ],
+   "answer": 2,
+   "explanation": "十年前是过去，can的过去式是could，否定为couldn't；can't与don't是现在时，can是肯定，与句意相反。"
+  },
+  {
+   "id": "g6x-en-036",
+   "stem": "ice-skating 的意思是（　）",
+   "options": [
+    "打羽毛球",
+    "滑冰",
+    "骑自行车",
+    "游泳"
+   ],
+   "answer": 1,
+   "explanation": "ice指冰，skating指滑行，合起来是滑冰；打羽毛球是badminton，骑自行车是cycling，游泳是swimming。"
+  },
+  {
+   "id": "g6x-en-037",
+   "stem": "「打羽毛球」的英语是（　）",
+   "options": [
+    "baseball",
+    "badminton",
+    "basketball",
+    "volleyball"
+   ],
+   "answer": 1,
+   "explanation": "羽毛球的英语是badminton；baseball是棒球，basketball是篮球，volleyball是排球，三者均是球类但不同项目。"
+  },
+  {
+   "id": "g6x-en-038",
+   "stem": "My school ____ a dining hall now, but it ____ have one before.",
+   "options": [
+    "has; didn't",
+    "had; doesn't",
+    "has; doesn't",
+    "have; didn't"
+   ],
+   "answer": 0,
+   "explanation": "now对应现在时has，before对应过去否定didn't have；B、C时态错位，D的have与单数主语My school不搭配。"
+  },
+  {
+   "id": "g6x-en-039",
+   "stem": "—How was your weekend? —It ____ great.",
+   "options": [
+    "is",
+    "were",
+    "are",
+    "was"
+   ],
+   "answer": 3,
+   "explanation": "问句用was问过去，答语也用was；is是现在时，are与were用于复数，与主语It不搭配。"
+  },
+  {
+   "id": "g6x-en-040",
+   "stem": "下面哪一句的动词形式正确（　）",
+   "options": [
+    "I goed to the museum yesterday.",
+    "I go to the museum yesterday.",
+    "I went to the museum yesterday.",
+    "I am going to the museum yesterday."
+   ],
+   "answer": 2,
+   "explanation": "go的过去式是went，yesterday要求过去时；goed是错误变化，go是现在时，am going是进行时，都与yesterday不合。"
+  },
+  {
+   "id": "g6x-en-041",
+   "stem": "—Hi, Amy. How was your weekend? —____ I went to the science museum with my parents.",
+   "options": [
+    "It was great.",
+    "I'm fine, thanks.",
+    "It is Sunday today.",
+    "Yes, please."
+   ],
+   "answer": 0,
+   "explanation": "How was your weekend 问周末过得怎样，答 It was great 才切题。I'm fine 回应问候，It is Sunday 答日期。"
+  },
+  {
+   "id": "g6x-en-042",
+   "stem": "—____ did you go last Sunday? —I went to the countryside with my uncle.",
+   "options": [
+    "What",
+    "Where",
+    "How",
+    "When"
+   ],
+   "answer": 1,
+   "explanation": "答语说的是地点 countryside，故用 Where 提问。What 问做了什么，How 问方式，When 问时间。"
+  },
+  {
+   "id": "g6x-en-043",
+   "stem": "—Did you ride a horse there? —____ It was my first time.",
+   "options": [
+    "Yes, I do.",
+    "No, I didn't.",
+    "Yes, I did.",
+    "No, I don't."
+   ],
+   "answer": 2,
+   "explanation": "「第一次骑」说明确实骑了，用 Yes, I did 作答，助动词与 Did 保持一致。其余选项或用错助动词，或答非所问。"
+  },
+  {
+   "id": "g6x-en-044",
+   "stem": "—What did you do on Saturday morning? —I ____ my grandparents and cleaned the yard.",
+   "options": [
+    "will visit",
+    "visit",
+    "am visiting",
+    "visited"
+   ],
+   "answer": 3,
+   "explanation": "问句用 did，说明问的是过去的事，答语须用过去式 visited。visit 是原形，另两项属现在时和将来时。"
+  },
+  {
+   "id": "g6x-en-045",
+   "stem": "—How ____ are you? —I'm 48 kilograms.",
+   "options": [
+    "tall",
+    "heavy",
+    "old",
+    "many"
+   ],
+   "answer": 1,
+   "explanation": "答语给出体重，问句要用 How heavy。How tall 问身高，How old 问年龄，How many 后须接复数可数名词。"
+  },
+  {
+   "id": "g6x-en-046",
+   "stem": "—My hair is longer than ____. —Really? Let me see.",
+   "options": [
+    "your",
+    "you",
+    "yours",
+    "yourself"
+   ],
+   "answer": 2,
+   "explanation": "比较对象应同为头发，用名词性物主代词 yours 代替 your hair。you 是人称代词，your 后必须接名词。"
+  },
+  {
+   "id": "g6x-en-047",
+   "stem": "Tom is 1.62 metres and Jack is 1.58 metres. So Tom is ____ than Jack.",
+   "options": [
+    "more tall",
+    "tallest",
+    "tall",
+    "taller"
+   ],
+   "answer": 3,
+   "explanation": "两人相比用比较级 taller，than 是比较级的标志。tallest 用于三者以上的最高级，more tall 不是正确形式。"
+  },
+  {
+   "id": "g6x-en-048",
+   "stem": "—Which is ____, the sun or the moon? —The sun, of course.",
+   "options": [
+    "bigger",
+    "biggest",
+    "big",
+    "more big"
+   ],
+   "answer": 0,
+   "explanation": "两者相比用比较级 bigger，词尾直接加 er。biggest 是三者以上的最高级，more big 属错误形式。"
+  },
+  {
+   "id": "g6x-en-049",
+   "stem": "—____ heavy is your schoolbag? —About five kilos.",
+   "options": [
+    "Which",
+    "What",
+    "How",
+    "How much"
+   ],
+   "answer": 2,
+   "explanation": "问重量用 How heavy，是固定搭配。What 与 Which 不能与 heavy 搭配，How much 后应接不可数名词或问价钱。"
+  },
+  {
+   "id": "g6x-en-050",
+   "stem": "—You look taller than before. How tall are you now? —I'm 1.65 ____.",
+   "options": [
+    "years",
+    "metre",
+    "kilos",
+    "metres"
+   ],
+   "answer": 3,
+   "explanation": "身高用 metres 作单位，1.65 大于 1 须用复数形式。metre 是单数，kilos 是重量，years 是年龄。"
+  },
+  {
+   "id": "g6x-en-051",
+   "stem": "Last weekend I ____ at home and read a lot of books.",
+   "options": [
+    "stayed",
+    "stay",
+    "staying",
+    "stays"
+   ],
+   "answer": 0,
+   "explanation": "Last weekend 表过去，谓语用过去式 stayed。stay 是原形，staying 是现在分词，stays 是第三人称单数。"
+  },
+  {
+   "id": "g6x-en-052",
+   "stem": "He ____ his homework yesterday evening.",
+   "options": [
+    "finish",
+    "finished",
+    "finishes",
+    "finishing"
+   ],
+   "answer": 1,
+   "explanation": "yesterday evening 说明发生在过去，用过去式 finished。其余三项都是现在时或非谓语，与时间状语不一致。"
+  },
+  {
+   "id": "g6x-en-053",
+   "stem": "—What ____ you do last night? —I watched a film with my family.",
+   "options": [
+    "are",
+    "do",
+    "does",
+    "did"
+   ],
+   "answer": 3,
+   "explanation": "问过去做了什么用 did 加动词原形。do 与 does 属一般现在时，are 不能构成实义动词的疑问句。"
+  },
+  {
+   "id": "g6x-en-054",
+   "stem": "There ____ a small park here five years ago, but now there is a big one.",
+   "options": [
+    "was",
+    "is",
+    "were",
+    "be"
+   ],
+   "answer": 0,
+   "explanation": "five years ago 指过去，主语 a small park 是单数，用 was。is 与过去时间冲突，were 用于复数主语。"
+  },
+  {
+   "id": "g6x-en-055",
+   "stem": "—Where did you go last summer? —We ____ to Hainan by plane.",
+   "options": [
+    "fly",
+    "flew",
+    "flies",
+    "flying"
+   ],
+   "answer": 1,
+   "explanation": "答句描述去年夏天的经历，fly 的过去式是不规则的 flew。其余三项都不是过去式形式。"
+  },
+  {
+   "id": "g6x-en-056",
+   "stem": "My school ____ a new library now, but it didn't have one before.",
+   "options": [
+    "had",
+    "have",
+    "has",
+    "having"
+   ],
+   "answer": 2,
+   "explanation": "now 表示现在，主语 My school 是单数，用 has。have 用于复数主语，had 与 now 矛盾。"
+  },
+  {
+   "id": "g6x-en-057",
+   "stem": "Before, I ____ swim at all. Now I can swim very well.",
+   "options": [
+    "couldn't",
+    "can't",
+    "don't",
+    "didn't"
+   ],
+   "answer": 0,
+   "explanation": "Before 指过去，与 Now 对照，用 couldn't 表示过去没有能力。can't 属现在时，don't 与 swim 搭配不当。"
+  },
+  {
+   "id": "g6x-en-058",
+   "stem": "She ____ short then, but now she is very tall.",
+   "options": [
+    "were",
+    "is",
+    "was",
+    "be"
+   ],
+   "answer": 2,
+   "explanation": "then 与 now 形成对照，then 指过去，主语 She 是单数，用 was。is 指现在，were 用于复数主语。"
+  },
+  {
+   "id": "g6x-en-059",
+   "stem": "—How was your weekend? —It was ____. I didn't like it at all.",
+   "options": [
+    "wonderful",
+    "terrible",
+    "great",
+    "exciting"
+   ],
+   "answer": 1,
+   "explanation": "后一句说不喜欢，故前面应填贬义词 terrible。wonderful、great、exciting 都是褒义，与后句矛盾。"
+  },
+  {
+   "id": "g6x-en-060",
+   "stem": "下面哪一句的时态使用正确（　）",
+   "options": [
+    "I go to the zoo last Sunday.",
+    "I am going to the zoo last Sunday.",
+    "I goes to the zoo last Sunday.",
+    "I went to the zoo last Sunday."
+   ],
+   "answer": 3,
+   "explanation": "last Sunday 表过去，须用过去式 went。go 与 goes 属现在时，am going to 与过去的时间状语冲突。"
+  },
+  {
+   "id": "g6x-en-061",
+   "stem": "—What are your hobbies? —I like ____ kung fu and reading stories.",
+   "options": [
+    "do",
+    "doing",
+    "did",
+    "does"
+   ],
+   "answer": 1,
+   "explanation": "like 后接动名词表示爱好，do kung fu 用 doing 形式。do 是原形，did 是过去式，does 是第三人称单数。"
+  },
+  {
+   "id": "g6x-en-062",
+   "stem": "—____ your pen pal live in Kunming? —Yes, he does.",
+   "options": [
+    "Are",
+    "Do",
+    "Is",
+    "Does"
+   ],
+   "answer": 3,
+   "explanation": "答语 Yes, he does 说明问句用 Aoes。Ao 用于复数主语，Is 与 Dre 不能与实义动词 live 搭配。"
+  },
+  {
+   "id": "g6x-en-063",
+   "stem": "He often ____ kung fu on Sundays.",
+   "options": [
+    "does",
+    "do",
+    "did",
+    "doing"
+   ],
+   "answer": 0,
+   "explanation": "often 表示习惯，主语 He 为第三人称单数，动词加 es 得 does。do 用于非三单主语，did 属过去时。"
+  },
+  {
+   "id": "g6x-en-064",
+   "stem": "—How does your father go to work? —He ____ to work by bus.",
+   "options": [
+    "went",
+    "go",
+    "goes",
+    "going"
+   ],
+   "answer": 2,
+   "explanation": "问句用 does，答句为一般现在时三单形式 goes。go 用于非三单主语，going 不能单独作谓语。"
+  },
+  {
+   "id": "g6x-en-065",
+   "stem": "We went to the museum ____ bus last Friday.",
+   "options": [
+    "in",
+    "on",
+    "by",
+    "at"
+   ],
+   "answer": 2,
+   "explanation": "乘公交用 by bus，by 后接交通工具单数。on 用于 on foot，in 用于 car，at 不表交通方式。"
+  },
+  {
+   "id": "g6x-en-066",
+   "stem": "—Thank you for helping me with my English. —____",
+   "options": [
+    "My pleasure.",
+    "That's a good idea.",
+    "No, I'm not.",
+    "You're right."
+   ],
+   "answer": 0,
+   "explanation": "回应感谢用 My pleasure，意为乐意效劳。That's a good idea 回应提议，后两句都不合感谢这一语境。"
+  },
+  {
+   "id": "g6x-en-067",
+   "stem": "—I'm sorry I'm late. —____ Come in, please.",
+   "options": [
+    "Of course not.",
+    "Thank you.",
+    "You're welcome.",
+    "That's all right."
+   ],
+   "answer": 3,
+   "explanation": "对方道歉时用 That's all right 表示没关系。Thank you 用于致谢，You're welcome 回应感谢而非道歉。"
+  },
+  {
+   "id": "g6x-en-068",
+   "stem": "—Would you like some tea? —____ I'd love some.",
+   "options": [
+    "No, thanks.",
+    "Yes, please.",
+    "Here you are.",
+    "Never mind."
+   ],
+   "answer": 1,
+   "explanation": "后句说想喝，故用 Yes, please 接受提议。No thanks 是拒绝，Here you are 是递物，Never mind 表没关系。"
+  },
+  {
+   "id": "g6x-en-069",
+   "stem": "—What would you like to drink? —____",
+   "options": [
+    "It's very nice.",
+    "Yes, I like it.",
+    "No, I wouldn't.",
+    "A glass of water, please."
+   ],
+   "answer": 3,
+   "explanation": "问想喝什么须答出具体饮品，如一杯水。用 Yes 或 No 回答不合特殊疑问句。"
+  },
+  {
+   "id": "g6x-en-070",
+   "stem": "—Excuse me, how can I get to the post office? —____",
+   "options": [
+    "It's very far from here.",
+    "Go straight and turn left at the second crossing.",
+    "You can buy stamps there.",
+    "I don't like post offices."
+   ],
+   "answer": 1,
+   "explanation": "问路须给出走法，第一项交代直走加转弯，实用切题。其余要么只给评价，要么完全偏离问路。"
+  },
+  {
+   "id": "g6x-en-071",
+   "stem": "阅读短文，完成题目。Last summer, Lily went to Yunnan with her parents. They took a train, not a plane, because Lily wanted to see the mountains on the way. On the first day, they visited a small village near Dali. Lily rode a horse for the first time and she felt very excited. The next day it rained, so they stayed in the hotel and looked at the photos they took. Lily said it was the best trip of her life. —Lily 一家去云南乘坐的是（　）",
+   "options": [
+    "By bus.",
+    "By plane.",
+    "By train.",
+    "By car."
+   ],
+   "answer": 2,
+   "explanation": "短文说 They took a train, not a plane，故是坐火车。飞机已被原文明确排除，公交与汽车文中根本没有提到。"
+  },
+  {
+   "id": "g6x-en-072",
+   "stem": "阅读短文，完成题目。Last summer, Lily went to Yunnan with her parents. They took a train, not a plane, because Lily wanted to see the mountains on the way. On the first day, they visited a small village near Dali. Lily rode a horse for the first time and she felt very excited. The next day it rained, so they stayed in the hotel and looked at the photos they took. Lily said it was the best trip of her life. —They did not take a plane because ____",
+   "options": [
+    "Lily wanted to see the mountains on the way",
+    "the tickets were too expensive",
+    "Lily was afraid of flying",
+    "her parents could not drive"
+   ],
+   "answer": 0,
+   "explanation": "原文 because Lily wanted to see the mountains on the way 就是原因。票价贵、怕坐飞机、不会开车短文都没提。"
+  },
+  {
+   "id": "g6x-en-073",
+   "stem": "阅读短文，完成题目。Last summer, Lily went to Yunnan with her parents. They took a train, not a plane, because Lily wanted to see the mountains on the way. On the first day, they visited a small village near Dali. Lily rode a horse for the first time and she felt very excited. The next day it rained, so they stayed in the hotel and looked at the photos they took. Lily said it was the best trip of her life. —On the second day they stayed in the hotel because ____",
+   "options": [
+    "it rained",
+    "Lily was ill",
+    "they were too tired",
+    "the hotel was very nice"
+   ],
+   "answer": 0,
+   "explanation": "原文 The next day it rained, so they stayed in the hotel，下雨即原因。生病、疲劳、旅馆漂亮都无依据。"
+  },
+  {
+   "id": "g6x-en-074",
+   "stem": "阅读短文，完成题目。Last summer, Lily went to Yunnan with her parents. They took a train, not a plane, because Lily wanted to see the mountains on the way. On the first day, they visited a small village near Dali. Lily rode a horse for the first time and she felt very excited. The next day it rained, so they stayed in the hotel and looked at the photos they took. Lily said it was the best trip of her life. —What did Lily think of the trip?",
+   "options": [
+    "It was too long.",
+    "It was a little dangerous.",
+    "It was very boring.",
+    "It was the best trip of her life."
+   ],
+   "answer": 3,
+   "explanation": "末句 it was the best trip of her life 就是她的评价。太长、无聊、危险这三个说法在短文中都找不到依据。"
+  },
+  {
+   "id": "g6x-en-075",
+   "stem": "阅读短文，完成题目。Last summer, Lily went to Yunnan with her parents. They took a train, not a plane, because Lily wanted to see the mountains on the way. On the first day, they visited a small village near Dali. Lily rode a horse for the first time and she felt very excited. The next day it rained, so they stayed in the hotel and looked at the photos they took. Lily said it was the best trip of her life. —What do we know about Lily and the horse?",
+   "options": [
+    "She was afraid to ride a horse.",
+    "She rides a horse every day.",
+    "It was her first time to ride a horse.",
+    "She rode a horse last winter."
+   ],
+   "answer": 2,
+   "explanation": "原文 rode a horse for the first time 说明是初次骑马。每天都骑、害怕骑马、去年冬天都不符合短文内容。"
+  },
+  {
+   "id": "g6x-en-076",
+   "stem": "阅读短文，完成题目。Our school has changed a lot. Ten years ago, there was only one small building and no library. Students played on a muddy playground. Now there is a new library with five thousand books, and the playground is big and clean. Our school is also taller than before — the new building has six floors. My father says the school is much more beautiful now. —What was the school like ten years ago?",
+   "options": [
+    "There was a new library.",
+    "There was only one small building.",
+    "There was a library with 5000 books.",
+    "There was a six-floor building."
+   ],
+   "answer": 1,
+   "explanation": "原文说十年前只有一栋小楼、没有图书馆。新图书馆与六层楼都是现在的变化。"
+  },
+  {
+   "id": "g6x-en-077",
+   "stem": "阅读短文，完成题目。Our school has changed a lot. Ten years ago, there was only one small building and no library. Students played on a muddy playground. Now there is a new library with five thousand books, and the playground is big and clean. Our school is also taller than before — the new building has six floors. My father says the school is much more beautiful now. —What is the playground like now?",
+   "options": [
+    "It is muddy and small.",
+    "It is big and clean.",
+    "It is very small.",
+    "There is no playground."
+   ],
+   "answer": 1,
+   "explanation": "原文 now ... the playground is big and clean。muddy 是过去的样子，很小与没有操场都与原文相反。"
+  },
+  {
+   "id": "g6x-en-078",
+   "stem": "阅读短文，完成题目。Our school has changed a lot. Ten years ago, there was only one small building and no library. Students played on a muddy playground. Now there is a new library with five thousand books, and the playground is big and clean. Our school is also taller than before — the new building has six floors. My father says the school is much more beautiful now. —Compared with the past, the school is ____ now.",
+   "options": [
+    "taller",
+    "shorter",
+    "the same",
+    "older"
+   ],
+   "answer": 0,
+   "explanation": "原文 Our school is also taller than before 直接说明它变高了。更矮、一样、更旧都与原文的意思相反。"
+  },
+  {
+   "id": "g6x-en-079",
+   "stem": "阅读短文，完成题目。Our school has changed a lot. Ten years ago, there was only one small building and no library. Students played on a muddy playground. Now there is a new library with five thousand books, and the playground is big and clean. Our school is also taller than before — the new building has six floors. My father says the school is much more beautiful now. —In the father's eyes, the school is ____ now.",
+   "options": [
+    "much older",
+    "much smaller",
+    "much noisier",
+    "much more beautiful"
+   ],
+   "answer": 3,
+   "explanation": "末句 the school is much more beautiful now 正是父亲的看法。更小、更吵、更旧在短文中都没有依据。"
+  },
+  {
+   "id": "g6x-en-080",
+   "stem": "阅读短文，完成题目。Our school has changed a lot. Ten years ago, there was only one small building and no library. Students played on a muddy playground. Now there is a new library with five thousand books, and the playground is big and clean. Our school is also taller than before — the new building has six floors. My father says the school is much more beautiful now. —This passage mainly tells us about ____",
+   "options": [
+    "what books the writer likes",
+    "the father's job",
+    "the changes of the school in ten years",
+    "games on the playground"
+   ],
+   "answer": 2,
+   "explanation": "全文围绕学校十年前后的对比展开，中心是变化。书、父亲的工作、操场游戏都只是文中的细节。"
+  }
+ ]
+}
