@@ -17,14 +17,14 @@ public interface IGateViewHost
     /// <summary>切到指定题。answeredCount 是已答题数（含当前已选），用于底部 "已答 N"。</summary>
     void ShowQuestion(int index, int answeredCount, int selectedIndex);
 
-    /// <summary>显示结果页。视图内部决定达标/未达标的呈现，3 秒倒计时达标时触发 PassedCountdownElapsed。</summary>
-    void ShowResult(QuizResult result);
-
     /// <summary>
     /// 注入历史作答记录（最新在前，最多 30 条）。宿主在装卷时调一次，
     /// 视图自行决定显示几条、怎么排。只读，视图不得修改。
     /// </summary>
     void SetHistory(IReadOnlyList<AttemptRecord> history);
+
+    /// <summary>显示结果页。视图内部决定达标/未达标的呈现，3 秒倒计时达标时触发 PassedCountdownElapsed。</summary>
+    void ShowResult(QuizResult result);
 
     /// <summary>宿主强制切走（解锁后）。视图不再拦截 Closing。</summary>
     void ReleaseAndClose();

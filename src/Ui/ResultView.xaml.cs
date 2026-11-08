@@ -33,7 +33,6 @@ public partial class ResultView : UserControl
     private readonly DispatcherTimer _timer;
     private Action? _onPassed;
     private string _gradeLabel = string.Empty;
-    private IReadOnlyList<AttemptRecord> _history = Array.Empty<AttemptRecord>();
 
     public ResultView()
     {
@@ -62,8 +61,6 @@ public partial class ResultView : UserControl
     /// </summary>
     public void SetHistory(IReadOnlyList<AttemptRecord> history)
     {
-        _history = history;
-
         if (history is null || history.Count == 0)
         {
             HistorySummary.Text = "还没有记录";
@@ -212,9 +209,17 @@ public partial class ResultView : UserControl
             FontSize = 13,
             Margin = new Thickness(0, 0, 0, 4),
             TextTrimming = TextTrimming.CharacterEllipsis,
-            Foreground = new SolidColorBrush(
-                record.Passed ? Color.FromRgb(0x9B, 0xA0, 0xA8) : Color.FromRgb(0x5E, 0x63, 0x6B)),
+            Foreground = HistoryBrush(record.Passed),
         };
+    }
+
+    /// <summary>历史行前景色：达标 #9BA0A8、未达标 #5E636B。优先取 Theme 里的资源，兜底用同色值。</summary>
+    private Brush HistoryBrush(bool passed)
+    {
+        string key = passed ? "Brush.HistoryPassed" : "Brush.HistoryMiss";
+        return TryFindResource(key) as Brush
+            ?? new SolidColorBrush(
+                passed ? Color.FromRgb(0x9B, 0xA0, 0xA8) : Color.FromRgb(0x5E, 0x63, 0x6B));
     }
 
     /// <summary>「11/07 14:37　六年级下　90 分　10/10 8/10 9/10　00:33」。</summary>

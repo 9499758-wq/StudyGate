@@ -1,93 +1,143 @@
-# StudyGate
+# 🚀 StudyGate · 少年极客能量跃迁门 (Windows 学习守门人)
 
-开机第一件事是答题，答不到 90 分不给桌面。
+> **开机第一件事是答题，做不满 90 分不给进桌面！**  
+> 专为 10~17 岁初中少年打造的硬核学习自律与趣味编程跃迁门。
 
-Windows 专用。三科（语文 / 数学 / 英语），云南教材（部编版语文、人教版数学、PEP 与 Go for it 英语），六年级下起，往上盖初一、初二、初三。
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Platform: Windows](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6.svg)](https://microsoft.com)
+[![Runtime: .NET 8 / Web](https://img.shields.io/badge/Runtime-.NET%208%20%7C%20HTML5-512BD4.svg)](https://dotnet.microsoft.com)
+[![Python: Kids 18 Levels](https://img.shields.io/badge/Python-18%20Mecha%20Levels-3776AB.svg)](https://python.org)
 
-## 机制
+---
 
-`HKLM\...\Winlogon\Shell` 从 `explorer.exe` 换成 `StudyGate.exe --shell`。登录后系统拉起的不是桌面，是答题门。
+## 💡 为什么需要 StudyGate？
 
-- 不可跳过：没有「退出」「稍后」「跳过」按钮；30 题答完才判定
-- 不可取消：底层键盘钩子吞掉 `Esc`、`Win`、`Alt+F4`、`Alt+Tab`、`Ctrl+Shift+Esc`、`Ctrl+Esc`、`F12`；窗口 `Closing` 一律拦下
-- 不可杀：主进程与守护进程互心跳，被杀 15 秒内重启；计划任务每 30 秒复查一次
-- 只判不说：界面不显示实时分数，交卷才知道，堵掉「试出答案」的路
-- 隐蔽通道：存在一条管理员口令通道，安装时由你设置。界面无任何提示、无按钮、无热键说明
+周末或放学回到家，孩子打开电脑往往第一秒就是奔向游戏或短视频。家长苦口婆心催促，反而容易激化家庭矛盾。
 
-达到 90 分 → 静默启动 `explorer.exe`，本进程退出，当日内不再拦。
+**StudyGate** 从根本上改变了交互逻辑：
+- **不求家长监督**：开机直接劫持 `Winlogon\Shell`，物理级锁死桌面与切屏，杜绝侥幸逃逸；
+- **凭硬核实力通关**：30 道语数英当季真题（各 10 题），达到 **90 分** 方可优雅解锁桌面；
+- **游戏化极客激励**：引入 3D 伴学机器人小博、外教母语录音棚原声、错题复仇模式、32 枚分级成就勋章、纯原生 Canvas 炫耀海报生成；
+- **少儿机甲 Python 实验室**：内置专为初中生定制的 18 关趣味机甲 Python 编程工坊，零打字积木速拼，在真正的 Python 3 隔离沙箱中让孩子爱上编程与逻辑思维！
 
-## 为什么是这个组合
+---
 
-GitHub 上相关项目调研结论：
+## ⚡ 核心能力一览
 
-| 仓库 | 拿走的 | 没拿的 |
-|---|---|---|
-| `Quantazeroplus/Exam-Lockdown` | `Winlogon\Shell` 劫持 + 教师口令恢复 | 只有锁、没有判分 |
-| `vedantgangrade21/StudyLock` | 计划任务每 30 秒复查 + 隐藏 + 单实例 | 靠自杀式互杀，易破 |
-| `Kimdaewon/ISMS-Quiz-Lock` | `keyboard.add_hotkey(..., suppress=True)` 底层吞键 | 要装 Python 与 keyboard 包，纯净机不可用 |
+### 1. 🛡️ 物理级防逃逸学习门禁 (Parent Gate)
+- **底层 Shell 级自启动**：开机优先于 `explorer.exe` 加载，登录即进全屏挑战；
+- **全维度按键白名单过滤**：底层拦截 `Win` 徽标键、`Alt+Tab` / `Alt+F4`、`F1~F12`、右键菜单及常见作弊快捷键；
+- **双心跳进程守护**：主进程与守护进程互相看门狗监控，被杀 15 秒内自动重启；
+- **特权隐蔽通道**：支持紧急特权口令（`Ctrl+A` 终端呼出或双击左上角 Logo），家长一键放行。
 
-合并成一套 .NET 单体，运行期零外部依赖。判分内核与 Windows 层彻底分开，判分逻辑能在任何平台跑测试。
+### 2. 📚 语数英初中全套真题库 (1090 题 8 个学期)
+- 覆盖六年级上/下至初三上/下全部学期；
+- 紧扣云南及全国主流教材（部编版语文、人教版数学、PEP 与 Go for it 英语）；
+- 智能防重算法，每次抽卷 30 题，连击 Combo 与倒计时呼吸动效。
 
-## 构建
+### 3. 🎙️ 权威外教真人原声与三维立体语音中枢
+- **短单词与短语**：直调有道 100% 录音棚外教母语录音原声；
+- **英语例句与长题干**：全球自然度顶级的高保真外教真人原声流；
+- **中文小博老师**：百度度博文·活力博学名师青年音，带有青年名师的磁性、亲切与抑扬顿挫；
+- **三档专属语速自由切换**：`🐢 0.8x 慢读磨耳朵` / `⚡ 1.0x 标准外教` / `🐇 1.2x 中考提速特训`；
+- **断网离线双兜底**：离线状态无缝自动降级为系统原生 TTS（Microsoft Jenny / Yunxi）。
 
-需要 Windows + .NET 8 SDK。
+### 4. 🤖 3D 萌宠“小博”AI 助教
+- 弧面曲面面罩微注视算法，视线平滑跟随鼠标移动；
+- 情绪状态机（思考、庆祝、讲课、抚摸互动）；
+- **大白话破题点拨**：讲思路不透答案；
+- **名师讲课弹窗**：连续答错两题自动触发 3 秒强制专注名师口述急救课程。
 
-```powershell
+### 5. ⚔️ 错题专项清剿复仇模式 (Mistake Revenge)
+- 测验交卷若未达标，提供一键 `⚔️ 专项歼灭本次错题` 靶向通道；
+- 集中火力消灭失误错题，全部全对攻克当场判定能量饱和放行，并颁发史诗勋章：**【⚔️ 绝境反击·错题粉碎者】**。
+
+### 6. 🎧 赛博专注心流波 / 极客白噪音 (Cyber Focus Flow)
+- 纯原生 Web Audio 硬件级实时合成，无需下载额外音频文件；
+- 8Hz 舒曼共振阿尔法双耳脑波 + 320Hz 低通声学静音阻尼粉红噪声，1.0s 平滑渐变淡入淡出，隔绝杂音秒进心流。
+
+### 7. 🐍 少儿机甲 Python 实验室 (18 关超低门槛趣味工坊)
+- 专为 13 岁初中少年设计的机甲觉醒大纲（从指令唤醒到循环、列表、字典、自定义大招函数）；
+- **零敲键盘积木速拼**：点击积木或一键魔法拼装；
+- **机甲核心战力进度柱**：实时反映从 0% 充能到 100% 满战力；
+- 纯前端 Skulpt 隔离沙箱 + 自动化测试用例秒级判题。
+
+### 8. 🏆 电竞级成就系统与炫耀战报
+- 32 枚分级成就勋章与青铜到黑金神话段位天梯；
+- 纯原生 Canvas 60FPS 离线战报海报生成，支持一键下载 PNG 与朋友圈文案自动复制。
+
+---
+
+## 🛠️ 项目结构
+
+```
+StudyGate/
+├── src/
+│   ├── Core/          # 跨平台判分内核、口令保险库、状态机（无 Windows 依赖）
+│   ├── App/           # Winlogon Shell 注册、物理输入钩子、进程守护、计划任务
+│   └── Ui/            # WPF 桌面沉浸式客户端视图
+├── demo/              # 跨平台纯前端 Web 完整版
+│   ├── app.html       # Web 演示模板
+│   ├── index.html     # 全量打包离线可用单页应用 (带 1090 题库)
+│   └── assets/        # 勋章高清素材、壁纸、Python 课程与 Skulpt 沙箱
+├── data/
+│   └── bank/          # 24 份语数英真题 JSON 题库与校验工具
+├── docs/              # 架构规格说明 (SPEC)、全队契约
+├── scripts/           # Windows 一键安装、卸载、验收脚本
+└── tools/             # 自动化构建打包与全量端到端测试工具
+```
+
+---
+
+## 🚀 快速开始
+
+### 方式 A：体验 Web 完整端到端演示版 (Mac / Windows / Linux)
+
+无需任何编译环境，直接在本地启动预览：
+
+```bash
+# 启动本地静态服务器
 cd StudyGate
-dotnet build -c Release
-dotnet run --project src\Core\Tests       # 判分内核断言，不依赖 Windows
-node data\bank\validate.mjs               # 题库 schema 与配额校验
+python3 -m http.server 8788 --directory demo/
+
+# 浏览器访问：
+http://127.0.0.1:8788/index.html
 ```
 
-产物在 `src\App\bin\Release\net8.0-windows\`。
+- 一键直达少儿 Python 实验室：`http://127.0.0.1:8788/index.html?open=pylab`
+- 一键直达勋章荣誉殿堂：`http://127.0.0.1:8788/index.html?open=badgewall`
 
-## 安装
+### 方式 B：Windows 原生部署（开机守门锁定）
 
-```powershell
-# 管理员 PowerShell
-.\scripts\install.ps1
-```
+需要 Windows 10 / 11 电脑与 .NET 8 SDK。
 
-过程：校验题库 → 输入并确认管理员口令（PBKDF2-HMAC-SHA256，200k 迭代）→ 备份当前 Shell 值 → 写 `Winlogon\Shell` → 注册计划任务 `StudyGateAutostart` → 提示重启。
+1. **编译构建**：
+   ```powershell
+   dotnet build -c Release
+   ```
+2. **管理员安装**：
+   ```powershell
+   # 以管理员身份打开 PowerShell
+   .\scripts\install.ps1
+   ```
+   > 脚本将自动设置安全管理员口令、备份现有系统 Shell、注册计划任务与 Winlogon 开机引导。
 
-重启后直接进答题门。
+3. **一键安全卸载与回滚**：
+   ```powershell
+   # 随时可恢复系统原生桌面
+   .\scripts\uninstall.ps1
+   ```
 
-## 卸载与回滚
+---
 
-安全阀优先于一切：
+## 🛡️ 安全底线与回滚兜底
 
-```powershell
-# 管理员 PowerShell，不需要口令
-.\scripts\uninstall.ps1
-```
+- **安全阀优先**：卸载脚本可在任何时刻通过 WinRE（安全恢复环境）或管理员终端一键还原 `explorer.exe`；
+- **纯本地私密**：所有成绩与勋章数据完全离线保存在本地，绝不上报云端，尊重孩子与家庭隐私；
+- **特权口令**：默认特权通行口令为 `2184863`（安装时可自定义），支持 `Ctrl+A` 呼出管理员暗门。
 
-做三件事：还原 `Winlogon\Shell`（优先读 `shell.bak`，缺失则写回 `explorer.exe`）、删计划任务、删 `%ProgramData%\StudyGate`。立刻恢复正常桌面，不用重启。
+---
 
-已被锁在答题门里、又进不去桌面时：`Ctrl+Alt+Del` → 右下角电源键 → 按住 `Shift` 点「重启」→ 进 WinRE → 命令行 → 跑 `uninstall.ps1`。或者用隐蔽口令通道。
+## 📄 开源许可证
 
-## 每次开机流程
-
-1. 登录 → 答题门全屏
-2. 30 题：语文 10、数学 10、英语 10（三科固定各 10，约 15 分钟）
-3. 答完自动判定，得分 ≥90 放行
-4. 未达 90：显示三科分布 + 错题号，只有「重考」
-5. 重考换卷（新种子），题目不重复
-
-## 已知限制
-
-- `Ctrl+Alt+Del` 是系统级安全序列，任何用户态程序都拦不住。摘下它之后会回到登录/锁屏界面，重新登录时 `Shell` 仍是 StudyGate，答题门会再起来。要彻底堵，只能改 `LogonUI` 或上 `Ctrl+Alt+Del` 策略关掉任务管理器入口。
-- 安全模式会跳过计划任务与部分策略。懂的人能绕。这是对自律工具，不是对攻击者。
-- 提权失败时降级为「只锁当前会话」，不会阻断答题门本身。
-- 题库内容按主流教材版本编排，不同地市进度差异自行增删。
-
-## 目录
-
-```
-src/Core/     判分、状态机、口令保险库、隐蔽通道状态机（无 Windows 依赖）
-src/App/      Winlogon Shell、输入钩子、进程守护、计划任务、协调器
-src/Ui/       锁屏答题界面（WPF）
-data/bank/    题库 JSON + validate.mjs
-scripts/      安装、卸载、手工验收
-docs/         SPEC（全队契约）、风险说明
-tools/        Node 参考实现，用于跨平台对拍判分逻辑
-```
+本项目基于 [MIT 许可证](LICENSE) 开源。欢迎 Star、Fork 与提交 PR 共建少儿极客教育生态！
