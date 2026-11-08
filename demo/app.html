@@ -6904,6 +6904,20 @@ try {
     setTimeout(() => { document.getElementById("btnOpenCodeLab")?.click(); }, 400);
   } else if (urlParams.get("open") === "badgewall") {
     setTimeout(() => { openBadgeWall(); }, 400);
+  } else if (urlParams.get("open") === "revenge-demo") {
+    setTimeout(() => {
+      if (Array.isArray(paper) && paper.length > 0) {
+        paper.forEach((q, idx) => {
+          if (idx === 2 || idx === 7) {
+            q.user = (q.ans === 0 ? 1 : 0);
+          } else {
+            q.user = q.ans;
+          }
+        });
+        curIdx = paper.length;
+        finish();
+      }
+    }, 450);
   }
 } catch(e) {}
 
