@@ -3,16 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>StudyGate · 3D 赛博超萌机甲小博 (Pixar Cute Mecha Companion)</title>
+<title>StudyGate · 小博 3D 赛博全息机甲展厅 (超级伴学生命体)</title>
 <style>
   :root {
-    --bg-dark: #070b14;
-    --neon-blue: #38bdf8;
+    --bg-dark: #070d18;
+    --neon-blue: #00f2fe;
+    --neon-cyan: #38bdf8;
     --neon-gold: #fbbf24;
-    --neon-pink: #f472b6;
-    --neon-green: #34d399;
-    --hud-bg: rgba(15, 23, 42, 0.75);
-    --hud-border: rgba(56, 189, 248, 0.3);
+    --neon-pink: #f43f5e;
+    --neon-purple: #c084fc;
     --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
@@ -24,24 +23,24 @@
     color: #f1f5f9;
   }
 
-  /* 3D Canvas 舞台 */
-  #webgl-container {
+  /* 赛博星舰背景与光晕 */
+  .space-bg {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     z-index: 1;
-    cursor: grab;
+    background: radial-gradient(circle at 50% 45%, #0f1c30 0%, #080d19 65%, #04070d 100%);
   }
-  #webgl-container:active { cursor: grabbing; }
-
-  /* 梦幻自习星舰微光暗角 */
-  .cyber-vignette {
+  .space-grid {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+      linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+    background-size: 50px 50px;
+    perspective: 800px;
+    transform: rotateX(45deg) translateY(-20%);
+    opacity: 0.5;
     pointer-events: none;
-    z-index: 2;
-    background: radial-gradient(circle at 50% 45%, transparent 35%, rgba(4, 7, 15, 0.75) 85%),
-                radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(244, 114, 182, 0.08) 0%, transparent 50%);
   }
 
   /* 顶部 HUD 栏 */
@@ -49,929 +48,939 @@
     position: absolute;
     top: 20px; left: 24px; right: 24px;
     display: flex; justify-content: space-between; align-items: center;
-    z-index: 10;
+    z-index: 20;
     pointer-events: auto;
   }
   .brand-badge {
     display: flex; align-items: center; gap: 12px;
-    background: var(--hud-bg);
-    border: 1px solid var(--hud-border);
-    backdrop-filter: blur(16px);
-    padding: 8px 18px;
-    border-radius: 999px;
-    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.15);
-  }
-  .brand-avatar {
-    width: 30px; height: 30px; border-radius: 50%;
-    background: linear-gradient(135deg, #38bdf8, #818cf8);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
-  }
-  .brand-title { font-size: 14px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
-  .brand-sub { font-size: 11px; color: var(--neon-blue); font-family: var(--font-mono); }
-
-  .hud-actions {
-    display: flex; gap: 10px; align-items: center;
-  }
-  .btn-nav {
-    background: var(--hud-bg);
-    border: 1px solid var(--hud-border);
-    color: #e2e8f0;
-    padding: 8px 16px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    backdrop-filter: blur(12px);
-    transition: all 0.2s;
-    text-decoration: none;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .btn-nav:hover {
-    color: #fff; border-color: var(--neon-blue);
-    background: rgba(56, 189, 248, 0.2);
-    box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
-    transform: translateY(-1px);
-  }
-
-  /* 萌宠状态泡泡 (Mascot Speech Bubble) */
-  .speech-bubble {
-    position: absolute;
-    top: 90px; left: 50%;
-    transform: translateX(-50%);
-    background: rgba(15, 23, 42, 0.85);
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(56, 189, 248, 0.2);
-    backdrop-filter: blur(16px);
-    border-radius: 20px;
-    padding: 12px 24px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #f8fafc;
-    z-index: 10;
-    pointer-events: none;
-    display: flex; align-items: center; gap: 10px;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  .speech-bubble::after {
-    content: '';
-    position: absolute;
-    bottom: -8px; left: 50%;
-    transform: translateX(-50%);
-    border-width: 8px 8px 0;
-    border-style: solid;
-    border-color: rgba(15, 23, 42, 0.85) transparent transparent transparent;
-  }
-  .speech-badge {
-    background: linear-gradient(135deg, #38bdf8, #6366f1);
-    color: #fff;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 999px;
-    font-weight: 700;
-  }
-
-  /* 底部互动魔盒甲板 */
-  .control-dock {
-    position: absolute;
-    bottom: 28px; left: 50%;
-    transform: translateX(-50%);
-    width: min(860px, 94vw);
     background: rgba(15, 23, 42, 0.85);
     border: 1px solid rgba(56, 189, 248, 0.35);
+    backdrop-filter: blur(16px);
+    padding: 8px 20px;
+    border-radius: 999px;
+    box-shadow: 0 4px 24px rgba(0, 242, 254, 0.2);
+  }
+  .brand-badge .logo {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, #00f2fe, #3b82f6);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 0 14px rgba(0, 242, 254, 0.6);
+  }
+  .brand-badge .title { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+  .brand-badge .sub { font-size: 11px; color: var(--neon-cyan); font-family: var(--font-mono); }
+
+  .nav-btn {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #38bdf8;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  }
+  .nav-btn:hover {
+    background: rgba(56, 189, 248, 0.25);
+    color: #fff; border-color: #00f2fe;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+    transform: translateY(-2px);
+  }
+
+  /* 核心 3D 视差舞台 (3D Parallax Mascot Arena) */
+  .stage-viewport {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    z-index: 10;
+    perspective: 1200px;
+    cursor: pointer;
+  }
+
+  /* 小博专属台词对话气泡 */
+  .speech-card {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.6), 0 0 24px rgba(0, 242, 254, 0.25);
     backdrop-filter: blur(20px);
     border-radius: 24px;
-    padding: 16px 22px;
-    z-index: 10;
-    box-shadow: 0 16px 40px rgba(0,0,0,0.6), 0 0 30px rgba(56, 189, 248, 0.15);
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+    transform: translateY(0);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-width: min(640px, 90vw);
+    text-align: center;
+    pointer-events: auto;
+  }
+  .speech-card::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: rgba(15, 23, 42, 0.9) transparent transparent transparent;
+  }
+  .speech-tag {
+    background: linear-gradient(135deg, #00f2fe, #6366f1);
+    color: #000;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .btn-audio-speak {
+    background: rgba(56, 189, 248, 0.2);
+    border: 1px solid #38bdf8;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .btn-audio-speak:hover { background: #38bdf8; color: #000; }
+
+  /* 3D 视差小博主体容器 (放大到 460px 超大超清) */
+  .mascot-3d-wrap {
+    width: 480px; height: 480px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.12s ease-out;
+  }
+
+  /* 全息科技光环 (Holographic Cyber Rings) */
+  .holo-ring-outer {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 540px; height: 540px;
+    margin-top: -270px; margin-left: -270px;
+    border: 1.5px dashed rgba(56, 189, 248, 0.35);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: rotateRing 24s linear infinite;
+    transform: translateZ(-30px);
+  }
+  .holo-ring-inner {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 420px; height: 420px;
+    margin-top: -210px; margin-left: -210px;
+    border: 1.2px solid rgba(0, 242, 254, 0.2);
+    border-left-color: rgba(0, 242, 254, 0.8);
+    border-right-color: rgba(244, 63, 94, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: rotateRingRev 16s linear infinite;
+    transform: translateZ(-15px);
+  }
+  @keyframes rotateRing { 100% { transform: translateZ(-30px) rotate(360deg); } }
+  @keyframes rotateRingRev { 100% { transform: translateZ(-15px) rotate(-360deg); } }
+
+  /* SVG 机器人核心容器 */
+  .mascot-svg-box {
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 16px 36px rgba(0, 242, 254, 0.35));
+    transition: transform 0.15s ease-out;
+    transform-origin: center bottom;
+  }
+
+  /* 底部全能互动甲板 */
+  .control-dock {
+    position: absolute;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    width: min(920px, 95vw);
+    background: rgba(15, 23, 42, 0.88);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    backdrop-filter: blur(24px);
+    border-radius: 26px;
+    padding: 16px 24px;
+    z-index: 20;
+    box-shadow: 0 16px 44px rgba(0,0,0,0.7), 0 0 32px rgba(0, 242, 254, 0.2);
     display: flex; flex-direction: column; gap: 12px;
     pointer-events: auto;
   }
 
-  .dock-section {
+  .dock-row {
     display: flex; justify-content: space-between; align-items: center; gap: 14px;
     flex-wrap: wrap;
   }
-
   .dock-title {
-    font-size: 12px; font-weight: 700; color: #94a3b8;
+    font-size: 13px; font-weight: 800; color: #94a3b8;
     display: flex; align-items: center; gap: 6px;
   }
-  .dock-title span { color: var(--neon-blue); }
+  .dock-title span { color: var(--neon-cyan); }
 
-  /* 技能交互按钮群 */
-  .skill-buttons {
+  /* 动作按钮组 */
+  .action-pills {
     display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
   }
-  .skill-btn {
-    background: rgba(30, 41, 59, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+  .action-btn {
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: #e2e8f0;
     padding: 8px 16px;
     border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     cursor: pointer;
     display: flex; align-items: center; gap: 6px;
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .skill-btn:hover {
-    transform: translateY(-2px) scale(1.04);
+  .action-btn:hover {
+    transform: translateY(-2px) scale(1.05);
     background: rgba(56, 189, 248, 0.25);
-    border-color: var(--neon-blue);
+    border-color: #00f2fe;
     color: #fff;
-    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.35);
+    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
   }
-  .skill-btn.active {
-    background: linear-gradient(135deg, #0284c7, #38bdf8);
-    border-color: #7dd3fc;
-    color: #fff;
-    box-shadow: 0 0 16px rgba(56, 189, 248, 0.6);
+  .action-btn.active {
+    background: linear-gradient(135deg, #0284c7, #00f2fe);
+    border-color: #fff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
   }
-  .skill-btn.gold {
+  .action-btn.gold {
     background: rgba(251, 191, 36, 0.15);
-    border-color: rgba(251, 191, 36, 0.4);
+    border-color: rgba(251, 191, 36, 0.5);
     color: #fde68a;
   }
-  .skill-btn.gold:hover {
+  .action-btn.gold:hover {
     background: #fbbf24; color: #000;
-    box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
+    box-shadow: 0 6px 22px rgba(251, 191, 36, 0.6);
   }
 
-  /* 表情与心情切换器 */
-  .mood-swatches {
+  /* 换装与配色条 */
+  .dock-subrow {
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 10px;
+    font-size: 12px; color: #94a3b8;
+  }
+  .swatch-group {
     display: flex; gap: 8px; align-items: center;
   }
-  .mood-btn {
-    padding: 6px 12px; border-radius: 999px;
-    font-size: 11px; font-weight: 600;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
+  .swatch-btn {
+    padding: 5px 12px; border-radius: 999px;
+    font-size: 11px; font-weight: 700;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: #cbd5e1; cursor: pointer;
     transition: all 0.2s;
   }
-  .mood-btn:hover, .mood-btn.active {
-    background: var(--neon-blue); color: #000;
-    border-color: #fff; font-weight: 700;
-    box-shadow: 0 0 12px var(--neon-blue);
+  .swatch-btn:hover, .swatch-btn.active {
+    background: #00f2fe; color: #000;
+    border-color: #fff;
+    box-shadow: 0 0 12px #00f2fe;
   }
 
-  /* 提示信息 */
-  .dock-tips {
-    font-size: 11px; color: #64748b; font-family: var(--font-mono);
-    text-align: right;
+  /* ── 机器人真实高拟真动画类 ── */
+  @keyframes mascot-float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    30% { transform: translateY(-10px) rotate(-1.5deg); }
+    65% { transform: translateY(-4px) rotate(1.5deg); }
   }
+  .m-anim-float { animation: mascot-float 3.8s ease-in-out infinite; }
+
+  @keyframes cheer-bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    30% { transform: translateY(-18px) scale(1.06); }
+    60% { transform: translateY(2px) scale(0.96); }
+  }
+  .m-anim-cheer { animation: cheer-bounce 0.7s ease infinite; }
+
+  @keyframes mascot-dance-flow {
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    20% { transform: translateY(-14px) rotate(-7deg) scale(1.05); }
+    40% { transform: translateY(3px) rotate(5deg) scale(0.98); }
+    60% { transform: translateY(-16px) rotate(7deg) scale(1.06); }
+    80% { transform: translateY(0px) rotate(-4deg) scale(1.02); }
+  }
+  .m-anim-dance { animation: mascot-dance-flow 0.85s ease-in-out infinite; }
+
+  @keyframes mascot-spin-flip {
+    0% { transform: rotateY(0deg) translateY(0); }
+    50% { transform: rotateY(180deg) translateY(-24px) scale(1.1); }
+    100% { transform: rotateY(360deg) translateY(0); }
+  }
+  .m-anim-spin { animation: mascot-spin-flip 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+  @keyframes lecture-float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    30% { transform: translateY(-8px) rotate(-1.5deg); }
+    65% { transform: translateY(-3px) rotate(1.5deg); }
+  }
+  .m-anim-lecture { animation: lecture-float 3.2s ease-in-out infinite; }
+
+  /* 眨眼与微动 */
+  @keyframes eye-blink {
+    0%, 94%, 98%, 100% { transform: scaleY(1); }
+    96% { transform: scaleY(0.08); }
+  }
+  .m-eye-left { animation: eye-blink 3.6s infinite; transform-origin: -16px -13px; }
+  .m-eye-right { animation: eye-blink 3.6s infinite; transform-origin: 16px -13px; }
+
+  @keyframes antenna-sway {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(-4deg); }
+    70% { transform: rotate(4deg); }
+  }
+  .m-antenna { animation: antenna-sway 3.2s ease-in-out infinite; transform-origin: 0 -48px; }
+
+  @keyframes reactor-pulse {
+    0%, 100% { opacity: 0.85; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.15); filter: drop-shadow(0 0 6px #00f2fe); }
+  }
+  .m-reactor { animation: reactor-pulse 2.0s ease-in-out infinite; transform-origin: 0 45px; }
+
+  @keyframes pointer-teach-pulse {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    25% { transform: rotate(-8deg) translateY(-4px); }
+    50% { transform: rotate(4deg) translateY(2px); }
+    75% { transform: rotate(-12deg) translateY(-6px); }
+  }
+  .m-pointer-arm { animation: pointer-teach-pulse 2.2s ease-in-out infinite; transform-origin: 23px 32px; }
+
+  @keyframes hand-wave-motion {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-32deg); }
+    50% { transform: rotate(20deg); }
+    75% { transform: rotate(-26deg); }
+  }
+  .m-wave-arm { animation: hand-wave-motion 1.0s ease-in-out infinite; transform-origin: 32px 30px; }
+
+  @keyframes laser-sweep {
+    0% { transform: translateY(-22px); opacity: 0.2; }
+    50% { transform: translateY(18px); opacity: 1; filter: drop-shadow(0 0 8px #00f2fe); }
+    100% { transform: translateY(-22px); opacity: 0.2; }
+  }
+  .m-scan-beam { animation: laser-sweep 1.2s ease-in-out infinite; }
+
+  @keyframes charge-shiver {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(-2px, 1.5px) scale(1.02); filter: drop-shadow(0 0 16px #00f2fe); }
+    40% { transform: translate(2px, -1.5px) scale(1.04); filter: drop-shadow(0 0 20px #fbbf24); }
+    60% { transform: translate(-1.5px, -2px) scale(1.03); filter: drop-shadow(0 0 22px #a855f7); }
+    80% { transform: translate(1.5px, 2px) scale(1.01); filter: drop-shadow(0 0 12px #00f2fe); }
+  }
+  .m-anim-charge { animation: charge-shiver 0.28s ease-in-out infinite; }
+
+  /* 说话时声波嘴巴 */
+  .m-mouth-waves { display: none; }
+  .m-mouth-smile { display: block; }
+  .is-speaking .m-mouth-smile { display: none; }
+  .is-speaking .m-mouth-waves { display: block; }
+  @keyframes voice-wave-a { 0%, 100% { transform: scaleY(0.2); } 50% { transform: scaleY(1.4); } }
+  @keyframes voice-wave-b { 0%, 100% { transform: scaleY(0.3); } 50% { transform: scaleY(1.7); } }
+  .is-speaking .vbar-1 { animation: voice-wave-a 0.28s ease-in-out infinite alternate; }
+  .is-speaking .vbar-2 { animation: voice-wave-b 0.35s ease-in-out infinite alternate 0.05s; }
+  .is-speaking .vbar-3 { animation: voice-wave-b 0.22s ease-in-out infinite alternate 0.02s; }
 
   @media (max-width: 768px) {
+    .mascot-3d-wrap { width: 340px; height: 340px; }
+    .holo-ring-outer { width: 380px; height: 380px; margin-top: -190px; margin-left: -190px; }
+    .holo-ring-inner { width: 300px; height: 300px; margin-top: -150px; margin-left: -150px; }
     .control-dock { bottom: 12px; padding: 12px; }
-    .speech-bubble { font-size: 12px; top: 75px; width: 90%; }
-    .dock-tips { display: none; }
+    .speech-card { font-size: 13px; padding: 10px 18px; margin-bottom: 12px; }
   }
 </style>
 </head>
 <body>
 
-<div id="webgl-container"></div>
-<div class="cyber-vignette"></div>
+<div class="space-bg">
+  <div class="space-grid"></div>
+</div>
 
-<!-- 顶部 HUD -->
+<!-- 顶部 HUD 栏 -->
 <header class="top-hud">
   <div class="brand-badge">
-    <div class="brand-avatar">🤖</div>
+    <div class="logo">🤖</div>
     <div>
-      <div class="brand-title">小博 · 3D 赛博治愈机甲</div>
-      <div class="brand-sub">STUDYGATE // PIXAR MECHA ENGINE</div>
+      <div class="title">小博 · 3D 全息伴学机甲展台</div>
+      <div class="sub">STUDYGATE // VECTOR 3D PARALLAX ENGINE</div>
     </div>
   </div>
 
-  <div class="hud-actions">
-    <button class="btn-nav" id="btn-cam-reset">🎯 视线对齐</button>
-    <a href="index.html" class="btn-nav" style="border-color:var(--neon-blue);color:#38bdf8">← 返回中考答题门</a>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <a href="index.html" class="nav-btn">
+      <span>← 返回中考答题门</span>
+    </a>
   </div>
 </header>
 
-<!-- 小博台词泡泡 -->
-<div class="speech-bubble" id="speech-bubble">
-  <span class="speech-badge">伴学状态</span>
-  <span id="speech-text">“你好呀小极客！我是你的机甲伴学导师小博，今天准备拿下哪一科？”</span>
-</div>
+<!-- 3D 视差主舞台 (以图二原版小博为主角，超大高清居中呈现) -->
+<main class="stage-viewport" id="stageViewport">
+  <!-- 小博实时对话气泡 -->
+  <div class="speech-card" id="speechCard">
+    <span class="speech-tag" id="speechTag">💡 伴学导师</span>
+    <span id="speechText">“你好呀小极客！我是你的中考伴学导师小博，今天我们一起把题库统统拿下！”</span>
+    <button class="btn-audio-speak" id="btnSpeakVoice">🗣️ 朗读</button>
+  </div>
 
-<!-- 底部超能互动魔盒 -->
+  <!-- 3D 视差包裹容器 -->
+  <div class="mascot-3d-wrap" id="mascot3dWrap">
+    <div class="holo-ring-outer"></div>
+    <div class="holo-ring-inner"></div>
+
+    <!-- 真正的前端图二超萌矢量 3D 小博核心 (由 JS 渲染) -->
+    <div class="mascot-svg-box m-anim-float" id="mascotSvgBox"></div>
+  </div>
+</main>
+
+<!-- 底部超能控制甲板 -->
 <footer class="control-dock">
-  <div class="dock-section">
+  <div class="dock-row">
     <div class="dock-title">
-      <span>✨ 超能机甲互动:</span>
+      <span>✨ 小博全套超能特技:</span>
     </div>
-    <div class="skill-buttons">
-      <button class="skill-btn" id="btn-wave">👋 招手问好</button>
-      <button class="skill-btn" id="btn-flip">💫 360° 无重力空翻</button>
-      <button class="skill-btn active" id="btn-shield">🛡️ 全息能量护盾</button>
-      <button class="skill-btn" id="btn-xray">✨ 晶莹星核透视</button>
-      <button class="skill-btn gold" id="btn-overclock">⚡ 学霸超频觉醒</button>
+    <div class="action-pills">
+      <button class="action-btn" data-act="lecture">👨‍🏫 名师激光教棒</button>
+      <button class="action-btn" data-act="wave">👋 挥手问好</button>
+      <button class="action-btn" data-act="dance">💃 赛博太空步</button>
+      <button class="action-btn" data-act="cheer">🏆 满分欢呼庆祝</button>
+      <button class="action-btn" data-act="spin">💫 360° 反重力空翻</button>
+      <button class="action-btn" data-act="scan">⚡ 全息雷达扫描</button>
+      <button class="action-btn" data-act="think">🤔 抓头深思</button>
+      <button class="action-btn gold" data-act="charge">🔥 超频觉醒爆能</button>
     </div>
   </div>
 
-  <div class="dock-section" style="border-top:1px solid rgba(255,255,255,0.08);padding-top:10px;">
+  <div class="dock-subrow">
     <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:12px;color:#94a3b8">😊 情绪表情:</span>
-      <div class="mood-swatches">
-        <button class="mood-btn active" data-mood="normal">天蓝萌眸</button>
-        <button class="mood-btn" data-mood="happy">开心眯眼</button>
-        <button class="mood-btn" data-mood="star">星星学霸</button>
-        <button class="mood-btn" data-mood="heart">暖心比心</button>
+      <span style="font-weight:700">🎨 战甲皮肤:</span>
+      <div class="swatch-group" id="armorGroup">
+        <button class="swatch-btn active" data-armor="white">纳米白瓷</button>
+        <button class="swatch-btn" data-armor="carbon">黑曜钛合金</button>
+        <button class="swatch-btn" data-armor="gold">超频流光金</button>
+        <button class="swatch-btn" data-armor="neon">赛博幻境紫</button>
       </div>
     </div>
-    <div class="dock-tips">
-      💡 戳戳小博的脸蛋会 Q 弹果冻晃动哦 | 鼠标悬停他会歪头看你
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-weight:700">👀 灵动萌眸:</span>
+      <div class="swatch-group" id="eyeColorGroup">
+        <button class="swatch-btn active" data-eye="cyan">湛蓝水灵</button>
+        <button class="swatch-btn" data-eye="gold">学霸金眸</button>
+        <button class="swatch-btn" data-eye="pink">元气粉瞳</button>
+        <button class="swatch-btn" data-eye="emerald">翡翠极光</button>
+      </div>
     </div>
   </div>
 </footer>
 
-<!-- 引入本地离线 Three.js 与 OrbitControls -->
-<script src="assets/three.min.js"></script>
-<script src="assets/OrbitControls.js"></script>
-
 <script>
 /* ─────────────────────────────────────────────────────────────
-   StudyGate 3D 治愈系机甲小博 (Pixar Edition)
-   采用苹果微晶白瓷 + 迪士尼极佳圆润流线 + 萌系大眼睛与 Q 弹果冻微动力学
-   彻底告别生硬吓人的骨架拆解，打造少儿最爱的温暖未来伴学科技！
+   StudyGate 小博 3D 全息超萌机甲展厅
+   100% 忠实还原前端图二的超高颜值矢量 3D 机器人！
+   结合 CSS 3D 透视视差倾斜 (Parallax Tilt) + Web Audio 真实音效 + 8大互动动作
    ───────────────────────────────────────────────────────────── */
 
-// 1. 初始化 WebGL 场景与渲染器
-const container = document.getElementById('webgl-container');
-const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x070b14, 0.04);
+// 1. 配置状态
+const MASCOT_CONFIG = {
+  type: 'byte',
+  armor: 'white',
+  eyeColor: 'cyan',
+  color: '#00f2fe'
+};
 
-const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.set(0, 0.5, 4.4);
+let currentMood = 'lecture'; // 默认进入展现名师手持激光教棒最帅气姿态！
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.35;
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-container.appendChild(renderer.domElement);
+// 2. 原版图二渲染引擎 (1:1 完美复刻前端图二的全部细节与柔润光泽)
+function renderMascotSvg(mood = 'idle') {
+  const cfg = MASCOT_CONFIG;
+  const armor = cfg.armor || 'white';
 
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.06;
-controls.minDistance = 2.0;
-controls.maxDistance = 8.0;
-controls.maxPolarAngle = Math.PI / 2 + 0.15;
-controls.target.set(0, 0.1, 0);
-
-// 2. 电影级柔和光影 (Pixar Warm Studio Lighting)
-const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
-scene.add(ambientLight);
-
-// 主聚光灯（产生温润柔和的高光）
-const keyLight = new THREE.DirectionalLight(0xfff7ed, 2.4);
-keyLight.position.set(4, 6, 5);
-keyLight.castShadow = true;
-scene.add(keyLight);
-
-// 侧边天蓝色冷光（科幻边缘轮廓）
-const rimLight = new THREE.PointLight(0x38bdf8, 3.5, 10);
-rimLight.position.set(-3.5, 2, -2);
-scene.add(rimLight);
-
-// 柔和暖粉色底光（如同可爱的腮红光晕）
-const blushLight = new THREE.PointLight(0xf472b6, 2.0, 8);
-blushLight.position.set(3, -1.5, 2);
-scene.add(blushLight);
-
-// 底部反重力推进柔光
-const thrusterLight = new THREE.PointLight(0x38bdf8, 4.0, 5);
-thrusterLight.position.set(0, -1.2, 0);
-scene.add(thrusterLight);
-
-// 3. 超高质感材质库 (PBR Materials)
-// 苹果级纳米白瓷烤漆 (Nanoceramic Ultra-Gloss White)
-const whiteCeramicMat = new THREE.MeshPhysicalMaterial({
-  color: 0xffffff,
-  roughness: 0.12,
-  metalness: 0.05,
-  clearcoat: 1.0,
-  clearcoatRoughness: 0.08,
-  reflectivity: 0.9
-});
-
-// 半透明星空黑晶曲面面罩 (Starry Black Crystal Visor)
-const blackVisorMat = new THREE.MeshPhysicalMaterial({
-  color: 0x050814,
-  roughness: 0.04,
-  metalness: 0.8,
-  transmission: 0.5,
-  transparent: true,
-  opacity: 0.95,
-  reflectivity: 0.95
-});
-
-// 天蓝色灵动大眼睛自发光材质
-let eyeEmissiveColor = new THREE.Color(0x38bdf8);
-const eyeGlowMat = new THREE.MeshBasicMaterial({
-  color: eyeEmissiveColor
-});
-
-// 暖粉色萌系腮红材质
-const blushMat = new THREE.MeshBasicMaterial({
-  color: 0xf472b6,
-  transparent: true,
-  opacity: 0.35
-});
-
-// 镀金关节与天线小件
-const warmGoldMat = new THREE.MeshStandardMaterial({
-  color: 0xfbbf24,
-  roughness: 0.25,
-  metalness: 0.85
-});
-
-// 晶莹冰晶星核透视材质 (X-Ray Crystal Material)
-const crystalGlassMat = new THREE.MeshPhysicalMaterial({
-  color: 0xbae6fd,
-  roughness: 0.05,
-  metalness: 0.1,
-  transmission: 0.92,
-  transparent: true,
-  opacity: 0.45,
-  ior: 1.5
-});
-
-// 4. 构建极致呆萌的 3D 小博装配体 (Cute Procedural Mecha Bot)
-const robotRoot = new THREE.Group();
-scene.add(robotRoot);
-
-// 头部装配组 (Head Group - 负责歪头与眨眼跟随)
-const headGroup = new THREE.Group();
-headGroup.position.set(0, 0.48, 0);
-robotRoot.add(headGroup);
-
-// (A) 圆润的白瓷脑袋 (类似鹅卵石/EVE超光滑造型)
-const headGeo = new THREE.SphereGeometry(0.56, 48, 36);
-headGeo.scale(1.0, 0.92, 0.95);
-const headMesh = new THREE.Mesh(headGeo, whiteCeramicMat);
-headGroup.add(headMesh);
-
-// (B) 嵌入式弧面黑晶面罩 (黑水晶大墨镜)
-const visorGeo = new THREE.SphereGeometry(0.52, 40, 24, 0, Math.PI, 0, Math.PI * 0.48);
-const visorMesh = new THREE.Mesh(visorGeo, blackVisorMat);
-visorMesh.rotation.x = Math.PI * 0.46;
-visorMesh.position.set(0, -0.02, 0.06);
-headGroup.add(visorMesh);
-
-// (C) 超萌水汪汪大眼睛 (Canvas 动态纹理，可无缝切换表情！)
-const eyeCanvas = document.createElement('canvas');
-eyeCanvas.width = 512;
-eyeCanvas.height = 256;
-const eyeCtx = eyeCanvas.getContext('2d');
-const eyeTexture = new THREE.CanvasTexture(eyeCanvas);
-
-let currentMood = 'normal'; // 'normal', 'happy', 'star', 'heart'
-let isBlinking = false;
-let blinkProgress = 0; // 0 = 睁开, 1 = 闭上
-
-function drawEyeExpressions() {
-  eyeCtx.clearRect(0, 0, 512, 256);
-
-  const drawOneEye = (cx, cy) => {
-    eyeCtx.save();
-    eyeCtx.translate(cx, cy);
-
-    // 眨眼压扁缩放
-    const scaleY = isBlinking ? (1 - blinkProgress * 0.92) : 1;
-    eyeCtx.scale(1, scaleY);
-
-    if (currentMood === 'normal') {
-      // 萌萌大圆眼 + 晶莹高光点
-      const grad = eyeCtx.createRadialGradient(0, 0, 5, 0, 0, 48);
-      grad.addColorStop(0, '#e0f2fe');
-      grad.addColorStop(0.4, '#38bdf8');
-      grad.addColorStop(1, '#0284c7');
-
-      eyeCtx.fillStyle = grad;
-      eyeCtx.beginPath();
-      eyeCtx.ellipse(0, 0, 42, 54, 0, 0, Math.PI * 2);
-      eyeCtx.fill();
-
-      // 双重晶莹星光高光
-      eyeCtx.fillStyle = '#ffffff';
-      eyeCtx.beginPath();
-      eyeCtx.arc(-14, -18, 12, 0, Math.PI * 2);
-      eyeCtx.fill();
-
-      eyeCtx.beginPath();
-      eyeCtx.arc(14, 16, 6, 0, Math.PI * 2);
-      eyeCtx.fill();
-
-    } else if (currentMood === 'happy') {
-      // 开心月牙眯眯眼 (^ ^)
-      eyeCtx.strokeStyle = '#38bdf8';
-      eyeCtx.lineWidth = 14;
-      eyeCtx.lineCap = 'round';
-      eyeCtx.beginPath();
-      eyeCtx.arc(0, 16, 38, Math.PI * 1.15, Math.PI * 1.85);
-      eyeCtx.stroke();
-
-    } else if (currentMood === 'star') {
-      // 学霸金色星星眼 (★ ★)
-      eyeCtx.fillStyle = '#fbbf24';
-      eyeCtx.beginPath();
-      for (let i = 0; i < 5; i++) {
-        eyeCtx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * 48, -Math.sin((18 + i * 72) * Math.PI / 180) * 48);
-        eyeCtx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * 22, -Math.sin((54 + i * 72) * Math.PI / 180) * 22);
-      }
-      eyeCtx.closePath();
-      eyeCtx.fill();
-
-      eyeCtx.fillStyle = '#ffffff';
-      eyeCtx.beginPath();
-      eyeCtx.arc(-8, -10, 8, 0, Math.PI*2);
-      eyeCtx.fill();
-
-    } else if (currentMood === 'heart') {
-      // 暖心爱心眼 (♥ ♥)
-      eyeCtx.fillStyle = '#f472b6';
-      eyeCtx.beginPath();
-      eyeCtx.moveTo(0, 10);
-      eyeCtx.bezierCurveTo(-35, -25, -25, -50, 0, -25);
-      eyeCtx.bezierCurveTo(25, -50, 35, -25, 0, 10);
-      eyeCtx.fill();
-    }
-
-    eyeCtx.restore();
+  const EYE_PALETTES = {
+    cyan: '#00f2fe',
+    gold: '#fbbf24',
+    pink: '#f43f5e',
+    purple: '#c084fc',
+    emerald: '#10b981'
   };
+  const c = EYE_PALETTES[cfg.eyeColor] || '#00f2fe';
 
-  drawOneEye(160, 128); // 左眼
-  drawOneEye(352, 128); // 右眼
+  let s = '<svg viewBox="-95 -85 190 190" width="100%" height="100%" aria-hidden="true">';
+  s += '<defs>';
 
-  eyeTexture.needsUpdate = true;
+  // 战甲外壳材质渐变 (Nano White / Carbon Dark / Cyber Neon / Gold Alloy)
+  if (armor === 'carbon') {
+    s += '<linearGradient id="mShellGrad" x1="0.15" y1="0" x2="0.85" y2="1">' +
+           '<stop offset="0%" stop-color="#334155"/>' +
+           '<stop offset="35%" stop-color="#1e293b"/>' +
+           '<stop offset="85%" stop-color="#0f172a"/>' +
+           '<stop offset="100%" stop-color="#020617"/>' +
+         '</linearGradient>';
+  } else if (armor === 'neon') {
+    s += '<linearGradient id="mShellGrad" x1="0" y1="0" x2="1" y2="1">' +
+           '<stop offset="0%" stop-color="#38bdf8"/>' +
+           '<stop offset="45%" stop-color="#6366f1"/>' +
+           '<stop offset="85%" stop-color="#a855f7"/>' +
+           '<stop offset="100%" stop-color="#ec4899"/>' +
+         '</linearGradient>';
+  } else if (armor === 'gold') {
+    s += '<linearGradient id="mShellGrad" x1="0" y1="0" x2="1" y2="1">' +
+           '<stop offset="0%" stop-color="#fef08a"/>' +
+           '<stop offset="35%" stop-color="#f59e0b"/>' +
+           '<stop offset="75%" stop-color="#b45309"/>' +
+           '<stop offset="100%" stop-color="#78350f"/>' +
+         '</linearGradient>';
+  } else { // white 纳米白瓷 (图二经典原色)
+    s += '<linearGradient id="mShellGrad" x1="0.15" y1="0" x2="0.85" y2="1">' +
+           '<stop offset="0%" stop-color="#ffffff"/>' +
+           '<stop offset="28%" stop-color="#f8fafc"/>' +
+           '<stop offset="68%" stop-color="#e2e8f0"/>' +
+           '<stop offset="88%" stop-color="#cbd5e1"/>' +
+           '<stop offset="100%" stop-color="#94a3b8"/>' +
+         '</linearGradient>';
+  }
+
+  // 战甲环境边缘光
+  s += '<linearGradient id="mShellRim" x1="0" y1="0" x2="1" y2="0">' +
+         '<stop offset="0%" stop-color="' + c + '" stop-opacity="0.45"/>' +
+         '<stop offset="50%" stop-color="#ffffff" stop-opacity="0.9"/>' +
+         '<stop offset="100%" stop-color="' + c + '" stop-opacity="0.45"/>' +
+       '</linearGradient>';
+
+  // 3D 曲面黑晶弧面罩渐变
+  s += '<linearGradient id="mVisorGrad" x1="0" y1="0" x2="0" y2="1">' +
+         '<stop offset="0%" stop-color="#1e293b"/>' +
+         '<stop offset="35%" stop-color="#0b1120"/>' +
+         '<stop offset="100%" stop-color="#020617"/>' +
+       '</linearGradient>';
+
+  // 45° 曲面玻璃高光斜切
+  s += '<linearGradient id="mGlassGloss" x1="0" y1="0" x2="1" y2="1">' +
+         '<stop offset="0%" stop-color="#ffffff" stop-opacity="0.42"/>' +
+         '<stop offset="45%" stop-color="#ffffff" stop-opacity="0.08"/>' +
+         '<stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>' +
+       '</linearGradient>';
+
+  // OLED 萌系大眼发光渐变 (图二超水灵深邃质感)
+  s += '<linearGradient id="mEyeGrad" x1="0" y1="0" x2="0" y2="1">' +
+         '<stop offset="0%" stop-color="#ffffff"/>' +
+         '<stop offset="40%" stop-color="' + c + '"/>' +
+         '<stop offset="100%" stop-color="#0284c7"/>' +
+       '</linearGradient>';
+
+  // 全息萌系粉红腮红
+  s += '<radialGradient id="mBlush" cx="50%" cy="50%" r="50%">' +
+         '<stop offset="0%" stop-color="#fb7185" stop-opacity="0.75"/>' +
+         '<stop offset="60%" stop-color="#fb7185" stop-opacity="0.32"/>' +
+         '<stop offset="100%" stop-color="#fb7185" stop-opacity="0"/>' +
+       '</radialGradient>';
+
+  // 等离子悬浮环能量流光
+  s += '<linearGradient id="mPlasma" x1="0" y1="0" x2="1" y2="0">' +
+         '<stop offset="0%" stop-color="' + c + '" stop-opacity="0.2"/>' +
+         '<stop offset="50%" stop-color="' + c + '" stop-opacity="0.95"/>' +
+         '<stop offset="100%" stop-color="' + c + '" stop-opacity="0.2"/>' +
+       '</linearGradient>';
+
+  // 桌面微透光
+  s += '<linearGradient id="mDesk" x1="0" y1="0" x2="0" y2="1">' +
+         '<stop offset="0%" stop-color="rgba(30,41,59,0.92)"/>' +
+         '<stop offset="100%" stop-color="rgba(15,23,42,0.96)"/>' +
+       '</linearGradient>';
+
+  // 柔光泛晕滤镜
+  s += '<filter id="mGlow" x="-20%" y="-20%" width="140%" height="140%">' +
+         '<feGaussianBlur stdDeviation="2.2" result="blur"/>' +
+         '<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>' +
+       '</filter>' +
+       '<filter id="mStrongGlow">' +
+         '<feGaussianBlur stdDeviation="3.8" result="blur"/>' +
+         '<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>' +
+       '</filter>' +
+       '</defs>';
+
+  // 1. 图二伴学工位环境桌面（Futuristic Desk Micro-Scene - 悬浮光环、小咖啡杯与微型仪表盘）
+  s += '<g class="mascot-desk">' +
+       '<ellipse cx="0" cy="84" rx="74" ry="14" fill="rgba(0,0,0,0.5)"/>' +
+       '<rect x="-64" y="68" width="128" height="11" rx="5" fill="url(#mDesk)" stroke="rgba(255,255,255,0.12)" stroke-width="1.2"/>' +
+       '<line x1="-56" y1="69" x2="56" y2="69" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>' +
+       '<rect x="-26" y="70" width="52" height="7" rx="2.5" fill="#090d16" stroke="rgba(255,255,255,0.08)"/>' +
+       '<circle cx="-19" cy="73.5" r="1.1" fill="' + c + '" opacity="0.9"/>' +
+       '<circle cx="-13" cy="73.5" r="1.1" fill="#38bdf8" opacity="0.9"/>' +
+       '<circle cx="-7" cy="73.5" r="1.1" fill="#c084fc" opacity="0.9"/>' +
+       '<circle cx="-1" cy="73.5" r="1.1" fill="#f43f5e" opacity="0.9"/>' +
+       '<circle cx="5" cy="73.5" r="1.1" fill="#fbbf24" opacity="0.9"/>' +
+       '<circle cx="11" cy="73.5" r="1.1" fill="#34d399" opacity="0.9"/>' +
+       '<circle cx="17" cy="73.5" r="1.1" fill="' + c + '" opacity="0.9"/>' +
+       '<rect x="38" y="61" width="11" height="15" rx="2.5" fill="#1e293b" stroke="rgba(255,255,255,0.15)"/>' +
+       '<rect x="40" y="63" width="7" height="3" rx="1" fill="' + c + '"/>' +
+       '<path d="M49 65 C52 65 52 70 49 70" fill="none" stroke="#64748b" stroke-width="1.2"/>' +
+       '<path d="M43 57 Q41 53 44 50 Q46 53 43 57 Z" fill="#fb7185" opacity="0.6"/>' +
+       '<rect x="-54" y="60" width="15" height="12" rx="2" fill="rgba(15,23,42,0.85)" stroke="' + c + '" stroke-width="0.8" opacity="0.85"/>' +
+       '<line x1="-50" y1="67" x2="-50" y2="64" stroke="' + c + '" stroke-width="1.1"/>' +
+       '<line x1="-47" y1="67" x2="-47" y2="62" stroke="' + c + '" stroke-width="1.1"/>' +
+       '<line x1="-44" y1="67" x2="-44" y2="65" stroke="' + c + '" stroke-width="1.1"/>' +
+       '<line x1="-41" y1="67" x2="-41" y2="63" stroke="' + c + '" stroke-width="1.1"/>' +
+       '</g>';
+
+  // 2. 躯干与等离子反重力底座（mascot-body）
+  s += '<g class="mascot-body">';
+  s += '<g class="m-plasma">' +
+       '<ellipse cx="0" cy="74" rx="25" ry="6.5" fill="none" stroke="url(#mPlasma)" stroke-width="2.6" filter="url(#mGlow)"/>' +
+       '<circle cx="-16" cy="74" r="1.3" fill="#ffffff" filter="url(#mGlow)"/>' +
+       '<circle cx="16" cy="74" r="1.3" fill="#ffffff" filter="url(#mGlow)"/>' +
+       '</g>';
+  s += '<path d="M-25 26 C-31 43 -21 65 0 65 C21 65 31 43 25 26 C19 22 -19 22 -25 26 Z" fill="url(#mShellGrad)" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"/>' +
+       '<path d="M-17 29 C-21 42 -13 57 0 57 C13 57 21 42 17 29 Z" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.9"/>' +
+       '<g class="m-reactor">' +
+       '<ellipse cx="0" cy="45" rx="8.5" ry="7.5" fill="#0b1120" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>' +
+       '<circle cx="0" cy="45" r="5" fill="' + c + '" filter="url(#mGlow)"/>' +
+       '<circle cx="0" cy="45" r="2.5" fill="#ffffff"/>' +
+       '</g>';
+
+  // 3. 悬浮手臂动作分支
+  if (mood === 'lecture') {
+    // 👨‍🏫 名师讲课姿态：右手持全息激光教棒，左手打节拍
+    s += '<g class="m-hands-lecture">' +
+         '<g class="m-teacher-l">' +
+         '<path d="M-23 32 Q-38 38 -26 18" fill="none" stroke="url(#mShellGrad)" stroke-width="6.5" stroke-linecap="round"/>' +
+         '<circle cx="-26" cy="18" r="5.5" fill="#ffffff" stroke="rgba(255,255,255,0.8)" stroke-width="1.2"/>' +
+         '<circle cx="-26" cy="18" r="2.2" fill="' + c + '" filter="url(#mGlow)"/>' +
+         '</g>' +
+         '<g class="m-pointer-arm">' +
+         '<path d="M23 32 Q38 28 42 6" fill="none" stroke="url(#mShellGrad)" stroke-width="6.5" stroke-linecap="round"/>' +
+         '<circle cx="42" cy="6" r="5.5" fill="#ffffff" stroke="rgba(255,255,255,0.8)" stroke-width="1.2"/>' +
+         '<line x1="42" y1="6" x2="68" y2="-28" stroke="#334155" stroke-width="3" stroke-linecap="round"/>' +
+         '<line x1="48" y1="-2" x2="68" y2="-28" stroke="' + c + '" stroke-width="2" stroke-linecap="round" filter="url(#mGlow)"/>' +
+         '<circle cx="68" cy="-28" r="4.5" fill="#ffffff" filter="url(#mStrongGlow)"/>' +
+         '<circle cx="68" cy="-28" r="2.5" fill="' + c + '"/>' +
+         '<circle cx="68" cy="-28" r="8" fill="none" stroke="' + c + '" stroke-width="1" class="m-pointer-sparkle" opacity="0.85"/>' +
+         '</g>' +
+         '</g>';
+  } else if (mood === 'wave') {
+    // 招手动作
+    s += '<g class="m-hands-wave">' +
+         '<path d="M-23 32 Q-27 52 -13 56" fill="none" stroke="url(#mShellGrad)" stroke-width="6" stroke-linecap="round"/>' +
+         '<circle cx="-13" cy="56" r="5" fill="#ffffff" stroke="rgba(255,255,255,0.8)" stroke-width="1"/>' +
+         '<g class="m-wave-arm">' +
+         '<path d="M26 30 Q44 14 36 -10" fill="none" stroke="url(#mShellGrad)" stroke-width="6.5" stroke-linecap="round"/>' +
+         '<circle cx="36" cy="-10" r="5.5" fill="#ffffff" stroke="rgba(255,255,255,0.8)" stroke-width="1.2"/>' +
+         '<circle cx="36" cy="-10" r="2.2" fill="' + c + '" filter="url(#mGlow)"/>' +
+         '</g>' +
+         '</g>';
+  } else if (mood === 'dance') {
+    // 街舞动作
+    s += '<g class="m-hands-dance">' +
+         '<path d="M-24 30 Q-44 26 -32 4" fill="none" stroke="url(#mShellGrad)" stroke-width="6" stroke-linecap="round"/>' +
+         '<circle cx="-32" cy="4" r="5.5" fill="#ffffff"/>' +
+         '<circle cx="-32" cy="4" r="2.2" fill="' + c + '" filter="url(#mGlow)"/>' +
+         '<path d="M24 30 Q44 38 34 56" fill="none" stroke="url(#mShellGrad)" stroke-width="6" stroke-linecap="round"/>' +
+         '<circle cx="34" cy="56" r="5.5" fill="#ffffff"/>' +
+         '<circle cx="34" cy="56" r="2.2" fill="' + c + '" filter="url(#mGlow)"/>' +
+         '</g>';
+  } else if (mood === 'cheer' || mood === 'celebrate') {
+    // 欢呼举拳
+    s += '<g class="m-hands-cheer">' +
+         '<path d="M-26 30 Q-42 12 -34 -4" fill="none" stroke="url(#mShellGrad)" stroke-width="6.5" stroke-linecap="round"/>' +
+         '<circle cx="-34" cy="-4" r="5.5" fill="#ffffff" stroke="rgba(255,255,255,0.8)" stroke-width="1.2"/>' +
+         '<circle cx="-34" cy="-4" r="2.4" fill="' + c + '" filter="url(#mGlow)"/>' +
+         '<path d="M26 30 Q42 12 34 -4" fill="none" stroke="url(#mShellGrad)" stroke-width="6.5" stroke-linecap="round"/>' +
+         '<circle cx="34" cy="-4" r="5.5" fill="#ffffff" stroke="rgba(255,255,255,0.8)" stroke-width="1.2"/>' +
+         '<circle cx="34" cy="-4" r="2.4" fill="' + c + '" filter="url(#mGlow)"/>' +
+         '</g>';
+  } else if (mood === 'think') {
+    // 抓头思索
+    s += '<g class="m-hands-think">' +
+         '<path d="M-23 32 Q-30 48 -15 52" fill="none" stroke="url(#mShellGrad)" stroke-width="6" stroke-linecap="round"/>' +
+         '<circle cx="-15" cy="52" r="5" fill="#ffffff" stroke="rgba(255,255,255,0.8)" stroke-width="1"/>' +
+         '<path d="M24 32 Q36 16 26 -6" fill="none" stroke="url(#mShellGrad)" stroke-width="6.5" stroke-linecap="round"/>' +
+         '<circle cx="26" cy="-6" r="5.5" fill="#ffffff" stroke="rgba(255,255,255,0.8)" stroke-width="1"/>' +
+         '<circle cx="26" cy="-6" r="2" fill="' + c + '" filter="url(#mGlow)"/>' +
+         '</g>';
+  } else {
+    // 默认待机手
+    s += '<g class="m-typing-hands">' +
+         '<g class="m-typing-l">' +
+         '<path d="M-23 32 Q-27 52 -13 56" fill="none" stroke="url(#mShellGrad)" stroke-width="6" stroke-linecap="round"/>' +
+         '<circle cx="-13" cy="56" r="5" fill="#ffffff" stroke="rgba(255,255,255,0.8)" stroke-width="1"/>' +
+         '<circle cx="-13" cy="56" r="1.8" fill="' + c + '" filter="url(#mGlow)"/>' +
+         '</g>' +
+         '<g class="m-typing-r">' +
+         '<path d="M23 32 Q27 52 13 56" fill="none" stroke="url(#mShellGrad)" stroke-width="6" stroke-linecap="round"/>' +
+         '<circle cx="13" cy="56" r="5" fill="#ffffff" stroke="rgba(255,255,255,0.8)" stroke-width="1"/>' +
+         '<circle cx="13" cy="56" r="1.8" fill="' + c + '" filter="url(#mGlow)"/>' +
+         '</g>' +
+         '</g>';
+  }
+  s += '</g>';
+
+  // 4. 头部与面部系统（mascot-head，图二超水灵的核心大萌头）
+  s += '<g class="mascot-head ' + (mood === 'scan' ? 'm-scan-head' : (mood === 'lecture' ? 'm-lecture-head' : '')) + '">';
+  s += '<ellipse cx="0" cy="18" rx="19" ry="3.5" fill="rgba(0,0,0,0.3)"/>';
+  // 白瓷外壳与顶部高光
+  s += '<rect x="-40" y="-48" width="80" height="64" rx="32" fill="url(#mShellGrad)" stroke="rgba(255,255,255,0.6)" stroke-width="1.4"/>' +
+       '<path d="M-25 -44 Q0 -52 25 -44" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" opacity="0.9"/>' +
+       // 耳机与耳舱
+       '<g class="m-ear-pods">' +
+       '<rect x="-44" y="-22" width="6" height="18" rx="3" fill="#0f172a" stroke="' + c + '" stroke-width="1.2"/>' +
+       '<circle cx="-41" cy="-13" r="2" fill="' + c + '" filter="url(#mGlow)"/>' +
+       '<rect x="38" y="-22" width="6" height="18" rx="3" fill="#0f172a" stroke="' + c + '" stroke-width="1.2"/>' +
+       '<circle cx="41" cy="-13" r="2" fill="' + c + '" filter="url(#mGlow)"/>' +
+       '</g>' +
+       // 头顶全息天线
+       '<g class="m-antenna">' +
+       '<line x1="0" y1="-48" x2="0" y2="-62" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/>' +
+       '<line x1="0" y1="-48" x2="0" y2="-62" stroke="rgba(255,255,255,0.8)" stroke-width="1" stroke-linecap="round"/>' +
+       '<circle cx="0" cy="-64" r="5" fill="' + (mood === 'charge' ? '#fbbf24' : c) + '" filter="url(#mStrongGlow)"/>' +
+       '<circle cx="0" cy="-64" r="2" fill="#ffffff"/>' +
+       '</g>';
+
+  // 3D 曲面黑晶玻璃面罩 (图二标志性的圆润黑晶屏幕)
+  s += '<rect x="-34" y="-38" width="68" height="48" rx="24" fill="url(#mVisorGrad)" stroke="rgba(255,255,255,0.18)" stroke-width="1.4"/>' +
+       '<path d="M-27 -34 C-10 -36 15 -25 27 -12 C18 -10 -5 -20 -23 -24 Z" fill="url(#mGlassGloss)"/>' +
+       '<ellipse cx="-19" cy="-28" rx="5" ry="2" fill="rgba(255,255,255,0.35)"/>';
+
+  // 萌系大眼睛与表情
+  s += '<g class="robot-eye-group">';
+  if (mood === 'scan') {
+    // 全息扫描雷达模式
+    s += '<g class="m-eyes-scan">' +
+         '<circle cx="-15" cy="-14" r="8" fill="none" stroke="' + c + '" stroke-width="1.2" opacity="0.6"/>' +
+         '<circle cx="15" cy="-14" r="8" fill="none" stroke="' + c + '" stroke-width="1.2" opacity="0.6"/>' +
+         '<line x1="-24" y1="-14" x2="-6" y2="-14" stroke="' + c + '" stroke-width="0.8" opacity="0.7"/>' +
+         '<line x1="6" y1="-14" x2="24" y2="-14" stroke="' + c + '" stroke-width="0.8" opacity="0.7"/>' +
+         '<circle cx="-15" cy="-14" r="2.5" fill="' + c + '" filter="url(#mGlow)"/>' +
+         '<circle cx="15" cy="-14" r="2.5" fill="' + c + '" filter="url(#mGlow)"/>' +
+         '<g class="m-scan-beam"><line x1="-28" y1="0" x2="28" y2="0" stroke="#ffffff" stroke-width="1.5" filter="url(#mGlow)"/><line x1="-28" y1="0" x2="28" y2="0" stroke="' + c + '" stroke-width="2.8" opacity="0.8"/></g>' +
+         '</g>';
+  } else if (mood === 'cheer' || mood === 'celebrate') {
+    // 治愈开心月牙大笑眼
+    s += '<g class="m-eyes-laugh">' +
+         '<path d="M-23 -14 Q-15 -25 -7 -14" fill="none" stroke="' + c + '" stroke-width="4.5" stroke-linecap="round" filter="url(#mGlow)"/>' +
+         '<path d="M-22 -15 Q-15 -23 -8 -15" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>' +
+         '<path d="M7 -14 Q15 -25 23 -14" fill="none" stroke="' + c + '" stroke-width="4.5" stroke-linecap="round" filter="url(#mGlow)"/>' +
+         '<path d="M8 -15 Q15 -23 22 -15" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>' +
+         '<ellipse cx="-21" cy="-6" rx="7" ry="4" fill="url(#mBlush)"/>' +
+         '<ellipse cx="21" cy="-6" rx="7" ry="4" fill="url(#mBlush)"/>' +
+         '<path d="M-4 -4 Q0 1 4 -4" fill="none" stroke="' + c + '" stroke-width="1.8" stroke-linecap="round" filter="url(#mGlow)"/>' +
+         '</g>';
+  } else {
+    // 图二经典：超级水灵的湛蓝大眼睛 + 双重高光点 + 微笑小嘴 + 粉红腮红
+    s += '<g class="m-eyes-lecture">' +
+         '<g class="m-eye-left">' +
+         '<ellipse cx="-15" cy="-13" rx="8.5" ry="11.5" fill="url(#mEyeGrad)" filter="url(#mGlow)"/>' +
+         '<circle cx="-17.5" cy="-16.5" r="3.2" fill="#ffffff"/>' +
+         '<circle cx="-12" cy="-9" r="1.5" fill="#ffffff" opacity="0.9"/>' +
+         '<path d="M-22 -7 Q-15 -3 -8 -7" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>' +
+         '<circle cx="-15" cy="-13" r="6" fill="none" stroke="' + c + '" stroke-width="1" opacity="0.7"/>' +
+         '</g>' +
+         '<g class="m-eye-right">' +
+         '<ellipse cx="15" cy="-13" rx="8.5" ry="11.5" fill="url(#mEyeGrad)" filter="url(#mGlow)"/>' +
+         '<circle cx="12.5" cy="-16.5" r="3.2" fill="#ffffff"/>' +
+         '<circle cx="18" cy="-9" r="1.5" fill="#ffffff" opacity="0.9"/>' +
+         '<path d="M8 -7 Q15 -3 22 -7" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>' +
+         '<circle cx="15" cy="-13" r="6" fill="none" stroke="' + c + '" stroke-width="1" opacity="0.7"/>' +
+         '</g>' +
+         // 萌系粉红腮红
+         '<ellipse cx="-21" cy="-5" rx="5.5" ry="2.8" fill="url(#mBlush)" opacity="0.6"/>' +
+         '<ellipse cx="21" cy="-5" rx="5.5" ry="2.8" fill="url(#mBlush)" opacity="0.6"/>' +
+         // 微笑小嘴巴与全息声波嘴
+         '<g class="m-mouth-system">' +
+         '<path class="m-mouth-smile" d="M-5 -2 Q0 3 5 -2" fill="none" stroke="' + c + '" stroke-width="1.8" stroke-linecap="round" filter="url(#mGlow)"/>' +
+         '<g class="m-mouth-waves">' +
+         '<line class="m-vbar vbar-1" x1="-4" y1="-2" x2="-4" y2="2" stroke="' + c + '" stroke-width="1.2" stroke-linecap="round"/>' +
+         '<line class="m-vbar vbar-2" x1="0" y1="-3" x2="0" y2="3" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>' +
+         '<line class="m-vbar vbar-3" x1="4" y1="-2" x2="4" y2="2" stroke="' + c + '" stroke-width="1.2" stroke-linecap="round"/>' +
+         '</g>' +
+         '</g>' +
+         '</g>';
+  }
+  s += '</g>'; // robot-eye-group
+  s += '</g>'; // mascot-head
+  s += '</svg>';
+  return s;
 }
-drawEyeExpressions();
 
-// 将眼睛投影在面罩前方的弧面平面上
-const eyeScreenGeo = new THREE.PlaneGeometry(0.72, 0.36);
-const eyeScreenMat = new THREE.MeshBasicMaterial({
-  map: eyeTexture,
-  transparent: true,
-  opacity: 0.95
-});
-const eyeScreen = new THREE.Mesh(eyeScreenGeo, eyeScreenMat);
-eyeScreen.position.set(0, 0.05, 0.51);
-headGroup.add(eyeScreen);
+// 3. 页面渲染与动画更新
+const mascotBox = document.getElementById('mascotSvgBox');
+function updateView(mood = currentMood) {
+  currentMood = mood;
+  mascotBox.innerHTML = renderMascotSvg(mood);
 
-// (D) 粉色腮红贴花 (超治愈小粉晕)
-const blushGeo = new THREE.CircleGeometry(0.08, 16);
-const leftBlush = new THREE.Mesh(blushGeo, blushMat);
-leftBlush.position.set(-0.35, -0.14, 0.44);
-leftBlush.rotation.y = -0.35;
-headGroup.add(leftBlush);
+  let animClass = 'm-anim-float';
+  if (mood === 'lecture') animClass = 'm-anim-lecture';
+  else if (mood === 'dance') animClass = 'm-anim-dance';
+  else if (mood === 'cheer' || mood === 'celebrate') animClass = 'm-anim-cheer';
+  else if (mood === 'spin') animClass = 'm-anim-spin';
+  else if (mood === 'charge') animClass = 'm-anim-charge';
 
-const rightBlush = new THREE.Mesh(blushGeo, blushMat);
-rightBlush.position.set(0.35, -0.14, 0.44);
-rightBlush.rotation.y = 0.35;
-headGroup.add(rightBlush);
-
-// (E) 头顶晃晃悠悠的呆萌小天线
-const antPoleGeo = new THREE.CylinderGeometry(0.016, 0.02, 0.22, 12);
-const antPole = new THREE.Mesh(antPoleGeo, warmGoldMat);
-antPole.position.set(0, 0.62, 0);
-headGroup.add(antPole);
-
-const antBulbGeo = new THREE.SphereGeometry(0.065, 16, 16);
-const antBulbMat = new THREE.MeshStandardMaterial({
-  color: 0xffffff,
-  emissive: 0x38bdf8,
-  emissiveIntensity: 2.2,
-  roughness: 0.2
-});
-const antBulb = new THREE.Mesh(antBulbGeo, antBulbMat);
-antBulb.position.set(0, 0.75, 0);
-headGroup.add(antBulb);
-
-
-// (F) 圆滚滚的磁悬浮身体 (Chubby Cute Body)
-const bodyGroup = new THREE.Group();
-bodyGroup.position.set(0, -0.18, 0);
-robotRoot.add(bodyGroup);
-
-const bodyGeo = new THREE.SphereGeometry(0.44, 40, 32);
-bodyGeo.scale(0.95, 1.05, 0.92);
-const bodyMesh = new THREE.Mesh(bodyGeo, whiteCeramicMat);
-bodyGroup.add(bodyMesh);
-
-// 肚子上的小博极客能量徽章 (蓝天发光圆盾)
-const badgeGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.02, 24);
-const badgeMat = new THREE.MeshStandardMaterial({
-  color: 0x0284c7,
-  emissive: 0x38bdf8,
-  emissiveIntensity: 1.5,
-  metalness: 0.5,
-  roughness: 0.2
-});
-const bellyBadge = new THREE.Mesh(badgeGeo, badgeMat);
-bellyBadge.rotation.x = Math.PI * 0.5;
-bellyBadge.position.set(0, 0.05, 0.4);
-bodyGroup.add(bellyBadge);
-
-// (G) 身体内部的【星辰能量晶核】 (平时微隐，透视时梦幻绽放)
-const heartGeo = new THREE.OctahedronGeometry(0.16, 0);
-const heartMat = new THREE.MeshStandardMaterial({
-  color: 0xffffff,
-  emissive: 0x38bdf8,
-  emissiveIntensity: 3.0,
-  roughness: 0.1,
-  metalness: 0.2
-});
-const heartGem = new THREE.Mesh(heartGeo, heartMat);
-heartGem.position.set(0, 0.05, 0);
-bodyGroup.add(heartGem);
-
-
-// (H) 左右悬浮小圆手 (Floating Hands)
-function createHand(isLeft = true) {
-  const hGroup = new THREE.Group();
-  const dir = isLeft ? -1 : 1;
-  hGroup.position.set(dir * 0.58, -0.05, 0.12);
-
-  // 悬浮小肉手
-  const handGeo = new THREE.SphereGeometry(0.11, 24, 24);
-  handGeo.scale(0.9, 1.1, 0.9);
-  const handMesh = new THREE.Mesh(handGeo, whiteCeramicMat);
-  hGroup.add(handMesh);
-
-  // 掌心微光圆点
-  const palmGlowGeo = new THREE.CircleGeometry(0.04, 16);
-  const palmGlow = new THREE.Mesh(palmGlowGeo, eyeGlowMat);
-  palmGlow.position.set(0, -0.02, 0.1);
-  hGroup.add(palmGlow);
-
-  robotRoot.add(hGroup);
-  return hGroup;
+  mascotBox.className = 'mascot-svg-box ' + animClass + (mascotBox.classList.contains('is-speaking') ? ' is-speaking' : '');
 }
-const leftHand = createHand(true);
-const rightHand = createHand(false);
+updateView('lecture');
 
+// 4. 真 3D 景深视差微跟随引擎 (Parallax 3D Gyro Engine)
+const wrap = document.getElementById('mascot3dWrap');
+let targetRotX = 0, targetRotY = 0;
+let curRotX = 0, curRotY = 0;
 
-// (I) 身体下方的等离子无重力能量微环 (Soft Plasma Ring)
-const thrusterGeo = new THREE.TorusGeometry(0.24, 0.028, 16, 32);
-const thrusterMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.75 });
-const thrusterRing = new THREE.Mesh(thrusterGeo, thrusterMat);
-thrusterRing.rotation.x = Math.PI * 0.5;
-thrusterRing.position.set(0, -0.68, 0);
-robotRoot.add(thrusterRing);
+window.addEventListener('mousemove', (e) => {
+  const normX = (e.clientX / window.innerWidth) - 0.5;
+  const normY = (e.clientY / window.innerHeight) - 0.5;
 
-// (J) 全息蜂巢球形能量护盾 (Holographic Honeycomb Shield)
-const shieldGeo = new THREE.IcosahedronGeometry(1.05, 2);
-const shieldMat = new THREE.MeshStandardMaterial({
-  color: 0x38bdf8,
-  emissive: 0x0284c7,
-  emissiveIntensity: 0.8,
-  wireframe: true,
-  transparent: true,
-  opacity: 0.45
+  targetRotY = normX * 28;  // 最大左右 28度 倾斜
+  targetRotX = -normY * 20; // 最大上下 20度 俯仰
 });
-const shieldMesh = new THREE.Mesh(shieldGeo, shieldMat);
-shieldMesh.position.set(0, 0.15, 0);
-robotRoot.add(shieldMesh);
 
-
-// (K) 漂浮的治愈系星空星尘粒子 (Dreamy Floating Star Particles)
-const starCount = 120;
-const starGeo = new THREE.BufferGeometry();
-const starPos = new Float32Array(starCount * 3);
-for(let i=0; i<starCount*3; i+=3) {
-  starPos[i] = (Math.random() - 0.5) * 8;
-  starPos[i+1] = (Math.random() - 0.5) * 6;
-  starPos[i+2] = (Math.random() - 0.5) * 8;
+function renderParallax() {
+  curRotX += (targetRotX - curRotX) * 0.08;
+  curRotY += (targetRotY - curRotY) * 0.08;
+  wrap.style.transform = `perspective(1000px) rotateX(${curRotX.toFixed(2)}deg) rotateY(${curRotY.toFixed(2)}deg)`;
+  requestAnimationFrame(renderParallax);
 }
-starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-const starMat = new THREE.PointsMaterial({ color: 0x7dd3fc, size: 0.05, transparent: true, opacity: 0.7 });
-const starPoints = new THREE.Points(starGeo, starMat);
-scene.add(starPoints);
+renderParallax();
 
-
-// 5. 治愈系 Web Audio 音效发生器 (Cute Sound Synthesis)
+// 5. 点击小博本体触发 Q 弹果冻与音效 (Squash & Stretch Feedback)
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
-
-function playCuteChime(type = 'bubble') {
+function playBoingSound() {
   try {
     if (!audioCtx) audioCtx = new AudioContext();
     if (audioCtx.state === 'suspended') audioCtx.resume();
-
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-
-    if (type === 'bubble') {
-      // 水滴泡泡 Q 弹音
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(420, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(840, audioCtx.currentTime + 0.12);
-      gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.16);
-
-    } else if (type === 'sparkle') {
-      // 欢呼治愈双音和弦
-      const f1 = 523.25; // C5
-      const f2 = 659.25; // E5
-      [f1, f2].forEach((freq, idx) => {
-        const o = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        o.type = 'triangle';
-        o.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.06);
-        g.gain.setValueAtTime(0.08, audioCtx.currentTime + idx * 0.06);
-        g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + idx * 0.06 + 0.35);
-        o.connect(g);
-        g.connect(audioCtx.destination);
-        o.start(audioCtx.currentTime + idx * 0.06);
-        o.stop(audioCtx.currentTime + idx * 0.06 + 0.36);
-      });
-    }
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.12);
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.18);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.19);
   } catch(e) {}
 }
 
-
-// 6. 交互动画与物理动力学驱动 (Physics & Interaction Engine)
-let jellyBounce = 0; // 点击身体触发的果冻抖动
-let jellySpeed = 0;
-
-let isFlipping = false;
-let flipProgress = 0;
-
-let isShieldActive = true;
-let isXRayActive = false;
-let isOverclock = false;
-
-// 鼠标视差微跟随 (Parallax Head Follow)
-const mouse = new THREE.Vector2();
-window.addEventListener('mousemove', (e) => {
-  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-});
-
-// 点击小博身体触发果冻 Q 弹 (Jelly Squish & Stretch)
-window.addEventListener('click', (e) => {
-  // 排除点击底部和顶部 HUD
-  if (e.target.closest('.control-dock') || e.target.closest('.top-hud')) return;
-
-  jellyBounce = 0.28; // 瞬间压扁拉伸
-  playCuteChime('bubble');
-  setSpeech('“哎呀！戳到我圆滚滚的纳米白瓷小肚腩啦，好痒好痒~ 😄”', '✨ 亲密互动');
-
-  // 暂时变成开心眼
-  const oldMood = currentMood;
-  currentMood = 'happy';
-  drawEyeExpressions();
+wrap.addEventListener('click', () => {
+  playBoingSound();
+  wrap.style.transform = `perspective(1000px) scale(0.92, 1.1) rotateX(${curRotX}deg) rotateY(${curRotY}deg)`;
   setTimeout(() => {
-    currentMood = oldMood;
-    drawEyeExpressions();
-  }, 1200);
+    wrap.style.transform = `perspective(1000px) scale(1.08, 0.95) rotateX(${curRotX}deg) rotateY(${curRotY}deg)`;
+    setTimeout(() => {
+      wrap.style.transform = `perspective(1000px) scale(1, 1) rotateX(${curRotX}deg) rotateY(${curRotY}deg)`;
+    }, 120);
+  }, 100);
+
+  speak("好痒好痒！戳到小博的纳米陶瓷脸蛋啦~ 我们继续加油做题吧！", "😄 亲密摸摸头");
 });
 
-// 自动随机自然眨眼 (Natural Blinking System)
-function triggerNaturalBlink() {
-  if (isBlinking) return;
-  isBlinking = true;
-  blinkProgress = 0;
+// 6. 对话与台词引擎 (带语音播放)
+const speechText = document.getElementById('speechText');
+const speechTag = document.getElementById('speechTag');
 
-  const blinkInterval = setInterval(() => {
-    blinkProgress += 0.25;
-    drawEyeExpressions();
-    if (blinkProgress >= 1.0) {
-      clearInterval(blinkInterval);
-      setTimeout(() => {
-        const unblinkInterval = setInterval(() => {
-          blinkProgress -= 0.25;
-          drawEyeExpressions();
-          if (blinkProgress <= 0) {
-            clearInterval(unblinkInterval);
-            isBlinking = false;
-          }
-        }, 20);
-      }, 50);
-    }
-  }, 20);
+function speak(text, tag = "💡 伴学导师") {
+  speechText.textContent = text;
+  speechTag.textContent = tag;
 
-  // 下一次眨眼时间 (2.5 ~ 5.5 秒随机)
-  setTimeout(triggerNaturalBlink, 2500 + Math.random() * 3000);
-}
-setTimeout(triggerNaturalBlink, 2000);
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'zh-CN';
+    u.rate = 1.05;
+    u.pitch = 1.12;
 
-
-// 7. 台词与状态泡泡
-const speechText = document.getElementById('speech-text');
-function setSpeech(txt, badge = '伴学状态') {
-  speechText.textContent = txt;
-  document.querySelector('.speech-badge').textContent = badge;
+    u.onstart = () => { mascotBox.classList.add('is-speaking'); };
+    u.onend = () => { mascotBox.classList.remove('is-speaking'); };
+    window.speechSynthesis.speak(u);
+  }
 }
 
+document.getElementById('btnSpeakVoice').onclick = () => {
+  speak(speechText.textContent, speechTag.textContent);
+};
 
-// 8. 按钮技能交互绑定
-document.getElementById('btn-wave').addEventListener('click', () => {
-  playCuteChime('bubble');
-  setSpeech('“哈喽小主人！今天我们一起把初中语数英错题统统歼灭！”', '👋 热情打招呼');
-  rightHand.userData.waving = true;
-  rightHand.userData.waveCount = 0;
-});
+// 7. 动作按钮交互事件
+const ACTION_LINES = {
+  lecture: { text: "听小博老师给你讲课！做这道题切忌死记硬背，先看核心已知条件，秒杀出题人的小陷阱！", tag: "👨‍🏫 名师讲课" },
+  wave: { text: "哈喽我的极客小主人！今天精力充沛，我们一口气拿下初中英语听力和数学压轴题！", tag: "👋 热情招手" },
+  dance: { text: "做累了就站起来和小博一起跳段赛博太空步，放松大脑，效率更高！", tag: "💃 太空步律动" },
+  cheer: { text: "太厉害啦！30道真题全部通关，斩获满分 S 级学霸机甲勋章！为你骄傲！", tag: "🏆 满分欢呼" },
+  spin: { text: "看我给你表演 360° 反重力大空翻！帅不帅气？", tag: "💫 反重力特技" },
+  scan: { text: "开启全息多维雷达扫描！正在为你检索易错知识点数据库...", tag: "⚡ 雷达扫描" },
+  think: { text: "唔... 让小博托腮好好想一想，这道题的破题黄金钥匙究竟藏在哪一行？", tag: "🤔 深度思考" },
+  charge: { text: "⚡ 超频爆能全开！机甲核心注入 100% 战力能量，中考金牌势在必得！", tag: "🔥 超频觉醒" }
+};
 
-document.getElementById('btn-flip').addEventListener('click', () => {
-  if (isFlipping) return;
-  isFlipping = true;
-  flipProgress = 0;
-  playCuteChime('sparkle');
-  setSpeech('“看我的 360° 反重力无重力超能大空翻！帅不帅气？”', '💫 极客空翻');
-});
-
-const btnShield = document.getElementById('btn-shield');
-btnShield.addEventListener('click', () => {
-  isShieldActive = !isShieldActive;
-  btnShield.classList.toggle('active', isShieldActive);
-  shieldMesh.visible = isShieldActive;
-  playCuteChime('bubble');
-  if (isShieldActive) {
-    setSpeech('“全息六边形蜂巢能量护盾已展开！专注气场全开，杂念退散！”', '🛡️ 能量力场');
-  } else {
-    setSpeech('“护盾已收纳，轻装上阵进入日常自习模式~”', '🛡️ 护盾待命');
-  }
-});
-
-const btnXray = document.getElementById('btn-xray');
-btnXray.addEventListener('click', () => {
-  isXRayActive = !isXRayActive;
-  btnXray.classList.toggle('active', isXRayActive);
-  playCuteChime('sparkle');
-
-  if (isXRayActive) {
-    headMesh.material = crystalGlassMat;
-    bodyMesh.material = crystalGlassMat;
-    setSpeech('“看！我身体里跳动着一颗纯净温柔的星辰能量晶石，温暖而强大~”', '✨ 晶莹透视');
-  } else {
-    headMesh.material = whiteCeramicMat;
-    bodyMesh.material = whiteCeramicMat;
-    setSpeech('“纳米级高光白瓷外甲恢复如初，依然是那个圆润可爱的小博！”', '🤖 装甲聚合');
-  }
-});
-
-const btnOverclock = document.getElementById('btn-overclock');
-btnOverclock.addEventListener('click', () => {
-  isOverclock = !isOverclock;
-  btnOverclock.classList.toggle('active', isOverclock);
-  playCuteChime('sparkle');
-
-  if (isOverclock) {
-    currentMood = 'star';
-    drawEyeExpressions();
-    antBulbMat.emissive.setHex(0xfbbf24);
-    badgeMat.emissive.setHex(0xfbbf24);
-    shieldMat.color.setHex(0xfbbf24);
-    shieldMat.emissive.setHex(0xd97706);
-    thrusterMat.color.setHex(0xfbbf24);
-    setSpeech('“⚡ 学霸超频觉醒！双目化作璀璨金星，脑力全开，直冲中考满分大满贯！”', '⚡ 满分超频');
-  } else {
-    currentMood = 'normal';
-    drawEyeExpressions();
-    antBulbMat.emissive.setHex(0x38bdf8);
-    badgeMat.emissive.setHex(0x38bdf8);
-    shieldMat.color.setHex(0x38bdf8);
-    shieldMat.emissive.setHex(0x0284c7);
-    thrusterMat.color.setHex(0x38bdf8);
-    setSpeech('“超频降温，平稳巡航中~”', '✨ 平稳伴学');
-  }
-});
-
-// 表情切换
-document.querySelectorAll('.mood-btn').forEach(btn => {
+document.querySelectorAll('.action-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.action-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    currentMood = btn.getAttribute('data-mood');
-    drawEyeExpressions();
-    playCuteChime('bubble');
 
-    const descMap = {
-      normal: '“天蓝色灵动大眼睛，好奇地看着周围的一切~”',
-      happy: '“嘻嘻！做对了一道大题，开心到两眼眯成月牙弯弯！”',
-      star: '“哇！难题被攻克了，满眼都是崇拜的小星星！”',
-      heart: '“好喜欢你呀我的小主人，学习路上有我一直陪着你！”'
-    };
-    setSpeech(descMap[currentMood] || '“伴学表情已切换~”', '😊 情绪表达');
+    const act = btn.getAttribute('data-act');
+    updateView(act);
+    playBoingSound();
+
+    const info = ACTION_LINES[act] || { text: "小博伴学状态已切换！", tag: "🤖 伴学状态" };
+    speak(info.text, info.tag);
+
+    // 旋转特技结束后恢复名师讲课态
+    if (act === 'spin') {
+      setTimeout(() => {
+        updateView('lecture');
+      }, 1200);
+    }
   });
 });
 
-document.getElementById('btn-cam-reset').addEventListener('click', () => {
-  camera.position.set(0, 0.5, 4.4);
-  controls.target.set(0, 0.1, 0);
-  controls.update();
+// 8. 换装皮肤切换
+document.querySelectorAll('#armorGroup .swatch-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#armorGroup .swatch-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    MASCOT_CONFIG.armor = btn.getAttribute('data-armor');
+    updateView();
+    playBoingSound();
+  });
 });
 
-
-// 9. 渲染循环与高品质平滑动画 (60FPS Render Loop)
-let clock = new THREE.Clock();
-
-function animate() {
-  requestAnimationFrame(animate);
-
-  const elapsedTime = clock.getElapsedTime();
-
-  // (1) 果冻物理抖动衰减 (Squash & Stretch Damping)
-  if (Math.abs(jellyBounce) > 0.001) {
-    jellySpeed += (-jellyBounce * 28 - jellySpeed * 6.5) * 0.016;
-    jellyBounce += jellySpeed * 0.016;
-  } else {
-    jellyBounce = 0;
-  }
-  const squishY = 1.0 - jellyBounce * 0.8;
-  const squishXZ = 1.0 + jellyBounce * 0.4;
-  robotRoot.scale.set(squishXZ, squishY, squishXZ);
-
-  // (2) 磁悬浮呼吸无重力起伏 (Gentle Levitation Hover)
-  const hoverY = Math.sin(elapsedTime * 2.0) * 0.06;
-  robotRoot.position.y = hoverY;
-
-  // (3) 头部微注视与歪头萌动 (Curious Tilt & Eye Follow)
-  if (!isFlipping) {
-    headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, mouse.x * 0.35, 0.08);
-    headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, -mouse.y * 0.22, 0.08);
-    headGroup.rotation.z = THREE.MathUtils.lerp(headGroup.rotation.z, -mouse.x * 0.15, 0.08); // 可爱的偏头萌杀
-  }
-
-  // (4) 空翻特技动画
-  if (isFlipping) {
-    flipProgress += 0.045;
-    robotRoot.rotation.x = flipProgress * Math.PI * 2;
-    robotRoot.position.y = hoverY + Math.sin(flipProgress * Math.PI) * 0.45;
-    if (flipProgress >= 1.0) {
-      isFlipping = false;
-      robotRoot.rotation.x = 0;
-      setSpeech('“呼~ 满分空翻着陆！完美！”', '✨ 特技完成');
-    }
-  }
-
-  // (5) 左右小手自然悬浮摆动与招手动画
-  if (rightHand.userData.waving) {
-    rightHand.userData.waveCount += 0.12;
-    rightHand.position.y = 0.22 + Math.sin(rightHand.userData.waveCount * 8) * 0.08;
-    rightHand.rotation.z = Math.sin(rightHand.userData.waveCount * 8) * 0.4;
-    if (rightHand.userData.waveCount > Math.PI * 2) {
-      rightHand.userData.waving = false;
-      rightHand.rotation.z = 0;
-    }
-  } else {
-    rightHand.position.y = -0.05 + Math.sin(elapsedTime * 2.5 + 1.2) * 0.04;
-  }
-  leftHand.position.y = -0.05 + Math.sin(elapsedTime * 2.5) * 0.04;
-
-  // (6) 头顶天线微晃
-  antPole.rotation.z = Math.sin(elapsedTime * 3.5) * 0.08;
-  antBulb.position.x = antPole.position.x + Math.sin(antPole.rotation.z) * 0.18;
-
-  // (7) 星核自转与六边形护盾旋转
-  heartGem.rotation.y += 0.03;
-  heartGem.rotation.x += 0.02;
-  shieldMesh.rotation.y -= 0.005;
-  shieldMesh.rotation.x += 0.003;
-
-  // (8) 推进能量环呼吸
-  thrusterRing.scale.setScalar(1.0 + Math.sin(elapsedTime * 5.0) * 0.05);
-
-  controls.update();
-  renderer.render(scene, camera);
-}
-
-// 窗口尺寸自适应
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+// 9. 眼睛色彩切换
+document.querySelectorAll('#eyeColorGroup .swatch-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#eyeColorGroup .swatch-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    MASCOT_CONFIG.eyeColor = btn.getAttribute('data-eye');
+    updateView();
+    playBoingSound();
+  });
 });
 
-// URL 参数便捷直达
+// 页面加载默认激活讲课按钮
+document.querySelector('.action-btn[data-act="lecture"]')?.classList.add('active');
+
+// URL 参数便捷直达 (供自动化截图与演示)
 try {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('mood')) {
-    const targetMood = params.get('mood');
-    const b = document.querySelector(`.mood-btn[data-mood="${targetMood}"]`);
+  const p = new URLSearchParams(window.location.search);
+  if (p.has('act')) {
+    const targetAct = p.get('act');
+    const b = document.querySelector(`.action-btn[data-act="${targetAct}"]`);
     if (b) b.click();
   }
-  if (params.get('overclock') === 'true') {
-    btnOverclock.click();
+  if (p.has('armor')) {
+    const targetArmor = p.get('armor');
+    const b = document.querySelector(`.swatch-btn[data-armor="${targetArmor}"]`);
+    if (b) b.click();
   }
-  if (params.get('xray') === 'true') {
-    btnXray.click();
+  if (p.has('eye')) {
+    const targetEye = p.get('eye');
+    const b = document.querySelector(`.swatch-btn[data-eye="${targetEye}"]`);
+    if (b) b.click();
   }
 } catch(e) {}
-
-// 启动渲染
-animate();
 </script>
 </body>
 </html>
