@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>StudyGate · 3D 赛博机甲伴学生命体 (全息爆炸解构)</title>
+<title>StudyGate · 3D 赛博超萌机甲小博 (Pixar Cute Mecha Companion)</title>
 <style>
   :root {
-    --bg-dark: #07090e;
-    --neon-blue: #00f0ff;
+    --bg-dark: #070b14;
+    --neon-blue: #38bdf8;
     --neon-gold: #fbbf24;
-    --neon-red: #f43f5e;
-    --neon-purple: #a855f7;
-    --hud-border: rgba(0, 240, 255, 0.35);
-    --hud-bg: rgba(10, 15, 26, 0.75);
-    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    --neon-pink: #f472b6;
+    --neon-green: #34d399;
+    --hud-bg: rgba(15, 23, 42, 0.75);
+    --hud-border: rgba(56, 189, 248, 0.3);
+    --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
   body, html {
@@ -21,10 +21,10 @@
     background-color: var(--bg-dark);
     overflow: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", sans-serif;
-    color: #e2e8f0;
+    color: #f1f5f9;
   }
 
-  /* 3D Canvas 容器 */
+  /* 3D Canvas 舞台 */
   #webgl-container {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -33,16 +33,15 @@
   }
   #webgl-container:active { cursor: grabbing; }
 
-  /* 赛博网格背景光晕 */
+  /* 梦幻自习星舰微光暗角 */
   .cyber-vignette {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     pointer-events: none;
     z-index: 2;
-    background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(5, 7, 12, 0.85) 90%),
-                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-    background-size: 100% 100%, 40px 40px, 40px 40px;
+    background: radial-gradient(circle at 50% 45%, transparent 35%, rgba(4, 7, 15, 0.75) 85%),
+                radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(244, 114, 182, 0.08) 0%, transparent 50%);
   }
 
   /* 顶部 HUD 栏 */
@@ -57,200 +56,177 @@
     display: flex; align-items: center; gap: 12px;
     background: var(--hud-bg);
     border: 1px solid var(--hud-border);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
     padding: 8px 18px;
     border-radius: 999px;
-    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
+    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.15);
   }
-  .brand-logo {
-    width: 28px; height: 28px; border-radius: 8px;
-    background: linear-gradient(135deg, #00f0ff, #3b82f6);
+  .brand-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px; font-weight: bold; color: #000;
+    font-size: 16px;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
   }
-  .brand-title { font-size: 14px; font-weight: 700; letter-spacing: 1px; color: #fff; }
+  .brand-title { font-size: 14px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
   .brand-sub { font-size: 11px; color: var(--neon-blue); font-family: var(--font-mono); }
 
-  .hud-stats {
-    display: flex; gap: 16px;
-    background: var(--hud-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    padding: 8px 18px;
-    border-radius: 999px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-  }
-  .hud-stat-item span { color: var(--neon-blue); font-weight: bold; margin-left: 4px; }
-
-  /* 左侧零件诊断检视 HUD */
-  .part-inspector {
-    position: absolute;
-    top: 90px; left: 24px;
-    width: 290px;
-    background: var(--hud-bg);
-    border: 1px solid var(--hud-border);
-    border-left: 3px solid var(--neon-blue);
-    backdrop-filter: blur(16px);
-    border-radius: 12px;
-    padding: 18px;
-    z-index: 10;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-    pointer-events: auto;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .inspector-header {
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
-    padding-bottom: 8px; margin-bottom: 12px;
-  }
-  .inspector-tag {
-    font-size: 10px; font-family: var(--font-mono);
-    background: rgba(0, 240, 255, 0.15);
-    color: var(--neon-blue);
-    padding: 2px 6px; border-radius: 4px;
-  }
-  .inspector-title { font-size: 14px; font-weight: bold; color: #fff; }
-  .part-desc { font-size: 12px; line-height: 1.6; color: #94a3b8; margin-bottom: 12px; }
-  .part-metrics {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-    font-family: var(--font-mono); font-size: 11px;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 10px; border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
-  .metric-label { color: #64748b; }
-  .metric-val { color: var(--neon-blue); font-weight: bold; text-align: right; }
-
-  /* 底部主控台 */
-  .bottom-deck {
-    position: absolute;
-    bottom: 24px; left: 50%;
-    transform: translateX(-50%);
-    width: min(840px, 94vw);
-    background: var(--hud-bg);
-    border: 1px solid var(--hud-border);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    padding: 18px 24px;
-    z-index: 10;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 24px rgba(0, 240, 255, 0.15);
-    display: flex; flex-direction: column; gap: 14px;
-    pointer-events: auto;
-  }
-
-  .deck-row {
-    display: flex; justify-content: space-between; align-items: center; gap: 20px;
-  }
-
-  /* 爆炸解构滑条 */
-  .slider-box {
-    flex: 1; display: flex; align-items: center; gap: 14px;
-  }
-  .slider-label {
-    font-family: var(--font-mono); font-size: 12px; font-weight: bold;
-    color: var(--neon-blue); white-space: nowrap;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .cyber-slider {
-    flex: 1;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 8px;
-    background: #1e293b;
-    border-radius: 4px;
-    outline: none;
-    border: 1px solid rgba(0, 240, 255, 0.3);
-  }
-  .cyber-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    background: var(--neon-blue);
-    cursor: pointer;
-    box-shadow: 0 0 14px var(--neon-blue);
-    border: 2px solid #fff;
-    transition: transform 0.1s;
-  }
-  .cyber-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
-  .slider-val {
-    font-family: var(--font-mono); font-size: 13px; font-weight: bold;
-    color: #fff; width: 44px; text-align: right;
-  }
-
-  /* 按钮与模式切换 */
-  .action-buttons {
+  .hud-actions {
     display: flex; gap: 10px; align-items: center;
   }
-  .cyber-btn {
-    background: rgba(0, 240, 255, 0.1);
-    border: 1px solid var(--neon-blue);
-    color: #fff;
+  .btn-nav {
+    background: var(--hud-bg);
+    border: 1px solid var(--hud-border);
+    color: #e2e8f0;
     padding: 8px 16px;
-    border-radius: 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition: all 0.2s;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-nav:hover {
+    color: #fff; border-color: var(--neon-blue);
+    background: rgba(56, 189, 248, 0.2);
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+    transform: translateY(-1px);
+  }
+
+  /* 萌宠状态泡泡 (Mascot Speech Bubble) */
+  .speech-bubble {
+    position: absolute;
+    top: 90px; left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(56, 189, 248, 0.2);
+    backdrop-filter: blur(16px);
+    border-radius: 20px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #f8fafc;
+    z-index: 10;
+    pointer-events: none;
+    display: flex; align-items: center; gap: 10px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -8px; left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0;
+    border-style: solid;
+    border-color: rgba(15, 23, 42, 0.85) transparent transparent transparent;
+  }
+  .speech-badge {
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  /* 底部互动魔盒甲板 */
+  .control-dock {
+    position: absolute;
+    bottom: 28px; left: 50%;
+    transform: translateX(-50%);
+    width: min(860px, 94vw);
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 16px 22px;
+    z-index: 10;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6), 0 0 30px rgba(56, 189, 248, 0.15);
+    display: flex; flex-direction: column; gap: 12px;
+    pointer-events: auto;
+  }
+
+  .dock-section {
+    display: flex; justify-content: space-between; align-items: center; gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .dock-title {
+    font-size: 12px; font-weight: 700; color: #94a3b8;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .dock-title span { color: var(--neon-blue); }
+
+  /* 技能交互按钮群 */
+  .skill-buttons {
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+  }
+  .skill-btn {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    padding: 8px 16px;
+    border-radius: 12px;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     display: flex; align-items: center; gap: 6px;
-    transition: all 0.2s;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .cyber-btn:hover {
-    background: var(--neon-blue);
-    color: #000;
-    box-shadow: 0 0 16px var(--neon-blue);
-    transform: translateY(-2px);
+  .skill-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    background: rgba(56, 189, 248, 0.25);
+    border-color: var(--neon-blue);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.35);
   }
-  .cyber-btn.active {
-    background: var(--neon-blue);
-    color: #000;
+  .skill-btn.active {
+    background: linear-gradient(135deg, #0284c7, #38bdf8);
+    border-color: #7dd3fc;
+    color: #fff;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.6);
+  }
+  .skill-btn.gold {
+    background: rgba(251, 191, 36, 0.15);
+    border-color: rgba(251, 191, 36, 0.4);
+    color: #fde68a;
+  }
+  .skill-btn.gold:hover {
+    background: #fbbf24; color: #000;
+    box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
   }
 
-  /* 颜色形态切换器 */
-  .theme-swatches {
+  /* 表情与心情切换器 */
+  .mood-swatches {
     display: flex; gap: 8px; align-items: center;
   }
-  .swatch {
-    width: 22px; height: 22px; border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .swatch:hover { transform: scale(1.2); }
-  .swatch.active { border-color: #fff; box-shadow: 0 0 12px currentColor; }
-  .swatch.blue { background: #00f0ff; color: #00f0ff; }
-  .swatch.gold { background: #fbbf24; color: #fbbf24; }
-  .swatch.red { background: #f43f5e; color: #f43f5e; }
-  .swatch.purple { background: #a855f7; color: #a855f7; }
-
-  /* 快捷返回 StudyGate 按钮 */
-  .btn-back-hub {
-    position: absolute;
-    top: 20px; right: 24px;
-    background: rgba(15, 23, 42, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #94a3b8;
-    padding: 8px 14px;
-    border-radius: 999px;
-    font-size: 12px;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
+  .mood-btn {
+    padding: 6px 12px; border-radius: 999px;
+    font-size: 11px; font-weight: 600;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #cbd5e1; cursor: pointer;
     transition: all 0.2s;
-    text-decoration: none;
-    display: flex; align-items: center; gap: 6px;
-    z-index: 10;
   }
-  .btn-back-hub:hover {
-    color: #fff; border-color: var(--neon-blue);
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+  .mood-btn:hover, .mood-btn.active {
+    background: var(--neon-blue); color: #000;
+    border-color: #fff; font-weight: 700;
+    box-shadow: 0 0 12px var(--neon-blue);
   }
 
-  /* 移动端与自适应优化 */
+  /* 提示信息 */
+  .dock-tips {
+    font-size: 11px; color: #64748b; font-family: var(--font-mono);
+    text-align: right;
+  }
+
   @media (max-width: 768px) {
-    .part-inspector { display: none; }
-    .bottom-deck { padding: 14px; }
-    .deck-row { flex-direction: column; align-items: stretch; gap: 10px; }
-    .slider-box { width: 100%; }
+    .control-dock { bottom: 12px; padding: 12px; }
+    .speech-bubble { font-size: 12px; top: 75px; width: 90%; }
+    .dock-tips { display: none; }
   }
 </style>
 </head>
@@ -262,79 +238,52 @@
 <!-- 顶部 HUD -->
 <header class="top-hud">
   <div class="brand-badge">
-    <div class="brand-logo">⚡</div>
+    <div class="brand-avatar">🤖</div>
     <div>
-      <div class="brand-title">STUDYGATE · CYBER MECHA-CORE</div>
-      <div class="brand-sub">PROCEDURAL 3D TEARDOWN SYSTEM // V3.2</div>
+      <div class="brand-title">小博 · 3D 赛博治愈机甲</div>
+      <div class="brand-sub">STUDYGATE // PIXAR MECHA ENGINE</div>
     </div>
   </div>
-  <div class="hud-stats">
-    <div class="hud-stat-item">FPS:<span id="hud-fps">60</span></div>
-    <div class="hud-stat-item">PARTS:<span id="hud-parts">148</span></div>
-    <div class="hud-stat-item">REACTOR:<span id="hud-core">99.8%</span></div>
+
+  <div class="hud-actions">
+    <button class="btn-nav" id="btn-cam-reset">🎯 视线对齐</button>
+    <a href="index.html" class="btn-nav" style="border-color:var(--neon-blue);color:#38bdf8">← 返回中考答题门</a>
   </div>
-  <a href="index.html" class="btn-back-hub">
-    <span>← 返回主门禁答题台</span>
-  </a>
 </header>
 
-<!-- 左侧零件全息诊断框 -->
-<aside class="part-inspector" id="part-inspector">
-  <div class="inspector-header">
-    <div class="inspector-title" id="insp-name">⚡ 量子微型反应堆</div>
-    <div class="inspector-tag" id="insp-code">CORE-01</div>
-  </div>
-  <div class="part-desc" id="insp-desc">
-    StudyGate 3D 伴学机甲的核心能源中枢。采用磁约束等离子体自循环加速轨道，可实时根据中考答题连续击数 (Combo) 提升输出能级。
-  </div>
-  <div class="part-metrics">
-    <div class="metric-label">材质工艺:</div>
-    <div class="metric-val" id="insp-mat">超导钛合金 / 钛蓝</div>
-    <div class="metric-label">解构位移:</div>
-    <div class="metric-val" id="insp-disp">+0.00 mm</div>
-    <div class="metric-label">伺服状态:</div>
-    <div class="metric-val" id="insp-status">ONLINE 运行中</div>
-    <div class="metric-label">耐压极限:</div>
-    <div class="metric-val" id="insp-max">4200 MPa</div>
-  </div>
-</aside>
+<!-- 小博台词泡泡 -->
+<div class="speech-bubble" id="speech-bubble">
+  <span class="speech-badge">伴学状态</span>
+  <span id="speech-text">“你好呀小极客！我是你的机甲伴学导师小博，今天准备拿下哪一科？”</span>
+</div>
 
-<!-- 底部全息控制甲板 -->
-<footer class="bottom-deck">
-  <div class="deck-row">
-    <div class="slider-box">
-      <div class="slider-label">
-        <span>⚡ 机械爆炸解构 (CUTAWAY):</span>
-      </div>
-      <input type="range" min="0" max="100" value="0" class="cyber-slider" id="explode-slider">
-      <div class="slider-val" id="slider-val-display">0%</div>
+<!-- 底部超能互动魔盒 -->
+<footer class="control-dock">
+  <div class="dock-section">
+    <div class="dock-title">
+      <span>✨ 超能机甲互动:</span>
     </div>
-
-    <div class="action-buttons">
-      <button class="cyber-btn" id="btn-toggle-explode">
-        <span>💥 智能展开 / 聚合</span>
-      </button>
-      <button class="cyber-btn" id="btn-auto-rotate">
-        <span>🔄 360° 巡航自转</span>
-      </button>
-      <button class="cyber-btn" id="btn-reset-cam">
-        <span>🎯 相机复位</span>
-      </button>
+    <div class="skill-buttons">
+      <button class="skill-btn" id="btn-wave">👋 招手问好</button>
+      <button class="skill-btn" id="btn-flip">💫 360° 无重力空翻</button>
+      <button class="skill-btn active" id="btn-shield">🛡️ 全息能量护盾</button>
+      <button class="skill-btn" id="btn-xray">✨ 晶莹星核透视</button>
+      <button class="skill-btn gold" id="btn-overclock">⚡ 学霸超频觉醒</button>
     </div>
   </div>
 
-  <div class="deck-row" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
-    <div style="font-size: 12px; color: #94a3b8; display: flex; align-items: center; gap: 8px;">
-      <span>🎨 机甲能量波长形态:</span>
-      <div class="theme-swatches">
-        <div class="swatch blue active" title="天蓝 · 极客自习态" data-color="#00f0ff"></div>
-        <div class="swatch gold" title="超频金 · 满分觉醒态" data-color="#fbbf24"></div>
-        <div class="swatch red" title="赤红 · 错题战备态" data-color="#f43f5e"></div>
-        <div class="swatch purple" title="幻夜紫 · 赛博心流态" data-color="#a855f7"></div>
+  <div class="dock-section" style="border-top:1px solid rgba(255,255,255,0.08);padding-top:10px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:12px;color:#94a3b8">😊 情绪表情:</span>
+      <div class="mood-swatches">
+        <button class="mood-btn active" data-mood="normal">天蓝萌眸</button>
+        <button class="mood-btn" data-mood="happy">开心眯眼</button>
+        <button class="mood-btn" data-mood="star">星星学霸</button>
+        <button class="mood-btn" data-mood="heart">暖心比心</button>
       </div>
     </div>
-    <div style="font-size: 11px; font-family: var(--font-mono); color: #64748b;">
-      💡 提示：左键拖拽旋转 | 滚轮缩放推近 | 鼠标移至部件触发解构诊断
+    <div class="dock-tips">
+      💡 戳戳小博的脸蛋会 Q 弹果冻晃动哦 | 鼠标悬停他会歪头看你
     </div>
   </div>
 </footer>
@@ -345,541 +294,654 @@
 
 <script>
 /* ─────────────────────────────────────────────────────────────
-   StudyGate 3D 赛博机甲伴学核心 (Procedural Cutaway Teardown Engine)
-   设计灵感对标 Nyxera0x 的纯代码参数化机甲装配与层级爆炸解构架构
+   StudyGate 3D 治愈系机甲小博 (Pixar Edition)
+   采用苹果微晶白瓷 + 迪士尼极佳圆润流线 + 萌系大眼睛与 Q 弹果冻微动力学
+   彻底告别生硬吓人的骨架拆解，打造少儿最爱的温暖未来伴学科技！
    ───────────────────────────────────────────────────────────── */
 
 // 1. 初始化 WebGL 场景与渲染器
 const container = document.getElementById('webgl-container');
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x07090e, 0.035);
+scene.fog = new THREE.FogExp2(0x070b14, 0.04);
 
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.set(0, 1.2, 5.2);
+const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(0, 0.5, 4.4);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.25;
+renderer.toneMappingExposure = 1.35;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 container.appendChild(renderer.domElement);
 
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
-controls.dampingFactor = 0.05;
+controls.dampingFactor = 0.06;
 controls.minDistance = 2.0;
-controls.maxDistance = 10.0;
-controls.maxPolarAngle = Math.PI / 2 + 0.1; // 防止翻到地平线以下
-controls.target.set(0, 0.2, 0);
+controls.maxDistance = 8.0;
+controls.maxPolarAngle = Math.PI / 2 + 0.15;
+controls.target.set(0, 0.1, 0);
 
-// 2. 真实物理光影 (PBR Lighting)
-const ambientLight = new THREE.AmbientLight(0x0f172a, 1.8);
+// 2. 电影级柔和光影 (Pixar Warm Studio Lighting)
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
 scene.add(ambientLight);
 
-const mainKeyLight = new THREE.DirectionalLight(0xffffff, 2.2);
-mainKeyLight.position.set(5, 8, 5);
-scene.add(mainKeyLight);
+// 主聚光灯（产生温润柔和的高光）
+const keyLight = new THREE.DirectionalLight(0xfff7ed, 2.4);
+keyLight.position.set(4, 6, 5);
+keyLight.castShadow = true;
+scene.add(keyLight);
 
-const cyanFillLight = new THREE.PointLight(0x00f0ff, 3.5, 12);
-cyanFillLight.position.set(-4, 2, 3);
-scene.add(cyanFillLight);
+// 侧边天蓝色冷光（科幻边缘轮廓）
+const rimLight = new THREE.PointLight(0x38bdf8, 3.5, 10);
+rimLight.position.set(-3.5, 2, -2);
+scene.add(rimLight);
 
-const purpleRimLight = new THREE.PointLight(0xa855f7, 2.8, 12);
-purpleRimLight.position.set(4, -2, -3);
-scene.add(purpleRimLight);
+// 柔和暖粉色底光（如同可爱的腮红光晕）
+const blushLight = new THREE.PointLight(0xf472b6, 2.0, 8);
+blushLight.position.set(3, -1.5, 2);
+scene.add(blushLight);
 
-// 底部反重力辉光
-const groundGlow = new THREE.PointLight(0x00f0ff, 4.0, 5);
-groundGlow.position.set(0, -1.2, 0);
-scene.add(groundGlow);
+// 底部反重力推进柔光
+const thrusterLight = new THREE.PointLight(0x38bdf8, 4.0, 5);
+thrusterLight.position.set(0, -1.2, 0);
+scene.add(thrusterLight);
 
-// 3. 通用材质库 (PBR Materials)
-let currentThemeHex = 0x00f0ff;
-
-// 纳米白瓷外壳 (Nanoceramic Shell)
-const ceramicMat = new THREE.MeshStandardMaterial({
-  color: 0xf1f5f9,
-  roughness: 0.15,
-  metalness: 0.1,
-  clearcoat: 0.8,
-  clearcoatRoughness: 0.1
+// 3. 超高质感材质库 (PBR Materials)
+// 苹果级纳米白瓷烤漆 (Nanoceramic Ultra-Gloss White)
+const whiteCeramicMat = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff,
+  roughness: 0.12,
+  metalness: 0.05,
+  clearcoat: 1.0,
+  clearcoatRoughness: 0.08,
+  reflectivity: 0.9
 });
 
-// 暗黑钛合金骨架 (Titanium Chassis)
-const titaniumMat = new THREE.MeshStandardMaterial({
-  color: 0x1e293b,
-  roughness: 0.35,
-  metalness: 0.85
-});
-
-// 镀铬银反光部件 (Chrome Metal)
-const chromeMat = new THREE.MeshStandardMaterial({
-  color: 0x94a3b8,
-  roughness: 0.1,
-  metalness: 0.95
-});
-
-// 金色能源轴承 (Gold Alloys)
-const goldMat = new THREE.MeshStandardMaterial({
-  color: 0xd97706,
-  roughness: 0.2,
-  metalness: 0.9
-});
-
-// 黑晶光学曲面面罩 (Black Crystal Visor)
-const visorMat = new THREE.MeshPhysicalMaterial({
-  color: 0x020617,
-  metalness: 0.9,
-  roughness: 0.05,
-  transmission: 0.6,
+// 半透明星空黑晶曲面面罩 (Starry Black Crystal Visor)
+const blackVisorMat = new THREE.MeshPhysicalMaterial({
+  color: 0x050814,
+  roughness: 0.04,
+  metalness: 0.8,
+  transmission: 0.5,
   transparent: true,
-  opacity: 0.92,
+  opacity: 0.95,
   reflectivity: 0.95
 });
 
-// 动态能量发光材质 (Emissive Glow Material)
-const glowMat = new THREE.MeshBasicMaterial({
-  color: currentThemeHex
+// 天蓝色灵动大眼睛自发光材质
+let eyeEmissiveColor = new THREE.Color(0x38bdf8);
+const eyeGlowMat = new THREE.MeshBasicMaterial({
+  color: eyeEmissiveColor
 });
 
-const coreGlowMat = new THREE.MeshStandardMaterial({
-  color: 0xffffff,
-  emissive: currentThemeHex,
-  emissiveIntensity: 2.2,
-  roughness: 0.1,
-  metalness: 0.2
+// 暖粉色萌系腮红材质
+const blushMat = new THREE.MeshBasicMaterial({
+  color: 0xf472b6,
+  transparent: true,
+  opacity: 0.35
 });
 
-// 4. 构建可爆炸拆解的机械结构体 (Procedural Teardown Assembly)
-// 每个部件定义：正常坐标 + 爆炸位移向量 + 诊断元数据
-const teardownParts = [];
+// 镀金关节与天线小件
+const warmGoldMat = new THREE.MeshStandardMaterial({
+  color: 0xfbbf24,
+  roughness: 0.25,
+  metalness: 0.85
+});
+
+// 晶莹冰晶星核透视材质 (X-Ray Crystal Material)
+const crystalGlassMat = new THREE.MeshPhysicalMaterial({
+  color: 0xbae6fd,
+  roughness: 0.05,
+  metalness: 0.1,
+  transmission: 0.92,
+  transparent: true,
+  opacity: 0.45,
+  ior: 1.5
+});
+
+// 4. 构建极致呆萌的 3D 小博装配体 (Cute Procedural Mecha Bot)
 const robotRoot = new THREE.Group();
 scene.add(robotRoot);
 
-function registerPart(mesh, name, code, desc, normalDisp, customData = {}) {
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
-  mesh.userData = {
-    name, code, desc,
-    initPos: mesh.position.clone(),
-    initRot: mesh.rotation.clone(),
-    dispVec: normalDisp.clone(), // 爆炸位移量 (相对于初始位置)
-    ...customData
-  };
-  teardownParts.push(mesh);
-  return mesh;
-}
-
-/* ───────────────────── (A) 头部组件装配 ───────────────────── */
+// 头部装配组 (Head Group - 负责歪头与眨眼跟随)
 const headGroup = new THREE.Group();
-headGroup.position.set(0, 0.75, 0);
+headGroup.position.set(0, 0.48, 0);
 robotRoot.add(headGroup);
 
-// 1. 白瓷后脑外壳
-const craniumGeo = new THREE.SphereGeometry(0.55, 32, 24, 0, Math.PI * 2, 0, Math.PI * 0.55);
-const cranium = new THREE.Mesh(craniumGeo, ceramicMat);
-cranium.rotation.x = -Math.PI * 0.1;
-cranium.position.set(0, 0, -0.05);
-headGroup.add(registerPart(cranium, "纳米白瓷防护脑甲", "HELM-01", "航天级纳米微晶陶瓷外壳，具备卓越的电磁屏蔽与抗物理冲击能级。", new THREE.Vector3(0, 0.6, -0.8)));
+// (A) 圆润的白瓷脑袋 (类似鹅卵石/EVE超光滑造型)
+const headGeo = new THREE.SphereGeometry(0.56, 48, 36);
+headGeo.scale(1.0, 0.92, 0.95);
+const headMesh = new THREE.Mesh(headGeo, whiteCeramicMat);
+headGroup.add(headMesh);
 
-// 2. 黑晶弧面光学面罩
-const visorGeo = new THREE.SphereGeometry(0.52, 32, 24, 0, Math.PI, 0, Math.PI * 0.5);
-const visor = new THREE.Mesh(visorGeo, visorMat);
-visor.rotation.x = Math.PI * 0.45;
-visor.position.set(0, 0.02, 0.08);
-headGroup.add(registerPart(visor, "深渊黑晶光学全息面罩", "VISOR-OPT", "曲面透光黑晶结构，内嵌双目光学传感器与全息 HUD 视觉阵列。", new THREE.Vector3(0, 0.25, 0.9)));
+// (B) 嵌入式弧面黑晶面罩 (黑水晶大墨镜)
+const visorGeo = new THREE.SphereGeometry(0.52, 40, 24, 0, Math.PI, 0, Math.PI * 0.48);
+const visorMesh = new THREE.Mesh(visorGeo, blackVisorMat);
+visorMesh.rotation.x = Math.PI * 0.46;
+visorMesh.position.set(0, -0.02, 0.06);
+headGroup.add(visorMesh);
 
-// 3. 双目发光显示屏 (左右天蓝色萌萌大眼睛)
-const eyeGeo = new THREE.TorusGeometry(0.11, 0.025, 16, 32);
-const leftEye = new THREE.Mesh(eyeGeo, glowMat);
-leftEye.position.set(-0.2, 0.05, 0.48);
-leftEye.rotation.y = -0.15;
-headGroup.add(registerPart(leftEye, "左目光学传感器矩阵", "EYE-L", "高动态 4K 双目光学追踪单元，支持中考题干视觉分析与微表情交互。", new THREE.Vector3(-0.2, 0.1, 0.6)));
+// (C) 超萌水汪汪大眼睛 (Canvas 动态纹理，可无缝切换表情！)
+const eyeCanvas = document.createElement('canvas');
+eyeCanvas.width = 512;
+eyeCanvas.height = 256;
+const eyeCtx = eyeCanvas.getContext('2d');
+const eyeTexture = new THREE.CanvasTexture(eyeCanvas);
 
-const rightEye = new THREE.Mesh(eyeGeo, glowMat);
-rightEye.position.set(0.2, 0.05, 0.48);
-rightEye.rotation.y = 0.15;
-headGroup.add(registerPart(rightEye, "右目光学传感器矩阵", "EYE-R", "高动态 4K 双目光学追踪单元，具备毫秒级眼神注视微追踪算法。", new THREE.Vector3(0.2, 0.1, 0.6)));
+let currentMood = 'normal'; // 'normal', 'happy', 'star', 'heart'
+let isBlinking = false;
+let blinkProgress = 0; // 0 = 睁开, 1 = 闭上
 
-// 4. 头顶量子天线
-const antStemGeo = new THREE.CylinderGeometry(0.015, 0.025, 0.28, 16);
-const antStem = new THREE.Mesh(antStemGeo, chromeMat);
-antStem.position.set(0, 0.62, -0.05);
-headGroup.add(registerPart(antStem, "量子通信天线连杆", "ANT-POLE", "超导射频连杆，负责与本地 StudyGate 学习数据总线保持离线低时延通信。", new THREE.Vector3(0, 0.9, -0.2)));
+function drawEyeExpressions() {
+  eyeCtx.clearRect(0, 0, 512, 256);
 
-const antBulbGeo = new THREE.SphereGeometry(0.06, 16, 16);
-const antBulb = new THREE.Mesh(antBulbGeo, coreGlowMat);
-antBulb.position.set(0, 0.78, -0.05);
-headGroup.add(registerPart(antBulb, "能量脉冲信号信标灯", "ANT-BEACON", "微型呼吸脉冲信标，随专注心流节拍进行 8Hz 舒曼共振微闪。", new THREE.Vector3(0, 1.2, -0.2)));
+  const drawOneEye = (cx, cy) => {
+    eyeCtx.save();
+    eyeCtx.translate(cx, cy);
 
-// 5. 左右磁悬浮耳罩
-const earGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.08, 24);
-const leftEar = new THREE.Mesh(earGeo, titaniumMat);
-leftEar.position.set(-0.55, 0, -0.05);
-leftEar.rotation.z = Math.PI * 0.5;
-headGroup.add(registerPart(leftEar, "左声学共振散热耳舱", "EAR-L", "内置全向微型扬声单元与对流散热格栅，提供立体母语外教原声。", new THREE.Vector3(-0.8, 0, -0.1)));
+    // 眨眼压扁缩放
+    const scaleY = isBlinking ? (1 - blinkProgress * 0.92) : 1;
+    eyeCtx.scale(1, scaleY);
 
-const rightEar = new THREE.Mesh(earGeo, titaniumMat);
-rightEar.position.set(0.55, 0, -0.05);
-rightEar.rotation.z = Math.PI * 0.5;
-headGroup.add(registerPart(rightEar, "右声学共振散热耳舱", "EAR-R", "内置全向微型扬声单元与对流散热格栅，提供立体母语外教原声。", new THREE.Vector3(0.8, 0, -0.1)));
+    if (currentMood === 'normal') {
+      // 萌萌大圆眼 + 晶莹高光点
+      const grad = eyeCtx.createRadialGradient(0, 0, 5, 0, 0, 48);
+      grad.addColorStop(0, '#e0f2fe');
+      grad.addColorStop(0.4, '#38bdf8');
+      grad.addColorStop(1, '#0284c7');
 
+      eyeCtx.fillStyle = grad;
+      eyeCtx.beginPath();
+      eyeCtx.ellipse(0, 0, 42, 54, 0, 0, Math.PI * 2);
+      eyeCtx.fill();
 
-/* ───────────────────── (B) 躯干与核心反应堆装配 ───────────────────── */
-const torsoGroup = new THREE.Group();
-torsoGroup.position.set(0, 0, 0);
-robotRoot.add(torsoGroup);
+      // 双重晶莹星光高光
+      eyeCtx.fillStyle = '#ffffff';
+      eyeCtx.beginPath();
+      eyeCtx.arc(-14, -18, 12, 0, Math.PI * 2);
+      eyeCtx.fill();
 
-// 1. 钛合金中央脊柱与主结构底盘
-const spineGeo = new THREE.CylinderGeometry(0.18, 0.22, 0.7, 16);
-const spine = new THREE.Mesh(spineGeo, titaniumMat);
-spine.position.set(0, 0, -0.05);
-torsoGroup.add(registerPart(spine, "主承力钛合金脊柱龙骨", "CHASSIS-SPINE", "机器人全身结构核心支撑梁，承受全向机械扭矩与抗剪切载荷。", new THREE.Vector3(0, -0.1, -0.5)));
+      eyeCtx.beginPath();
+      eyeCtx.arc(14, 16, 6, 0, Math.PI * 2);
+      eyeCtx.fill();
 
-// 2. 核心反应堆 (微型核聚变/量子反应堆)
-const reactorGroup = new THREE.Group();
-reactorGroup.position.set(0, 0.05, 0.05);
-torsoGroup.add(reactorGroup);
+    } else if (currentMood === 'happy') {
+      // 开心月牙眯眯眼 (^ ^)
+      eyeCtx.strokeStyle = '#38bdf8';
+      eyeCtx.lineWidth = 14;
+      eyeCtx.lineCap = 'round';
+      eyeCtx.beginPath();
+      eyeCtx.arc(0, 16, 38, Math.PI * 1.15, Math.PI * 1.85);
+      eyeCtx.stroke();
 
-// 反应堆中心发光等离子球
-const coreGeo = new THREE.SphereGeometry(0.18, 32, 32);
-const reactorCoreMesh = new THREE.Mesh(coreGeo, coreGlowMat);
-reactorGroup.add(registerPart(reactorCoreMesh, "磁约束量子微型反应堆", "CORE-01", "核心能量中枢，利用超导磁轨约束高密离子流，为全机甲各构件提供动力。", new THREE.Vector3(0, 0, 0.8)));
+    } else if (currentMood === 'star') {
+      // 学霸金色星星眼 (★ ★)
+      eyeCtx.fillStyle = '#fbbf24';
+      eyeCtx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        eyeCtx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * 48, -Math.sin((18 + i * 72) * Math.PI / 180) * 48);
+        eyeCtx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * 22, -Math.sin((54 + i * 72) * Math.PI / 180) * 22);
+      }
+      eyeCtx.closePath();
+      eyeCtx.fill();
 
-// 反应堆内层金色齿牙旋转环
-const innerRingGeo = new THREE.TorusGeometry(0.26, 0.02, 16, 32);
-const innerRing = new THREE.Mesh(innerRingGeo, goldMat);
-innerRing.rotation.x = Math.PI * 0.5;
-reactorGroup.add(registerPart(innerRing, "反应堆内层磁加速轨道环", "MAG-RING-01", "反向高速自转的超导环，均衡能量回路中的电荷分布。", new THREE.Vector3(0, 0, 0.6)));
+      eyeCtx.fillStyle = '#ffffff';
+      eyeCtx.beginPath();
+      eyeCtx.arc(-8, -10, 8, 0, Math.PI*2);
+      eyeCtx.fill();
 
-// 反应堆外层能量约束钛环
-const outerRingGeo = new THREE.TorusGeometry(0.34, 0.025, 16, 32);
-const outerRing = new THREE.Mesh(outerRingGeo, titaniumMat);
-outerRing.rotation.y = Math.PI * 0.25;
-reactorGroup.add(registerPart(outerRing, "能量约束外防护环", "MAG-RING-02", "防止反应堆等离子流溢出的外圈物理阻尼结构件。", new THREE.Vector3(0, 0, 0.4)));
+    } else if (currentMood === 'heart') {
+      // 暖心爱心眼 (♥ ♥)
+      eyeCtx.fillStyle = '#f472b6';
+      eyeCtx.beginPath();
+      eyeCtx.moveTo(0, 10);
+      eyeCtx.bezierCurveTo(-35, -25, -25, -50, 0, -25);
+      eyeCtx.bezierCurveTo(25, -50, 35, -25, 0, 10);
+      eyeCtx.fill();
+    }
 
-// 3. 四组斜向液压伸缩连杆 (Pistons)
-const pistonMat = chromeMat;
-const pistonAngles = [
-  { x: -0.22, y: 0.22, dx: -0.6, dy: 0.6 },
-  { x: 0.22, y: 0.22, dx: 0.6, dy: 0.6 },
-  { x: -0.22, y: -0.2, dx: -0.6, dy: -0.6 },
-  { x: 0.22, y: -0.2, dx: 0.6, dy: -0.6 }
-];
+    eyeCtx.restore();
+  };
 
-pistonAngles.forEach((p, idx) => {
-  const pGroup = new THREE.Group();
-  pGroup.position.set(p.x, p.y, 0);
+  drawOneEye(160, 128); // 左眼
+  drawOneEye(352, 128); // 右眼
 
-  const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.25, 12), titaniumMat);
-  const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.35, 12), chromeMat);
-  rod.position.y = 0.08;
-  pGroup.add(cyl);
-  pGroup.add(rod);
-  pGroup.rotation.z = Math.atan2(p.dy, p.dx) - Math.PI/2;
+  eyeTexture.needsUpdate = true;
+}
+drawEyeExpressions();
 
-  torsoGroup.add(registerPart(pGroup, `伺服液压推杆 #${idx+1}`, `HYDR-0${idx+1}`, "双向伺服高压液压缸，在爆炸拆解态可伸长 180% 维持骨架平衡。", new THREE.Vector3(p.dx * 0.9, p.dy * 0.9, 0.2)));
+// 将眼睛投影在面罩前方的弧面平面上
+const eyeScreenGeo = new THREE.PlaneGeometry(0.72, 0.36);
+const eyeScreenMat = new THREE.MeshBasicMaterial({
+  map: eyeTexture,
+  transparent: true,
+  opacity: 0.95
 });
+const eyeScreen = new THREE.Mesh(eyeScreenGeo, eyeScreenMat);
+eyeScreen.position.set(0, 0.05, 0.51);
+headGroup.add(eyeScreen);
 
-// 4. 左右对称可对开白瓷胸部外甲 (Chest Armor Plates)
-const chestGeo = new THREE.BoxGeometry(0.28, 0.46, 0.1);
-const leftChest = new THREE.Mesh(chestGeo, ceramicMat);
-leftChest.position.set(-0.24, 0.05, 0.22);
-leftChest.rotation.y = 0.2;
-torsoGroup.add(registerPart(leftChest, "左舷前胸复合陶瓷装甲", "CHEST-L", "纳米级白瓷烤漆装甲板，可在受到冲击或全息检视时向侧前方滑动弹开。", new THREE.Vector3(-0.9, 0.1, 0.8)));
+// (D) 粉色腮红贴花 (超治愈小粉晕)
+const blushGeo = new THREE.CircleGeometry(0.08, 16);
+const leftBlush = new THREE.Mesh(blushGeo, blushMat);
+leftBlush.position.set(-0.35, -0.14, 0.44);
+leftBlush.rotation.y = -0.35;
+headGroup.add(leftBlush);
 
-const rightChest = new THREE.Mesh(chestGeo, ceramicMat);
-rightChest.position.set(0.24, 0.05, 0.22);
-rightChest.rotation.y = -0.2;
-torsoGroup.add(registerPart(rightChest, "右舷前胸复合陶瓷装甲", "CHEST-R", "纳米级白瓷烤漆装甲板，可在受到冲击或全息检视时向侧前方滑动弹开。", new THREE.Vector3(0.9, 0.1, 0.8)));
+const rightBlush = new THREE.Mesh(blushGeo, blushMat);
+rightBlush.position.set(0.35, -0.14, 0.44);
+rightBlush.rotation.y = 0.35;
+headGroup.add(rightBlush);
 
-// 5. 背部散热背包与导流翼 (Back Thruster Pack)
-const backGeo = new THREE.BoxGeometry(0.42, 0.5, 0.12);
-const backPack = new THREE.Mesh(backGeo, titaniumMat);
-backPack.position.set(0, 0.05, -0.25);
-torsoGroup.add(registerPart(backPack, "背部矢量能量背包", "PACK-BACK", "集成主电池组与辅助算力芯片，提供长时间离线稳定续航。", new THREE.Vector3(0, 0, -1.0)));
+// (E) 头顶晃晃悠悠的呆萌小天线
+const antPoleGeo = new THREE.CylinderGeometry(0.016, 0.02, 0.22, 12);
+const antPole = new THREE.Mesh(antPoleGeo, warmGoldMat);
+antPole.position.set(0, 0.62, 0);
+headGroup.add(antPole);
+
+const antBulbGeo = new THREE.SphereGeometry(0.065, 16, 16);
+const antBulbMat = new THREE.MeshStandardMaterial({
+  color: 0xffffff,
+  emissive: 0x38bdf8,
+  emissiveIntensity: 2.2,
+  roughness: 0.2
+});
+const antBulb = new THREE.Mesh(antBulbGeo, antBulbMat);
+antBulb.position.set(0, 0.75, 0);
+headGroup.add(antBulb);
 
 
-/* ───────────────────── (C) 左右磁悬浮极客小手 ───────────────────── */
+// (F) 圆滚滚的磁悬浮身体 (Chubby Cute Body)
+const bodyGroup = new THREE.Group();
+bodyGroup.position.set(0, -0.18, 0);
+robotRoot.add(bodyGroup);
+
+const bodyGeo = new THREE.SphereGeometry(0.44, 40, 32);
+bodyGeo.scale(0.95, 1.05, 0.92);
+const bodyMesh = new THREE.Mesh(bodyGeo, whiteCeramicMat);
+bodyGroup.add(bodyMesh);
+
+// 肚子上的小博极客能量徽章 (蓝天发光圆盾)
+const badgeGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.02, 24);
+const badgeMat = new THREE.MeshStandardMaterial({
+  color: 0x0284c7,
+  emissive: 0x38bdf8,
+  emissiveIntensity: 1.5,
+  metalness: 0.5,
+  roughness: 0.2
+});
+const bellyBadge = new THREE.Mesh(badgeGeo, badgeMat);
+bellyBadge.rotation.x = Math.PI * 0.5;
+bellyBadge.position.set(0, 0.05, 0.4);
+bodyGroup.add(bellyBadge);
+
+// (G) 身体内部的【星辰能量晶核】 (平时微隐，透视时梦幻绽放)
+const heartGeo = new THREE.OctahedronGeometry(0.16, 0);
+const heartMat = new THREE.MeshStandardMaterial({
+  color: 0xffffff,
+  emissive: 0x38bdf8,
+  emissiveIntensity: 3.0,
+  roughness: 0.1,
+  metalness: 0.2
+});
+const heartGem = new THREE.Mesh(heartGeo, heartMat);
+heartGem.position.set(0, 0.05, 0);
+bodyGroup.add(heartGem);
+
+
+// (H) 左右悬浮小圆手 (Floating Hands)
 function createHand(isLeft = true) {
   const hGroup = new THREE.Group();
   const dir = isLeft ? -1 : 1;
-  hGroup.position.set(dir * 0.72, 0, 0.1);
+  hGroup.position.set(dir * 0.58, -0.05, 0.12);
 
-  // 手掌悬浮核心球
-  const palmGeo = new THREE.SphereGeometry(0.12, 16, 16);
-  const palm = new THREE.Mesh(palmGeo, ceramicMat);
-  hGroup.add(palm);
+  // 悬浮小肉手
+  const handGeo = new THREE.SphereGeometry(0.11, 24, 24);
+  handGeo.scale(0.9, 1.1, 0.9);
+  const handMesh = new THREE.Mesh(handGeo, whiteCeramicMat);
+  hGroup.add(handMesh);
 
-  // 掌心反重力微发光孔
-  const holeGeo = new THREE.CircleGeometry(0.04, 16);
-  const hole = new THREE.Mesh(holeGeo, glowMat);
-  hole.position.set(0, 0, 0.12);
-  hGroup.add(hole);
+  // 掌心微光圆点
+  const palmGlowGeo = new THREE.CircleGeometry(0.04, 16);
+  const palmGlow = new THREE.Mesh(palmGlowGeo, eyeGlowMat);
+  palmGlow.position.set(0, -0.02, 0.1);
+  hGroup.add(palmGlow);
 
-  // 3 根微型机械指节
-  for(let i = -1; i <= 1; i++) {
-    const finger = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.08, 8), chromeMat);
-    finger.position.set(i * 0.05, 0.11, 0.02);
-    finger.rotation.x = 0.2;
-    hGroup.add(finger);
-  }
-
-  robotRoot.add(registerPart(hGroup, isLeft ? "左舷磁悬浮操控机械手" : "右舷磁悬浮操控机械手", isLeft ? "HAND-L" : "HAND-R", "无物理线缆连接的无线感应磁悬浮手，支持点触、招手与学霸比赞姿态。", new THREE.Vector3(dir * 1.0, 0, 0.4)));
+  robotRoot.add(hGroup);
   return hGroup;
 }
 const leftHand = createHand(true);
 const rightHand = createHand(false);
 
 
-/* ───────────────────── (D) 底部反重力喷口与全息 HUD 光环 ───────────────────── */
-const baseGroup = new THREE.Group();
-baseGroup.position.set(0, -0.45, 0);
-robotRoot.add(baseGroup);
+// (I) 身体下方的等离子无重力能量微环 (Soft Plasma Ring)
+const thrusterGeo = new THREE.TorusGeometry(0.24, 0.028, 16, 32);
+const thrusterMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.75 });
+const thrusterRing = new THREE.Mesh(thrusterGeo, thrusterMat);
+thrusterRing.rotation.x = Math.PI * 0.5;
+thrusterRing.position.set(0, -0.68, 0);
+robotRoot.add(thrusterRing);
 
-// 等离子喷口外环
-const nozzleGeo = new THREE.CylinderGeometry(0.26, 0.18, 0.14, 24, 1, true);
-const nozzle = new THREE.Mesh(nozzleGeo, titaniumMat);
-baseGroup.add(registerPart(nozzle, "等离子反重力推进喷口", "THRUST-NOZZLE", "磁流体推进喷口，向下喷射低能量蓝白离子流，实现无重力轻盈悬浮。", new THREE.Vector3(0, -0.6, 0)));
+// (J) 全息蜂巢球形能量护盾 (Holographic Honeycomb Shield)
+const shieldGeo = new THREE.IcosahedronGeometry(1.05, 2);
+const shieldMat = new THREE.MeshStandardMaterial({
+  color: 0x38bdf8,
+  emissive: 0x0284c7,
+  emissiveIntensity: 0.8,
+  wireframe: true,
+  transparent: true,
+  opacity: 0.45
+});
+const shieldMesh = new THREE.Mesh(shieldGeo, shieldMat);
+shieldMesh.position.set(0, 0.15, 0);
+robotRoot.add(shieldMesh);
 
-// 悬浮等离子辉光圆盘
-const plasmaDisc = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.02, 24), coreGlowMat);
-plasmaDisc.position.y = -0.06;
-baseGroup.add(registerPart(plasmaDisc, "反重力离子发射栅极", "GRID-EMIT", "离子束加速栅格，高频振荡驱动等离子体微射流。", new THREE.Vector3(0, -0.9, 0)));
 
-// 地面大型全息 HUD 环阵列 (Holographic Ground Projector)
-const hudRingGeo1 = new THREE.RingGeometry(1.0, 1.05, 64);
-const hudRingMat1 = new THREE.MeshBasicMaterial({ color: currentThemeHex, side: THREE.DoubleSide, transparent: true, opacity: 0.4 });
-const hudRing1 = new THREE.Mesh(hudRingGeo1, hudRingMat1);
-hudRing1.rotation.x = Math.PI * 0.5;
-hudRing1.position.y = -1.1;
-scene.add(hudRing1);
-
-const hudRingGeo2 = new THREE.RingGeometry(1.35, 1.37, 64);
-const hudRingMat2 = new THREE.MeshBasicMaterial({ color: currentThemeHex, side: THREE.DoubleSide, transparent: true, opacity: 0.25 });
-const hudRing2 = new THREE.Mesh(hudRingGeo2, hudRingMat2);
-hudRing2.rotation.x = Math.PI * 0.5;
-hudRing2.position.y = -1.1;
-scene.add(hudRing2);
-
-// 星尘背景粒子系统 (Dust Particles)
-const particleCount = 200;
-const particleGeo = new THREE.BufferGeometry();
-const particlePos = new Float32Array(particleCount * 3);
-for(let i=0; i<particleCount*3; i+=3) {
-  particlePos[i] = (Math.random() - 0.5) * 12;
-  particlePos[i+1] = (Math.random() - 0.5) * 8;
-  particlePos[i+2] = (Math.random() - 0.5) * 12;
+// (K) 漂浮的治愈系星空星尘粒子 (Dreamy Floating Star Particles)
+const starCount = 120;
+const starGeo = new THREE.BufferGeometry();
+const starPos = new Float32Array(starCount * 3);
+for(let i=0; i<starCount*3; i+=3) {
+  starPos[i] = (Math.random() - 0.5) * 8;
+  starPos[i+1] = (Math.random() - 0.5) * 6;
+  starPos[i+2] = (Math.random() - 0.5) * 8;
 }
-particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
-const particleMat = new THREE.PointsMaterial({ color: currentThemeHex, size: 0.04, transparent: true, opacity: 0.6 });
-const particleField = new THREE.Points(particleGeo, particleMat);
-scene.add(particleField);
+starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+const starMat = new THREE.PointsMaterial({ color: 0x7dd3fc, size: 0.05, transparent: true, opacity: 0.7 });
+const starPoints = new THREE.Points(starGeo, starMat);
+scene.add(starPoints);
 
 
-// 5. 机械爆炸拆解动力学引擎 (Cutaway Engine)
-let explodeProgress = 0; // 0.0 到 1.0
-let targetProgress = 0;
-let isAutoExploding = false;
-let autoRotateActive = true;
-
-function applyExplosion(factor) {
-  explodeProgress = factor;
-  teardownParts.forEach(mesh => {
-    const data = mesh.userData;
-    if (data.initPos && data.dispVec) {
-      // 缓动位移插值 (Cubic Out Easing)
-      mesh.position.copy(data.initPos).addScaledVector(data.dispVec, factor);
-    }
-  });
-
-  // 更新左侧 HUD 解构位移显示
-  const inspDisp = document.getElementById('insp-disp');
-  if (inspDisp) inspDisp.textContent = `+${(factor * 120).toFixed(1)} mm`;
-}
-
-// 6. 音频引擎 (纯原生 Web Audio 实时物理合成机械伺服音)
+// 5. 治愈系 Web Audio 音效发生器 (Cute Sound Synthesis)
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
 
-function playServoSound(intensity = 0.5) {
+function playCuteChime(type = 'bubble') {
   try {
     if (!audioCtx) audioCtx = new AudioContext();
     if (audioCtx.state === 'suspended') audioCtx.resume();
 
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    const filter = audioCtx.createBiquadFilter();
 
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(140, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(320 + intensity * 200, audioCtx.currentTime + 0.15);
+    if (type === 'bubble') {
+      // 水滴泡泡 Q 弹音
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(420, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(840, audioCtx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.16);
 
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(600, audioCtx.currentTime);
-
-    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
-
-    osc.connect(filter);
-    filter.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.26);
+    } else if (type === 'sparkle') {
+      // 欢呼治愈双音和弦
+      const f1 = 523.25; // C5
+      const f2 = 659.25; // E5
+      [f1, f2].forEach((freq, idx) => {
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.type = 'triangle';
+        o.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.06);
+        g.gain.setValueAtTime(0.08, audioCtx.currentTime + idx * 0.06);
+        g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + idx * 0.06 + 0.35);
+        o.connect(g);
+        g.connect(audioCtx.destination);
+        o.start(audioCtx.currentTime + idx * 0.06);
+        o.stop(audioCtx.currentTime + idx * 0.06 + 0.36);
+      });
+    }
   } catch(e) {}
 }
 
 
-// 7. 鼠标射线检测与零件全息悬停扫描 (Raycaster Part Inspector)
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-let hoveredPart = null;
+// 6. 交互动画与物理动力学驱动 (Physics & Interaction Engine)
+let jellyBounce = 0; // 点击身体触发的果冻抖动
+let jellySpeed = 0;
 
+let isFlipping = false;
+let flipProgress = 0;
+
+let isShieldActive = true;
+let isXRayActive = false;
+let isOverclock = false;
+
+// 鼠标视差微跟随 (Parallax Head Follow)
+const mouse = new THREE.Vector2();
 window.addEventListener('mousemove', (e) => {
   mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-
-  // 视差头部微跟随 (Parallax Head Tracking)
-  headGroup.rotation.y = mouse.x * 0.35;
-  headGroup.rotation.x = -mouse.y * 0.2;
 });
 
-function checkRaycast() {
-  raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObjects(teardownParts, true);
+// 点击小博身体触发果冻 Q 弹 (Jelly Squish & Stretch)
+window.addEventListener('click', (e) => {
+  // 排除点击底部和顶部 HUD
+  if (e.target.closest('.control-dock') || e.target.closest('.top-hud')) return;
 
-  if (intersects.length > 0) {
-    let topMesh = intersects[0].object;
-    while(topMesh && !topMesh.userData.name && topMesh.parent) {
-      topMesh = topMesh.parent;
-    }
-    if (topMesh && topMesh.userData && topMesh.userData.name) {
-      if (hoveredPart !== topMesh) {
-        hoveredPart = topMesh;
-        updateInspector(topMesh.userData);
-      }
-    }
-  }
-}
+  jellyBounce = 0.28; // 瞬间压扁拉伸
+  playCuteChime('bubble');
+  setSpeech('“哎呀！戳到我圆滚滚的纳米白瓷小肚腩啦，好痒好痒~ 😄”', '✨ 亲密互动');
 
-function updateInspector(data) {
-  document.getElementById('insp-name').textContent = data.name;
-  document.getElementById('insp-code').textContent = data.code;
-  document.getElementById('insp-desc').textContent = data.desc;
-  document.getElementById('insp-mat').textContent = "PBR 物理复合材质";
-}
-
-
-// 8. 交互事件绑定与控制甲板 (Controls Deck Binding)
-const slider = document.getElementById('explode-slider');
-const sliderValDisplay = document.getElementById('slider-val-display');
-const btnToggle = document.getElementById('btn-toggle-explode');
-const btnAutoRotate = document.getElementById('btn-auto-rotate');
-const btnResetCam = document.getElementById('btn-reset-cam');
-
-slider.addEventListener('input', (e) => {
-  targetProgress = e.target.value / 100;
-  sliderValDisplay.textContent = `${e.target.value}%`;
-  playServoSound(targetProgress);
+  // 暂时变成开心眼
+  const oldMood = currentMood;
+  currentMood = 'happy';
+  drawEyeExpressions();
+  setTimeout(() => {
+    currentMood = oldMood;
+    drawEyeExpressions();
+  }, 1200);
 });
 
-btnToggle.addEventListener('click', () => {
-  if (targetProgress > 0.5) {
-    targetProgress = 0;
+// 自动随机自然眨眼 (Natural Blinking System)
+function triggerNaturalBlink() {
+  if (isBlinking) return;
+  isBlinking = true;
+  blinkProgress = 0;
+
+  const blinkInterval = setInterval(() => {
+    blinkProgress += 0.25;
+    drawEyeExpressions();
+    if (blinkProgress >= 1.0) {
+      clearInterval(blinkInterval);
+      setTimeout(() => {
+        const unblinkInterval = setInterval(() => {
+          blinkProgress -= 0.25;
+          drawEyeExpressions();
+          if (blinkProgress <= 0) {
+            clearInterval(unblinkInterval);
+            isBlinking = false;
+          }
+        }, 20);
+      }, 50);
+    }
+  }, 20);
+
+  // 下一次眨眼时间 (2.5 ~ 5.5 秒随机)
+  setTimeout(triggerNaturalBlink, 2500 + Math.random() * 3000);
+}
+setTimeout(triggerNaturalBlink, 2000);
+
+
+// 7. 台词与状态泡泡
+const speechText = document.getElementById('speech-text');
+function setSpeech(txt, badge = '伴学状态') {
+  speechText.textContent = txt;
+  document.querySelector('.speech-badge').textContent = badge;
+}
+
+
+// 8. 按钮技能交互绑定
+document.getElementById('btn-wave').addEventListener('click', () => {
+  playCuteChime('bubble');
+  setSpeech('“哈喽小主人！今天我们一起把初中语数英错题统统歼灭！”', '👋 热情打招呼');
+  rightHand.userData.waving = true;
+  rightHand.userData.waveCount = 0;
+});
+
+document.getElementById('btn-flip').addEventListener('click', () => {
+  if (isFlipping) return;
+  isFlipping = true;
+  flipProgress = 0;
+  playCuteChime('sparkle');
+  setSpeech('“看我的 360° 反重力无重力超能大空翻！帅不帅气？”', '💫 极客空翻');
+});
+
+const btnShield = document.getElementById('btn-shield');
+btnShield.addEventListener('click', () => {
+  isShieldActive = !isShieldActive;
+  btnShield.classList.toggle('active', isShieldActive);
+  shieldMesh.visible = isShieldActive;
+  playCuteChime('bubble');
+  if (isShieldActive) {
+    setSpeech('“全息六边形蜂巢能量护盾已展开！专注气场全开，杂念退散！”', '🛡️ 能量力场');
   } else {
-    targetProgress = 1.0;
+    setSpeech('“护盾已收纳，轻装上阵进入日常自习模式~”', '🛡️ 护盾待命');
   }
-  slider.value = Math.round(targetProgress * 100);
-  sliderValDisplay.textContent = `${slider.value}%`;
-  playServoSound(targetProgress);
 });
 
-btnAutoRotate.addEventListener('click', () => {
-  autoRotateActive = !autoRotateActive;
-  btnAutoRotate.classList.toggle('active', autoRotateActive);
+const btnXray = document.getElementById('btn-xray');
+btnXray.addEventListener('click', () => {
+  isXRayActive = !isXRayActive;
+  btnXray.classList.toggle('active', isXRayActive);
+  playCuteChime('sparkle');
+
+  if (isXRayActive) {
+    headMesh.material = crystalGlassMat;
+    bodyMesh.material = crystalGlassMat;
+    setSpeech('“看！我身体里跳动着一颗纯净温柔的星辰能量晶石，温暖而强大~”', '✨ 晶莹透视');
+  } else {
+    headMesh.material = whiteCeramicMat;
+    bodyMesh.material = whiteCeramicMat;
+    setSpeech('“纳米级高光白瓷外甲恢复如初，依然是那个圆润可爱的小博！”', '🤖 装甲聚合');
+  }
 });
-btnAutoRotate.classList.add('active');
 
-btnResetCam.addEventListener('click', () => {
-  camera.position.set(0, 1.2, 5.2);
-  controls.target.set(0, 0.2, 0);
-  controls.update();
+const btnOverclock = document.getElementById('btn-overclock');
+btnOverclock.addEventListener('click', () => {
+  isOverclock = !isOverclock;
+  btnOverclock.classList.toggle('active', isOverclock);
+  playCuteChime('sparkle');
+
+  if (isOverclock) {
+    currentMood = 'star';
+    drawEyeExpressions();
+    antBulbMat.emissive.setHex(0xfbbf24);
+    badgeMat.emissive.setHex(0xfbbf24);
+    shieldMat.color.setHex(0xfbbf24);
+    shieldMat.emissive.setHex(0xd97706);
+    thrusterMat.color.setHex(0xfbbf24);
+    setSpeech('“⚡ 学霸超频觉醒！双目化作璀璨金星，脑力全开，直冲中考满分大满贯！”', '⚡ 满分超频');
+  } else {
+    currentMood = 'normal';
+    drawEyeExpressions();
+    antBulbMat.emissive.setHex(0x38bdf8);
+    badgeMat.emissive.setHex(0x38bdf8);
+    shieldMat.color.setHex(0x38bdf8);
+    shieldMat.emissive.setHex(0x0284c7);
+    thrusterMat.color.setHex(0x38bdf8);
+    setSpeech('“超频降温，平稳巡航中~”', '✨ 平稳伴学');
+  }
 });
 
-// 形态色彩切换
-document.querySelectorAll('.swatch').forEach(swatch => {
-  swatch.addEventListener('click', () => {
-    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
-    swatch.classList.add('active');
+// 表情切换
+document.querySelectorAll('.mood-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMood = btn.getAttribute('data-mood');
+    drawEyeExpressions();
+    playCuteChime('bubble');
 
-    const hexStr = swatch.getAttribute('data-color');
-    currentThemeHex = parseInt(hexStr.replace('#', '0x'));
-
-    // 更新场景灯光与材质辉光
-    cyanFillLight.color.setHex(currentThemeHex);
-    groundGlow.color.setHex(currentThemeHex);
-    glowMat.color.setHex(currentThemeHex);
-    coreGlowMat.emissive.setHex(currentThemeHex);
-    hudRingMat1.color.setHex(currentThemeHex);
-    hudRingMat2.color.setHex(currentThemeHex);
-    particleMat.color.setHex(currentThemeHex);
-
-    playServoSound(0.8);
+    const descMap = {
+      normal: '“天蓝色灵动大眼睛，好奇地看着周围的一切~”',
+      happy: '“嘻嘻！做对了一道大题，开心到两眼眯成月牙弯弯！”',
+      star: '“哇！难题被攻克了，满眼都是崇拜的小星星！”',
+      heart: '“好喜欢你呀我的小主人，学习路上有我一直陪着你！”'
+    };
+    setSpeech(descMap[currentMood] || '“伴学表情已切换~”', '😊 情绪表达');
   });
 });
 
+document.getElementById('btn-cam-reset').addEventListener('click', () => {
+  camera.position.set(0, 0.5, 4.4);
+  controls.target.set(0, 0.1, 0);
+  controls.update();
+});
 
-// 9. 渲染与动画主循环 (Animation Loop)
+
+// 9. 渲染循环与高品质平滑动画 (60FPS Render Loop)
 let clock = new THREE.Clock();
-let frameCount = 0;
-let lastFpsTime = performance.now();
-const fpsDisplay = document.getElementById('hud-fps');
 
 function animate() {
   requestAnimationFrame(animate);
 
   const elapsedTime = clock.getElapsedTime();
 
-  // 1. 平滑插值更新爆炸展开位移
-  if (Math.abs(explodeProgress - targetProgress) > 0.002) {
-    explodeProgress += (targetProgress - explodeProgress) * 0.12;
-    applyExplosion(explodeProgress);
+  // (1) 果冻物理抖动衰减 (Squash & Stretch Damping)
+  if (Math.abs(jellyBounce) > 0.001) {
+    jellySpeed += (-jellyBounce * 28 - jellySpeed * 6.5) * 0.016;
+    jellyBounce += jellySpeed * 0.016;
+  } else {
+    jellyBounce = 0;
+  }
+  const squishY = 1.0 - jellyBounce * 0.8;
+  const squishXZ = 1.0 + jellyBounce * 0.4;
+  robotRoot.scale.set(squishXZ, squishY, squishXZ);
+
+  // (2) 磁悬浮呼吸无重力起伏 (Gentle Levitation Hover)
+  const hoverY = Math.sin(elapsedTime * 2.0) * 0.06;
+  robotRoot.position.y = hoverY;
+
+  // (3) 头部微注视与歪头萌动 (Curious Tilt & Eye Follow)
+  if (!isFlipping) {
+    headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, mouse.x * 0.35, 0.08);
+    headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, -mouse.y * 0.22, 0.08);
+    headGroup.rotation.z = THREE.MathUtils.lerp(headGroup.rotation.z, -mouse.x * 0.15, 0.08); // 可爱的偏头萌杀
   }
 
-  // 2. 磁悬浮呼吸起伏动力学 (Hovering Levitation)
-  const hoverOffset = Math.sin(elapsedTime * 1.8) * 0.08;
-  robotRoot.position.y = hoverOffset;
-
-  // 左右小手微幅摆动
-  leftHand.position.y = Math.sin(elapsedTime * 2.2 + 0.5) * 0.06;
-  rightHand.position.y = Math.sin(elapsedTime * 2.2 + 2.0) * 0.06;
-
-  // 3. 反应堆核心与光轨旋转
-  innerRing.rotation.z += 0.04;
-  outerRing.rotation.y += 0.02;
-  outerRing.rotation.x += 0.015;
-
-  // 4. 地面全息 HUD 环反向旋转
-  hudRing1.rotation.z += 0.005;
-  hudRing2.rotation.z -= 0.008;
-
-  // 5. 巡航自转
-  if (autoRotateActive) {
-    robotRoot.rotation.y += 0.004;
+  // (4) 空翻特技动画
+  if (isFlipping) {
+    flipProgress += 0.045;
+    robotRoot.rotation.x = flipProgress * Math.PI * 2;
+    robotRoot.position.y = hoverY + Math.sin(flipProgress * Math.PI) * 0.45;
+    if (flipProgress >= 1.0) {
+      isFlipping = false;
+      robotRoot.rotation.x = 0;
+      setSpeech('“呼~ 满分空翻着陆！完美！”', '✨ 特技完成');
+    }
   }
 
-  // 6. 射线检测拾取
-  checkRaycast();
-
-  // 7. FPS 监控
-  frameCount++;
-  const now = performance.now();
-  if (now - lastFpsTime >= 1000) {
-    if (fpsDisplay) fpsDisplay.textContent = frameCount;
-    frameCount = 0;
-    lastFpsTime = now;
+  // (5) 左右小手自然悬浮摆动与招手动画
+  if (rightHand.userData.waving) {
+    rightHand.userData.waveCount += 0.12;
+    rightHand.position.y = 0.22 + Math.sin(rightHand.userData.waveCount * 8) * 0.08;
+    rightHand.rotation.z = Math.sin(rightHand.userData.waveCount * 8) * 0.4;
+    if (rightHand.userData.waveCount > Math.PI * 2) {
+      rightHand.userData.waving = false;
+      rightHand.rotation.z = 0;
+    }
+  } else {
+    rightHand.position.y = -0.05 + Math.sin(elapsedTime * 2.5 + 1.2) * 0.04;
   }
+  leftHand.position.y = -0.05 + Math.sin(elapsedTime * 2.5) * 0.04;
+
+  // (6) 头顶天线微晃
+  antPole.rotation.z = Math.sin(elapsedTime * 3.5) * 0.08;
+  antBulb.position.x = antPole.position.x + Math.sin(antPole.rotation.z) * 0.18;
+
+  // (7) 星核自转与六边形护盾旋转
+  heartGem.rotation.y += 0.03;
+  heartGem.rotation.x += 0.02;
+  shieldMesh.rotation.y -= 0.005;
+  shieldMesh.rotation.x += 0.003;
+
+  // (8) 推进能量环呼吸
+  thrusterRing.scale.setScalar(1.0 + Math.sin(elapsedTime * 5.0) * 0.05);
 
   controls.update();
   renderer.render(scene, camera);
@@ -892,31 +954,23 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// 支持 URL 预设参数 (供自动化截图与演示直达)
+// URL 参数便捷直达
 try {
   const params = new URLSearchParams(window.location.search);
-  if (params.has('explode')) {
-    const expVal = Math.min(100, Math.max(0, parseFloat(params.get('explode'))));
-    targetProgress = expVal / 100;
-    explodeProgress = targetProgress;
-    applyExplosion(explodeProgress);
-    slider.value = expVal;
-    sliderValDisplay.textContent = `${expVal}%`;
+  if (params.get('mood')) {
+    const targetMood = params.get('mood');
+    const b = document.querySelector(`.mood-btn[data-mood="${targetMood}"]`);
+    if (b) b.click();
   }
-  if (params.get('autorotate') === 'false') {
-    autoRotateActive = false;
-    btnAutoRotate.classList.remove('active');
+  if (params.get('overclock') === 'true') {
+    btnOverclock.click();
   }
-  if (params.get('theme') === 'gold') {
-    document.querySelector('.swatch.gold')?.click();
-  } else if (params.get('theme') === 'red') {
-    document.querySelector('.swatch.red')?.click();
-  } else if (params.get('theme') === 'purple') {
-    document.querySelector('.swatch.purple')?.click();
+  if (params.get('xray') === 'true') {
+    btnXray.click();
   }
 } catch(e) {}
 
-// 启动渲染循环
+// 启动渲染
 animate();
 </script>
 </body>
