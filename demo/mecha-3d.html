@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>StudyGate · 3D 赛博机甲伴学生命体 (全息爆炸解构)</title>
+<style>
+  :root {
+    --bg-dark: #07090e;
+    --neon-blue: #00f0ff;
+    --neon-gold: #fbbf24;
+    --neon-red: #f43f5e;
+    --neon-purple: #a855f7;
+    --hud-border: rgba(0, 240, 255, 0.35);
+    --hud-bg: rgba(10, 15, 26, 0.75);
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+  body, html {
+    width: 100%; height: 100%;
+    background-color: var(--bg-dark);
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", sans-serif;
+    color: #e2e8f0;
+  }
+
+  /* 3D Canvas 容器 */
+  #webgl-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1;
+    cursor: grab;
+  }
+  #webgl-container:active { cursor: grabbing; }
+
+  /* 赛博网格背景光晕 */
+  .cyber-vignette {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(5, 7, 12, 0.85) 90%),
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 40px 40px, 40px 40px;
+  }
+
+  /* 顶部 HUD 栏 */
+  .top-hud {
+    position: absolute;
+    top: 20px; left: 24px; right: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 10;
+    pointer-events: auto;
+  }
+  .brand-badge {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--hud-bg);
+    border: 1px solid var(--hud-border);
+    backdrop-filter: blur(12px);
+    padding: 8px 18px;
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
+  }
+  .brand-logo {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: linear-gradient(135deg, #00f0ff, #3b82f6);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: bold; color: #000;
+  }
+  .brand-title { font-size: 14px; font-weight: 700; letter-spacing: 1px; color: #fff; }
+  .brand-sub { font-size: 11px; color: var(--neon-blue); font-family: var(--font-mono); }
+
+  .hud-stats {
+    display: flex; gap: 16px;
+    background: var(--hud-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .hud-stat-item span { color: var(--neon-blue); font-weight: bold; margin-left: 4px; }
+
+  /* 左侧零件诊断检视 HUD */
+  .part-inspector {
+    position: absolute;
+    top: 90px; left: 24px;
+    width: 290px;
+    background: var(--hud-bg);
+    border: 1px solid var(--hud-border);
+    border-left: 3px solid var(--neon-blue);
+    backdrop-filter: blur(16px);
+    border-radius: 12px;
+    padding: 18px;
+    z-index: 10;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    pointer-events: auto;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .inspector-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    padding-bottom: 8px; margin-bottom: 12px;
+  }
+  .inspector-tag {
+    font-size: 10px; font-family: var(--font-mono);
+    background: rgba(0, 240, 255, 0.15);
+    color: var(--neon-blue);
+    padding: 2px 6px; border-radius: 4px;
+  }
+  .inspector-title { font-size: 14px; font-weight: bold; color: #fff; }
+  .part-desc { font-size: 12px; line-height: 1.6; color: #94a3b8; margin-bottom: 12px; }
+  .part-metrics {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    font-family: var(--font-mono); font-size: 11px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px; border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .metric-label { color: #64748b; }
+  .metric-val { color: var(--neon-blue); font-weight: bold; text-align: right; }
+
+  /* 底部主控台 */
+  .bottom-deck {
+    position: absolute;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    width: min(840px, 94vw);
+    background: var(--hud-bg);
+    border: 1px solid var(--hud-border);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 18px 24px;
+    z-index: 10;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 24px rgba(0, 240, 255, 0.15);
+    display: flex; flex-direction: column; gap: 14px;
+    pointer-events: auto;
+  }
+
+  .deck-row {
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+  }
+
+  /* 爆炸解构滑条 */
+  .slider-box {
+    flex: 1; display: flex; align-items: center; gap: 14px;
+  }
+  .slider-label {
+    font-family: var(--font-mono); font-size: 12px; font-weight: bold;
+    color: var(--neon-blue); white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .cyber-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    background: #1e293b;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+  }
+  .cyber-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--neon-blue);
+    cursor: pointer;
+    box-shadow: 0 0 14px var(--neon-blue);
+    border: 2px solid #fff;
+    transition: transform 0.1s;
+  }
+  .cyber-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+  .slider-val {
+    font-family: var(--font-mono); font-size: 13px; font-weight: bold;
+    color: #fff; width: 44px; text-align: right;
+  }
+
+  /* 按钮与模式切换 */
+  .action-buttons {
+    display: flex; gap: 10px; align-items: center;
+  }
+  .cyber-btn {
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid var(--neon-blue);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s;
+  }
+  .cyber-btn:hover {
+    background: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 0 16px var(--neon-blue);
+    transform: translateY(-2px);
+  }
+  .cyber-btn.active {
+    background: var(--neon-blue);
+    color: #000;
+  }
+
+  /* 颜色形态切换器 */
+  .theme-swatches {
+    display: flex; gap: 8px; align-items: center;
+  }
+  .swatch {
+    width: 22px; height: 22px; border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .swatch:hover { transform: scale(1.2); }
+  .swatch.active { border-color: #fff; box-shadow: 0 0 12px currentColor; }
+  .swatch.blue { background: #00f0ff; color: #00f0ff; }
+  .swatch.gold { background: #fbbf24; color: #fbbf24; }
+  .swatch.red { background: #f43f5e; color: #f43f5e; }
+  .swatch.purple { background: #a855f7; color: #a855f7; }
+
+  /* 快捷返回 StudyGate 按钮 */
+  .btn-back-hub {
+    position: absolute;
+    top: 20px; right: 24px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #94a3b8;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    z-index: 10;
+  }
+  .btn-back-hub:hover {
+    color: #fff; border-color: var(--neon-blue);
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+  }
+
+  /* 移动端与自适应优化 */
+  @media (max-width: 768px) {
+    .part-inspector { display: none; }
+    .bottom-deck { padding: 14px; }
+    .deck-row { flex-direction: column; align-items: stretch; gap: 10px; }
+    .slider-box { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div id="webgl-container"></div>
+<div class="cyber-vignette"></div>
+
+<!-- 顶部 HUD -->
+<header class="top-hud">
+  <div class="brand-badge">
+    <div class="brand-logo">⚡</div>
+    <div>
+      <div class="brand-title">STUDYGATE · CYBER MECHA-CORE</div>
+      <div class="brand-sub">PROCEDURAL 3D TEARDOWN SYSTEM // V3.2</div>
+    </div>
+  </div>
+  <div class="hud-stats">
+    <div class="hud-stat-item">FPS:<span id="hud-fps">60</span></div>
+    <div class="hud-stat-item">PARTS:<span id="hud-parts">148</span></div>
+    <div class="hud-stat-item">REACTOR:<span id="hud-core">99.8%</span></div>
+  </div>
+  <a href="index.html" class="btn-back-hub">
+    <span>← 返回主门禁答题台</span>
+  </a>
+</header>
+
+<!-- 左侧零件全息诊断框 -->
+<aside class="part-inspector" id="part-inspector">
+  <div class="inspector-header">
+    <div class="inspector-title" id="insp-name">⚡ 量子微型反应堆</div>
+    <div class="inspector-tag" id="insp-code">CORE-01</div>
+  </div>
+  <div class="part-desc" id="insp-desc">
+    StudyGate 3D 伴学机甲的核心能源中枢。采用磁约束等离子体自循环加速轨道，可实时根据中考答题连续击数 (Combo) 提升输出能级。
+  </div>
+  <div class="part-metrics">
+    <div class="metric-label">材质工艺:</div>
+    <div class="metric-val" id="insp-mat">超导钛合金 / 钛蓝</div>
+    <div class="metric-label">解构位移:</div>
+    <div class="metric-val" id="insp-disp">+0.00 mm</div>
+    <div class="metric-label">伺服状态:</div>
+    <div class="metric-val" id="insp-status">ONLINE 运行中</div>
+    <div class="metric-label">耐压极限:</div>
+    <div class="metric-val" id="insp-max">4200 MPa</div>
+  </div>
+</aside>
+
+<!-- 底部全息控制甲板 -->
+<footer class="bottom-deck">
+  <div class="deck-row">
+    <div class="slider-box">
+      <div class="slider-label">
+        <span>⚡ 机械爆炸解构 (CUTAWAY):</span>
+      </div>
+      <input type="range" min="0" max="100" value="0" class="cyber-slider" id="explode-slider">
+      <div class="slider-val" id="slider-val-display">0%</div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="cyber-btn" id="btn-toggle-explode">
+        <span>💥 智能展开 / 聚合</span>
+      </button>
+      <button class="cyber-btn" id="btn-auto-rotate">
+        <span>🔄 360° 巡航自转</span>
+      </button>
+      <button class="cyber-btn" id="btn-reset-cam">
+        <span>🎯 相机复位</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="deck-row" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+    <div style="font-size: 12px; color: #94a3b8; display: flex; align-items: center; gap: 8px;">
+      <span>🎨 机甲能量波长形态:</span>
+      <div class="theme-swatches">
+        <div class="swatch blue active" title="天蓝 · 极客自习态" data-color="#00f0ff"></div>
+        <div class="swatch gold" title="超频金 · 满分觉醒态" data-color="#fbbf24"></div>
+        <div class="swatch red" title="赤红 · 错题战备态" data-color="#f43f5e"></div>
+        <div class="swatch purple" title="幻夜紫 · 赛博心流态" data-color="#a855f7"></div>
+      </div>
+    </div>
+    <div style="font-size: 11px; font-family: var(--font-mono); color: #64748b;">
+      💡 提示：左键拖拽旋转 | 滚轮缩放推近 | 鼠标移至部件触发解构诊断
+    </div>
+  </div>
+</footer>
+
+<!-- 引入本地离线 Three.js 与 OrbitControls -->
+<script src="assets/three.min.js"></script>
+<script src="assets/OrbitControls.js"></script>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   StudyGate 3D 赛博机甲伴学核心 (Procedural Cutaway Teardown Engine)
+   设计灵感对标 Nyxera0x 的纯代码参数化机甲装配与层级爆炸解构架构
+   ───────────────────────────────────────────────────────────── */
+
+// 1. 初始化 WebGL 场景与渲染器
+const container = document.getElementById('webgl-container');
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x07090e, 0.035);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(0, 1.2, 5.2);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.25;
+container.appendChild(renderer.domElement);
+
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.minDistance = 2.0;
+controls.maxDistance = 10.0;
+controls.maxPolarAngle = Math.PI / 2 + 0.1; // 防止翻到地平线以下
+controls.target.set(0, 0.2, 0);
+
+// 2. 真实物理光影 (PBR Lighting)
+const ambientLight = new THREE.AmbientLight(0x0f172a, 1.8);
+scene.add(ambientLight);
+
+const mainKeyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+mainKeyLight.position.set(5, 8, 5);
+scene.add(mainKeyLight);
+
+const cyanFillLight = new THREE.PointLight(0x00f0ff, 3.5, 12);
+cyanFillLight.position.set(-4, 2, 3);
+scene.add(cyanFillLight);
+
+const purpleRimLight = new THREE.PointLight(0xa855f7, 2.8, 12);
+purpleRimLight.position.set(4, -2, -3);
+scene.add(purpleRimLight);
+
+// 底部反重力辉光
+const groundGlow = new THREE.PointLight(0x00f0ff, 4.0, 5);
+groundGlow.position.set(0, -1.2, 0);
+scene.add(groundGlow);
+
+// 3. 通用材质库 (PBR Materials)
+let currentThemeHex = 0x00f0ff;
+
+// 纳米白瓷外壳 (Nanoceramic Shell)
+const ceramicMat = new THREE.MeshStandardMaterial({
+  color: 0xf1f5f9,
+  roughness: 0.15,
+  metalness: 0.1,
+  clearcoat: 0.8,
+  clearcoatRoughness: 0.1
+});
+
+// 暗黑钛合金骨架 (Titanium Chassis)
+const titaniumMat = new THREE.MeshStandardMaterial({
+  color: 0x1e293b,
+  roughness: 0.35,
+  metalness: 0.85
+});
+
+// 镀铬银反光部件 (Chrome Metal)
+const chromeMat = new THREE.MeshStandardMaterial({
+  color: 0x94a3b8,
+  roughness: 0.1,
+  metalness: 0.95
+});
+
+// 金色能源轴承 (Gold Alloys)
+const goldMat = new THREE.MeshStandardMaterial({
+  color: 0xd97706,
+  roughness: 0.2,
+  metalness: 0.9
+});
+
+// 黑晶光学曲面面罩 (Black Crystal Visor)
+const visorMat = new THREE.MeshPhysicalMaterial({
+  color: 0x020617,
+  metalness: 0.9,
+  roughness: 0.05,
+  transmission: 0.6,
+  transparent: true,
+  opacity: 0.92,
+  reflectivity: 0.95
+});
+
+// 动态能量发光材质 (Emissive Glow Material)
+const glowMat = new THREE.MeshBasicMaterial({
+  color: currentThemeHex
+});
+
+const coreGlowMat = new THREE.MeshStandardMaterial({
+  color: 0xffffff,
+  emissive: currentThemeHex,
+  emissiveIntensity: 2.2,
+  roughness: 0.1,
+  metalness: 0.2
+});
+
+// 4. 构建可爆炸拆解的机械结构体 (Procedural Teardown Assembly)
+// 每个部件定义：正常坐标 + 爆炸位移向量 + 诊断元数据
+const teardownParts = [];
+const robotRoot = new THREE.Group();
+scene.add(robotRoot);
+
+function registerPart(mesh, name, code, desc, normalDisp, customData = {}) {
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  mesh.userData = {
+    name, code, desc,
+    initPos: mesh.position.clone(),
+    initRot: mesh.rotation.clone(),
+    dispVec: normalDisp.clone(), // 爆炸位移量 (相对于初始位置)
+    ...customData
+  };
+  teardownParts.push(mesh);
+  return mesh;
+}
+
+/* ───────────────────── (A) 头部组件装配 ───────────────────── */
+const headGroup = new THREE.Group();
+headGroup.position.set(0, 0.75, 0);
+robotRoot.add(headGroup);
+
+// 1. 白瓷后脑外壳
+const craniumGeo = new THREE.SphereGeometry(0.55, 32, 24, 0, Math.PI * 2, 0, Math.PI * 0.55);
+const cranium = new THREE.Mesh(craniumGeo, ceramicMat);
+cranium.rotation.x = -Math.PI * 0.1;
+cranium.position.set(0, 0, -0.05);
+headGroup.add(registerPart(cranium, "纳米白瓷防护脑甲", "HELM-01", "航天级纳米微晶陶瓷外壳，具备卓越的电磁屏蔽与抗物理冲击能级。", new THREE.Vector3(0, 0.6, -0.8)));
+
+// 2. 黑晶弧面光学面罩
+const visorGeo = new THREE.SphereGeometry(0.52, 32, 24, 0, Math.PI, 0, Math.PI * 0.5);
+const visor = new THREE.Mesh(visorGeo, visorMat);
+visor.rotation.x = Math.PI * 0.45;
+visor.position.set(0, 0.02, 0.08);
+headGroup.add(registerPart(visor, "深渊黑晶光学全息面罩", "VISOR-OPT", "曲面透光黑晶结构，内嵌双目光学传感器与全息 HUD 视觉阵列。", new THREE.Vector3(0, 0.25, 0.9)));
+
+// 3. 双目发光显示屏 (左右天蓝色萌萌大眼睛)
+const eyeGeo = new THREE.TorusGeometry(0.11, 0.025, 16, 32);
+const leftEye = new THREE.Mesh(eyeGeo, glowMat);
+leftEye.position.set(-0.2, 0.05, 0.48);
+leftEye.rotation.y = -0.15;
+headGroup.add(registerPart(leftEye, "左目光学传感器矩阵", "EYE-L", "高动态 4K 双目光学追踪单元，支持中考题干视觉分析与微表情交互。", new THREE.Vector3(-0.2, 0.1, 0.6)));
+
+const rightEye = new THREE.Mesh(eyeGeo, glowMat);
+rightEye.position.set(0.2, 0.05, 0.48);
+rightEye.rotation.y = 0.15;
+headGroup.add(registerPart(rightEye, "右目光学传感器矩阵", "EYE-R", "高动态 4K 双目光学追踪单元，具备毫秒级眼神注视微追踪算法。", new THREE.Vector3(0.2, 0.1, 0.6)));
+
+// 4. 头顶量子天线
+const antStemGeo = new THREE.CylinderGeometry(0.015, 0.025, 0.28, 16);
+const antStem = new THREE.Mesh(antStemGeo, chromeMat);
+antStem.position.set(0, 0.62, -0.05);
+headGroup.add(registerPart(antStem, "量子通信天线连杆", "ANT-POLE", "超导射频连杆，负责与本地 StudyGate 学习数据总线保持离线低时延通信。", new THREE.Vector3(0, 0.9, -0.2)));
+
+const antBulbGeo = new THREE.SphereGeometry(0.06, 16, 16);
+const antBulb = new THREE.Mesh(antBulbGeo, coreGlowMat);
+antBulb.position.set(0, 0.78, -0.05);
+headGroup.add(registerPart(antBulb, "能量脉冲信号信标灯", "ANT-BEACON", "微型呼吸脉冲信标，随专注心流节拍进行 8Hz 舒曼共振微闪。", new THREE.Vector3(0, 1.2, -0.2)));
+
+// 5. 左右磁悬浮耳罩
+const earGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.08, 24);
+const leftEar = new THREE.Mesh(earGeo, titaniumMat);
+leftEar.position.set(-0.55, 0, -0.05);
+leftEar.rotation.z = Math.PI * 0.5;
+headGroup.add(registerPart(leftEar, "左声学共振散热耳舱", "EAR-L", "内置全向微型扬声单元与对流散热格栅，提供立体母语外教原声。", new THREE.Vector3(-0.8, 0, -0.1)));
+
+const rightEar = new THREE.Mesh(earGeo, titaniumMat);
+rightEar.position.set(0.55, 0, -0.05);
+rightEar.rotation.z = Math.PI * 0.5;
+headGroup.add(registerPart(rightEar, "右声学共振散热耳舱", "EAR-R", "内置全向微型扬声单元与对流散热格栅，提供立体母语外教原声。", new THREE.Vector3(0.8, 0, -0.1)));
+
+
+/* ───────────────────── (B) 躯干与核心反应堆装配 ───────────────────── */
+const torsoGroup = new THREE.Group();
+torsoGroup.position.set(0, 0, 0);
+robotRoot.add(torsoGroup);
+
+// 1. 钛合金中央脊柱与主结构底盘
+const spineGeo = new THREE.CylinderGeometry(0.18, 0.22, 0.7, 16);
+const spine = new THREE.Mesh(spineGeo, titaniumMat);
+spine.position.set(0, 0, -0.05);
+torsoGroup.add(registerPart(spine, "主承力钛合金脊柱龙骨", "CHASSIS-SPINE", "机器人全身结构核心支撑梁，承受全向机械扭矩与抗剪切载荷。", new THREE.Vector3(0, -0.1, -0.5)));
+
+// 2. 核心反应堆 (微型核聚变/量子反应堆)
+const reactorGroup = new THREE.Group();
+reactorGroup.position.set(0, 0.05, 0.05);
+torsoGroup.add(reactorGroup);
+
+// 反应堆中心发光等离子球
+const coreGeo = new THREE.SphereGeometry(0.18, 32, 32);
+const reactorCoreMesh = new THREE.Mesh(coreGeo, coreGlowMat);
+reactorGroup.add(registerPart(reactorCoreMesh, "磁约束量子微型反应堆", "CORE-01", "核心能量中枢，利用超导磁轨约束高密离子流，为全机甲各构件提供动力。", new THREE.Vector3(0, 0, 0.8)));
+
+// 反应堆内层金色齿牙旋转环
+const innerRingGeo = new THREE.TorusGeometry(0.26, 0.02, 16, 32);
+const innerRing = new THREE.Mesh(innerRingGeo, goldMat);
+innerRing.rotation.x = Math.PI * 0.5;
+reactorGroup.add(registerPart(innerRing, "反应堆内层磁加速轨道环", "MAG-RING-01", "反向高速自转的超导环，均衡能量回路中的电荷分布。", new THREE.Vector3(0, 0, 0.6)));
+
+// 反应堆外层能量约束钛环
+const outerRingGeo = new THREE.TorusGeometry(0.34, 0.025, 16, 32);
+const outerRing = new THREE.Mesh(outerRingGeo, titaniumMat);
+outerRing.rotation.y = Math.PI * 0.25;
+reactorGroup.add(registerPart(outerRing, "能量约束外防护环", "MAG-RING-02", "防止反应堆等离子流溢出的外圈物理阻尼结构件。", new THREE.Vector3(0, 0, 0.4)));
+
+// 3. 四组斜向液压伸缩连杆 (Pistons)
+const pistonMat = chromeMat;
+const pistonAngles = [
+  { x: -0.22, y: 0.22, dx: -0.6, dy: 0.6 },
+  { x: 0.22, y: 0.22, dx: 0.6, dy: 0.6 },
+  { x: -0.22, y: -0.2, dx: -0.6, dy: -0.6 },
+  { x: 0.22, y: -0.2, dx: 0.6, dy: -0.6 }
+];
+
+pistonAngles.forEach((p, idx) => {
+  const pGroup = new THREE.Group();
+  pGroup.position.set(p.x, p.y, 0);
+
+  const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.25, 12), titaniumMat);
+  const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.35, 12), chromeMat);
+  rod.position.y = 0.08;
+  pGroup.add(cyl);
+  pGroup.add(rod);
+  pGroup.rotation.z = Math.atan2(p.dy, p.dx) - Math.PI/2;
+
+  torsoGroup.add(registerPart(pGroup, `伺服液压推杆 #${idx+1}`, `HYDR-0${idx+1}`, "双向伺服高压液压缸，在爆炸拆解态可伸长 180% 维持骨架平衡。", new THREE.Vector3(p.dx * 0.9, p.dy * 0.9, 0.2)));
+});
+
+// 4. 左右对称可对开白瓷胸部外甲 (Chest Armor Plates)
+const chestGeo = new THREE.BoxGeometry(0.28, 0.46, 0.1);
+const leftChest = new THREE.Mesh(chestGeo, ceramicMat);
+leftChest.position.set(-0.24, 0.05, 0.22);
+leftChest.rotation.y = 0.2;
+torsoGroup.add(registerPart(leftChest, "左舷前胸复合陶瓷装甲", "CHEST-L", "纳米级白瓷烤漆装甲板，可在受到冲击或全息检视时向侧前方滑动弹开。", new THREE.Vector3(-0.9, 0.1, 0.8)));
+
+const rightChest = new THREE.Mesh(chestGeo, ceramicMat);
+rightChest.position.set(0.24, 0.05, 0.22);
+rightChest.rotation.y = -0.2;
+torsoGroup.add(registerPart(rightChest, "右舷前胸复合陶瓷装甲", "CHEST-R", "纳米级白瓷烤漆装甲板，可在受到冲击或全息检视时向侧前方滑动弹开。", new THREE.Vector3(0.9, 0.1, 0.8)));
+
+// 5. 背部散热背包与导流翼 (Back Thruster Pack)
+const backGeo = new THREE.BoxGeometry(0.42, 0.5, 0.12);
+const backPack = new THREE.Mesh(backGeo, titaniumMat);
+backPack.position.set(0, 0.05, -0.25);
+torsoGroup.add(registerPart(backPack, "背部矢量能量背包", "PACK-BACK", "集成主电池组与辅助算力芯片，提供长时间离线稳定续航。", new THREE.Vector3(0, 0, -1.0)));
+
+
+/* ───────────────────── (C) 左右磁悬浮极客小手 ───────────────────── */
+function createHand(isLeft = true) {
+  const hGroup = new THREE.Group();
+  const dir = isLeft ? -1 : 1;
+  hGroup.position.set(dir * 0.72, 0, 0.1);
+
+  // 手掌悬浮核心球
+  const palmGeo = new THREE.SphereGeometry(0.12, 16, 16);
+  const palm = new THREE.Mesh(palmGeo, ceramicMat);
+  hGroup.add(palm);
+
+  // 掌心反重力微发光孔
+  const holeGeo = new THREE.CircleGeometry(0.04, 16);
+  const hole = new THREE.Mesh(holeGeo, glowMat);
+  hole.position.set(0, 0, 0.12);
+  hGroup.add(hole);
+
+  // 3 根微型机械指节
+  for(let i = -1; i <= 1; i++) {
+    const finger = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.08, 8), chromeMat);
+    finger.position.set(i * 0.05, 0.11, 0.02);
+    finger.rotation.x = 0.2;
+    hGroup.add(finger);
+  }
+
+  robotRoot.add(registerPart(hGroup, isLeft ? "左舷磁悬浮操控机械手" : "右舷磁悬浮操控机械手", isLeft ? "HAND-L" : "HAND-R", "无物理线缆连接的无线感应磁悬浮手，支持点触、招手与学霸比赞姿态。", new THREE.Vector3(dir * 1.0, 0, 0.4)));
+  return hGroup;
+}
+const leftHand = createHand(true);
+const rightHand = createHand(false);
+
+
+/* ───────────────────── (D) 底部反重力喷口与全息 HUD 光环 ───────────────────── */
+const baseGroup = new THREE.Group();
+baseGroup.position.set(0, -0.45, 0);
+robotRoot.add(baseGroup);
+
+// 等离子喷口外环
+const nozzleGeo = new THREE.CylinderGeometry(0.26, 0.18, 0.14, 24, 1, true);
+const nozzle = new THREE.Mesh(nozzleGeo, titaniumMat);
+baseGroup.add(registerPart(nozzle, "等离子反重力推进喷口", "THRUST-NOZZLE", "磁流体推进喷口，向下喷射低能量蓝白离子流，实现无重力轻盈悬浮。", new THREE.Vector3(0, -0.6, 0)));
+
+// 悬浮等离子辉光圆盘
+const plasmaDisc = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.02, 24), coreGlowMat);
+plasmaDisc.position.y = -0.06;
+baseGroup.add(registerPart(plasmaDisc, "反重力离子发射栅极", "GRID-EMIT", "离子束加速栅格，高频振荡驱动等离子体微射流。", new THREE.Vector3(0, -0.9, 0)));
+
+// 地面大型全息 HUD 环阵列 (Holographic Ground Projector)
+const hudRingGeo1 = new THREE.RingGeometry(1.0, 1.05, 64);
+const hudRingMat1 = new THREE.MeshBasicMaterial({ color: currentThemeHex, side: THREE.DoubleSide, transparent: true, opacity: 0.4 });
+const hudRing1 = new THREE.Mesh(hudRingGeo1, hudRingMat1);
+hudRing1.rotation.x = Math.PI * 0.5;
+hudRing1.position.y = -1.1;
+scene.add(hudRing1);
+
+const hudRingGeo2 = new THREE.RingGeometry(1.35, 1.37, 64);
+const hudRingMat2 = new THREE.MeshBasicMaterial({ color: currentThemeHex, side: THREE.DoubleSide, transparent: true, opacity: 0.25 });
+const hudRing2 = new THREE.Mesh(hudRingGeo2, hudRingMat2);
+hudRing2.rotation.x = Math.PI * 0.5;
+hudRing2.position.y = -1.1;
+scene.add(hudRing2);
+
+// 星尘背景粒子系统 (Dust Particles)
+const particleCount = 200;
+const particleGeo = new THREE.BufferGeometry();
+const particlePos = new Float32Array(particleCount * 3);
+for(let i=0; i<particleCount*3; i+=3) {
+  particlePos[i] = (Math.random() - 0.5) * 12;
+  particlePos[i+1] = (Math.random() - 0.5) * 8;
+  particlePos[i+2] = (Math.random() - 0.5) * 12;
+}
+particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+const particleMat = new THREE.PointsMaterial({ color: currentThemeHex, size: 0.04, transparent: true, opacity: 0.6 });
+const particleField = new THREE.Points(particleGeo, particleMat);
+scene.add(particleField);
+
+
+// 5. 机械爆炸拆解动力学引擎 (Cutaway Engine)
+let explodeProgress = 0; // 0.0 到 1.0
+let targetProgress = 0;
+let isAutoExploding = false;
+let autoRotateActive = true;
+
+function applyExplosion(factor) {
+  explodeProgress = factor;
+  teardownParts.forEach(mesh => {
+    const data = mesh.userData;
+    if (data.initPos && data.dispVec) {
+      // 缓动位移插值 (Cubic Out Easing)
+      mesh.position.copy(data.initPos).addScaledVector(data.dispVec, factor);
+    }
+  });
+
+  // 更新左侧 HUD 解构位移显示
+  const inspDisp = document.getElementById('insp-disp');
+  if (inspDisp) inspDisp.textContent = `+${(factor * 120).toFixed(1)} mm`;
+}
+
+// 6. 音频引擎 (纯原生 Web Audio 实时物理合成机械伺服音)
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+
+function playServoSound(intensity = 0.5) {
+  try {
+    if (!audioCtx) audioCtx = new AudioContext();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const filter = audioCtx.createBiquadFilter();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(140, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(320 + intensity * 200, audioCtx.currentTime + 0.15);
+
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(600, audioCtx.currentTime);
+
+    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.26);
+  } catch(e) {}
+}
+
+
+// 7. 鼠标射线检测与零件全息悬停扫描 (Raycaster Part Inspector)
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let hoveredPart = null;
+
+window.addEventListener('mousemove', (e) => {
+  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+  // 视差头部微跟随 (Parallax Head Tracking)
+  headGroup.rotation.y = mouse.x * 0.35;
+  headGroup.rotation.x = -mouse.y * 0.2;
+});
+
+function checkRaycast() {
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(teardownParts, true);
+
+  if (intersects.length > 0) {
+    let topMesh = intersects[0].object;
+    while(topMesh && !topMesh.userData.name && topMesh.parent) {
+      topMesh = topMesh.parent;
+    }
+    if (topMesh && topMesh.userData && topMesh.userData.name) {
+      if (hoveredPart !== topMesh) {
+        hoveredPart = topMesh;
+        updateInspector(topMesh.userData);
+      }
+    }
+  }
+}
+
+function updateInspector(data) {
+  document.getElementById('insp-name').textContent = data.name;
+  document.getElementById('insp-code').textContent = data.code;
+  document.getElementById('insp-desc').textContent = data.desc;
+  document.getElementById('insp-mat').textContent = "PBR 物理复合材质";
+}
+
+
+// 8. 交互事件绑定与控制甲板 (Controls Deck Binding)
+const slider = document.getElementById('explode-slider');
+const sliderValDisplay = document.getElementById('slider-val-display');
+const btnToggle = document.getElementById('btn-toggle-explode');
+const btnAutoRotate = document.getElementById('btn-auto-rotate');
+const btnResetCam = document.getElementById('btn-reset-cam');
+
+slider.addEventListener('input', (e) => {
+  targetProgress = e.target.value / 100;
+  sliderValDisplay.textContent = `${e.target.value}%`;
+  playServoSound(targetProgress);
+});
+
+btnToggle.addEventListener('click', () => {
+  if (targetProgress > 0.5) {
+    targetProgress = 0;
+  } else {
+    targetProgress = 1.0;
+  }
+  slider.value = Math.round(targetProgress * 100);
+  sliderValDisplay.textContent = `${slider.value}%`;
+  playServoSound(targetProgress);
+});
+
+btnAutoRotate.addEventListener('click', () => {
+  autoRotateActive = !autoRotateActive;
+  btnAutoRotate.classList.toggle('active', autoRotateActive);
+});
+btnAutoRotate.classList.add('active');
+
+btnResetCam.addEventListener('click', () => {
+  camera.position.set(0, 1.2, 5.2);
+  controls.target.set(0, 0.2, 0);
+  controls.update();
+});
+
+// 形态色彩切换
+document.querySelectorAll('.swatch').forEach(swatch => {
+  swatch.addEventListener('click', () => {
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+    swatch.classList.add('active');
+
+    const hexStr = swatch.getAttribute('data-color');
+    currentThemeHex = parseInt(hexStr.replace('#', '0x'));
+
+    // 更新场景灯光与材质辉光
+    cyanFillLight.color.setHex(currentThemeHex);
+    groundGlow.color.setHex(currentThemeHex);
+    glowMat.color.setHex(currentThemeHex);
+    coreGlowMat.emissive.setHex(currentThemeHex);
+    hudRingMat1.color.setHex(currentThemeHex);
+    hudRingMat2.color.setHex(currentThemeHex);
+    particleMat.color.setHex(currentThemeHex);
+
+    playServoSound(0.8);
+  });
+});
+
+
+// 9. 渲染与动画主循环 (Animation Loop)
+let clock = new THREE.Clock();
+let frameCount = 0;
+let lastFpsTime = performance.now();
+const fpsDisplay = document.getElementById('hud-fps');
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  const elapsedTime = clock.getElapsedTime();
+
+  // 1. 平滑插值更新爆炸展开位移
+  if (Math.abs(explodeProgress - targetProgress) > 0.002) {
+    explodeProgress += (targetProgress - explodeProgress) * 0.12;
+    applyExplosion(explodeProgress);
+  }
+
+  // 2. 磁悬浮呼吸起伏动力学 (Hovering Levitation)
+  const hoverOffset = Math.sin(elapsedTime * 1.8) * 0.08;
+  robotRoot.position.y = hoverOffset;
+
+  // 左右小手微幅摆动
+  leftHand.position.y = Math.sin(elapsedTime * 2.2 + 0.5) * 0.06;
+  rightHand.position.y = Math.sin(elapsedTime * 2.2 + 2.0) * 0.06;
+
+  // 3. 反应堆核心与光轨旋转
+  innerRing.rotation.z += 0.04;
+  outerRing.rotation.y += 0.02;
+  outerRing.rotation.x += 0.015;
+
+  // 4. 地面全息 HUD 环反向旋转
+  hudRing1.rotation.z += 0.005;
+  hudRing2.rotation.z -= 0.008;
+
+  // 5. 巡航自转
+  if (autoRotateActive) {
+    robotRoot.rotation.y += 0.004;
+  }
+
+  // 6. 射线检测拾取
+  checkRaycast();
+
+  // 7. FPS 监控
+  frameCount++;
+  const now = performance.now();
+  if (now - lastFpsTime >= 1000) {
+    if (fpsDisplay) fpsDisplay.textContent = frameCount;
+    frameCount = 0;
+    lastFpsTime = now;
+  }
+
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+// 窗口尺寸自适应
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// 支持 URL 预设参数 (供自动化截图与演示直达)
+try {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('explode')) {
+    const expVal = Math.min(100, Math.max(0, parseFloat(params.get('explode'))));
+    targetProgress = expVal / 100;
+    explodeProgress = targetProgress;
+    applyExplosion(explodeProgress);
+    slider.value = expVal;
+    sliderValDisplay.textContent = `${expVal}%`;
+  }
+  if (params.get('autorotate') === 'false') {
+    autoRotateActive = false;
+    btnAutoRotate.classList.remove('active');
+  }
+  if (params.get('theme') === 'gold') {
+    document.querySelector('.swatch.gold')?.click();
+  } else if (params.get('theme') === 'red') {
+    document.querySelector('.swatch.red')?.click();
+  } else if (params.get('theme') === 'purple') {
+    document.querySelector('.swatch.purple')?.click();
+  }
+} catch(e) {}
+
+// 启动渲染循环
+animate();
+</script>
+</body>
+</html>

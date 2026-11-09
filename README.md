@@ -157,20 +157,49 @@ StudyGate **彻底放弃了居高临下的监视思维，而是从教育心理�
 
 ---
 
+### 🌟 系统五：🤖 3D 赛博机甲伴学生命体与全息机械爆炸拆解 (Procedural Cutaway Teardown)
+
+> 💡 **对标 X 顶级开源项目（Nyxera0x / Cutaway）**：告别传统笨重建模软件，采用**纯代码参数化几何体 + 分层机械骨骼装配 + PBR 次表面微晶物理材质**，纯前端纯原生打造可 360° 交互的实体机甲伴学核心！
+
+<div align="center">
+  <img src="docs/screenshots/05-studygate-mecha-3d-assembled.png" width="450" alt="3D 机甲正常巡航装配态" />
+  <img src="docs/screenshots/06-studygate-mecha-3d-exploded.png" width="450" alt="3D 机甲全息机械爆炸拆解态" />
+  <p><em>▲ 左：正常巡航伴学装配态 ｜ 右：85% 机械全息爆炸拆解态（Cutaway Exploded View）</em></p>
+</div>
+
+- **🧩 纯代码程序化精密装配体 (140+ 独立机械构件)**：
+  - **头部装配**：纳米微晶陶瓷后脑外壳、黑晶弧面曲面面罩、全息双目光学发光矩阵、量子信标天线、左右声学对流格栅耳舱；
+  - **核心胸腔动力中枢**：磁约束等离子量子微型反应堆（双反向自转超导磁轨环）、钛合金中轴主梁脊柱、四组伺服液压推杆、模块化对开陶瓷胸部外甲、背部能量导流背包；
+  - **反重力悬浮手与推进底盘**：掌心微发光孔的悬浮仿生机械手、等离子反重力发射栅极、地面双层全息 HUD 刻度环阵列；
+- **⚡ 实时爆炸拆解滑块 (Cutaway 0% ~ 100%)**：
+  - 拖拽底部全息滑块，所有部件沿自身物理轴向与机械导轨平滑悬浮弹开，内部高速运转的量子反应堆与伺服液压杆尽收眼底；
+  - 真实机械伺服传动音（纯原生 Web Audio 实时物理合成齿轮与液压气动音效）；
+- **🔍 军工级零件全息悬停扫描**：
+  - 鼠标悬停在机甲任何部件上，左侧 HUD 瞬时浮现该零件的军工编号、材质工艺、耐压极限与功能解析；
+- **🎨 4 套能量波长形态一键切换**：
+  - 极客天蓝（日常自习态）、超频金（满分觉醒态）、赤红（错题战备态）、幻夜紫（赛博心流态）。
+
+---
+
 ## 🛠️ 项目工程结构
 
 ```
 StudyGate/
 ├── demo/                  # 跨平台纯前端 Web 完整版 (随时随地直接打开可用，单文件零依赖)
 │   ├── index.html         # 核心单页应用 (内置 1090 真题库、3D 伴学萌宠、Python 实验室、勋章墙)
+│   ├── mecha-3d.html      # ⚡ 3D 赛博机甲伴学生命体·全息爆炸解构独立展厅 (Three.js 纯原生打造)
 │   ├── app.html           # 源码工程模板
-│   └── assets/            # 3D 勋章高清原画、极客深空壁纸、机甲音频
+│   └── assets/            # 离线 3D 引擎库 (three.min.js, OrbitControls.js)、3D 勋章原画、极客深空壁纸
+│       ├── three.min.js   # 100% 本地离线 Three.js 核心库
+│       └── OrbitControls.js # 100% 本地离线轨道控制器
 ├── docs/                  # 规格说明书与完整技术图文资料
 │   ├── screenshots/       # 4K / Retina 实机运行高清截图
 │   │   ├── 01-studygate-main-hero.png
 │   │   ├── 02-studygate-pylab-arena.png
 │   │   ├── 03-studygate-badgewall-hall.png
-│   │   └── 04-studygate-revenge-portal.png
+│   │   ├── 04-studygate-revenge-portal.png
+│   │   ├── 05-studygate-mecha-3d-assembled.png
+│   │   └── 06-studygate-mecha-3d-exploded.png
 │   ├── SPEC.md            # 系统总体技术规格书
 │   ├── CONTRACTS.md       # 模块间调用契约与通信协议
 │   ├── RISKS.md           # 风险管理矩阵与逃逸防护方案
@@ -178,6 +207,14 @@ StudyGate/
 ├── src/                   # Windows 原生客户端源码 (.NET 8 WPF)
 │   ├── Core/              # 跨平台判分内核、口令保险库、状态机
 │   ├── App/               # Winlogon Shell 注册、底层输入钩子、看门狗互保
+│   └── Ui/                # 沉浸式桌面客户端视图
+├── data/
+│   └── bank/              # 24 份语数英初中真题 JSON 原始题库
+├── scripts/               # Windows 一键安全安装、卸载回滚 PowerShell 脚本
+│   ├── install.ps1        # 管理员一键安装与注册开机引导
+│   └── uninstall.ps1      # 物理级一键安全卸载（还原系统原生桌面）
+└── tools/                 # 自动化测试与判题闭环核查脚本
+```
 │   └── Ui/                # 沉浸式桌面客户端视图
 ├── data/
 │   └── bank/              # 24 份语数英初中真题 JSON 原始题库
@@ -212,6 +249,8 @@ http://127.0.0.1:8788/index.html
 - **一键直达少儿 Python 实验室**：`http://127.0.0.1:8788/index.html?open=pylab`
 - **一键直达勋章荣誉殿堂**：`http://127.0.0.1:8788/index.html?open=badgewall`
 - **一键预览错题复仇结算台**：`http://127.0.0.1:8788/index.html?open=revenge-demo`
+- **⚡ 3D 赛博机甲伴学核心 (全息爆炸解构展厅)**：`http://127.0.0.1:8788/mecha-3d.html`
+- **一键直达 85% 机械全息爆炸拆解态**：`http://127.0.0.1:8788/mecha-3d.html?explode=85`
 
 ---
 

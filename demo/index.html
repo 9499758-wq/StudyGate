@@ -2074,6 +2074,7 @@ pre.drawer-body { font-family: var(--mono); white-space: pre-wrap; color: #34d39
       <button class="hud-btn" id="btnFocusNoise" title="点击开启/关闭【🎧 赛博专注心流波 / 极客白噪音】">🎧 专注</button>
       <button class="hud-btn on" id="btnWallpaper" title="切换极客科幻壁纸 (点击轮播4套超清壁纸)">🖼️</button>
       <button class="hud-btn" id="btnCustomizer" title="伙伴装扮舱">🎨</button>
+      <a href="mecha-3d.html" target="_blank" class="hud-btn" id="btnMecha3D" title="进入【⚡ 3D 赛博机甲伴学生命体·全息爆炸解构展厅】" style="background:linear-gradient(135deg,rgba(0,240,255,0.2),rgba(59,130,246,0.3));border-color:rgba(0,240,255,0.6);color:#00f0ff;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-weight:700">🤖 3D机甲</a>
     </div>
   </header>
 
@@ -2120,6 +2121,7 @@ pre.drawer-body { font-family: var(--mono); white-space: pre-wrap; color: #34d39
           </div>
           <div style="display:flex;gap:6px">
             <button class="custom-btn" id="btnOpenCodeLab" style="background:linear-gradient(135deg,rgba(14,165,233,0.35),rgba(99,102,241,0.35));border-color:var(--accent-sky);color:#38bdf8;font-weight:700" title="进入小博机器人深度编程实验室">⚡ 编程实验室</button>
+            <a href="mecha-3d.html" target="_blank" class="custom-btn" style="background:linear-gradient(135deg,rgba(0,240,255,0.25),rgba(99,102,241,0.25));border-color:#00f0ff;color:#00f0ff;font-weight:700;text-decoration:none;display:inline-flex;align-items:center" title="查看小博 3D 全息机械骨骼与爆炸拆解">🤖 3D解构</a>
             <button class="custom-btn" id="btnOpenCustom">换装 &gt;</button>
           </div>
         </div>
@@ -2358,7 +2360,10 @@ pre.drawer-body { font-family: var(--mono); white-space: pre-wrap; color: #34d39
           <span class="lab-energy-bar-text" id="labEnergyText">0% 战力</span>
         </div>
       </div>
-      <button class="close-modal-btn" id="btnCloseCodeLab" title="退出编程实验室">&times;</button>
+      <div style="display:flex;align-items:center;gap:10px">
+        <a href="mecha-3d.html" target="_blank" style="text-decoration:none;background:linear-gradient(135deg,#00f0ff,#3b82f6);color:#000;font-weight:700;font-size:12px;padding:6px 14px;border-radius:8px;display:inline-flex;align-items:center;gap:4px;box-shadow:0 0 12px rgba(0,240,255,0.4)" title="在全息 3D 视角查看所编写代码操纵的实体机甲全构件">🤖 3D全息机甲拆解</a>
+        <button class="close-modal-btn" id="btnCloseCodeLab" title="退出编程实验室">&times;</button>
+      </div>
     </div>
 
     <div class="code-lab-body">
